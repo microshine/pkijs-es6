@@ -1,5 +1,5 @@
 import * as asn1js from "asn1js";
-import { getParametersValue } from "common";
+import { getParametersValue } from "pvutils";
 import KeyTransRecipientInfo from "KeyTransRecipientInfo";
 import KeyAgreeRecipientInfo from "KeyAgreeRecipientInfo";
 import KEKRecipientInfo from "KEKRecipientInfo";

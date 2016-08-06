@@ -1,5 +1,5 @@
 import * as asn1js from "asn1js";
-import { getParametersValue } from "common";
+import { getParametersValue } from "pvutils";
 import Attribute from "Attribute";
 //**************************************************************************************
 export default class SignedAndUnsignedAttributes
@@ -161,6 +161,9 @@ export default class SignedAndUnsignedAttributes
 	 */
 	toSchema()
 	{
+		if(SignedAndUnsignedAttributes.compareWithDefault("type", this.type) || SignedAndUnsignedAttributes.compareWithDefault("attributes", this.attributes))
+			throw new Error("Incorrectly initialized \"SignedAndUnsignedAttributes\" class");
+		
 		//region Construct and return new ASN.1 schema for this object
 		return (new asn1js.Constructed({
 			optional: true,
@@ -179,6 +182,9 @@ export default class SignedAndUnsignedAttributes
 	 */
 	toJSON()
 	{
+		if(SignedAndUnsignedAttributes.compareWithDefault("type", this.type) || SignedAndUnsignedAttributes.compareWithDefault("attributes", this.attributes))
+			throw new Error("Incorrectly initialized \"SignedAndUnsignedAttributes\" class");
+		
 		return {
 			type: this.type,
 			attributes: Array.from(this.attributes, element => element.toJSON())

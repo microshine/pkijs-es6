@@ -1,11 +1,11 @@
 import * as asn1js from "asn1js";
-import { getParametersValue } from "common";
+import { getParametersValue } from "pvutils";
+import { getOIDByAlgorithm, getAlgorithmParameters, getCrypto, createCMSECDSASignature } from "common";
 import TBSRequest from "TBSRequest";
 import Signature from "Signature";
 import Request from "Request";
 import CertID from "CertID";
 import Certificate from "Certificate";
-import { getOIDByAlgorithm, getAlgorithmParameters, getCrypto, createCMSECDSASignature } from "common";
 import AlgorithmIdentifier from "AlgorithmIdentifier";
 import RSASSAPSSParams from "RSASSAPSSParams";
 //**************************************************************************************

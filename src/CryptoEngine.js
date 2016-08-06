@@ -1,5 +1,5 @@
 import * as asn1js from "asn1js";
-import { getParametersValue } from "common";
+import { getParametersValue } from "pvutils";
 import PublicKeyInfo from "PublicKeyInfo";
 import PrivateKeyInfo from "PrivateKeyInfo";
 //**************************************************************************************
@@ -36,7 +36,12 @@ export default class CryptoEngine
 		//region Initial variables
 		let jwk = {};
 		//endregion
-
+		
+		//region Change "keyData" type if needed
+		if(keyData instanceof Uint8Array)
+			keyData = keyData.buffer;
+		//endregion
+		
 		switch(format.toLowerCase())
 		{
 			case "raw":

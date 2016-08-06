@@ -1,7 +1,7 @@
 import * as asn1js from "asn1js";
-import { getParametersValue } from "common";
-import AlgorithmIdentifier from "AlgorithmIdentifier";
+import { getParametersValue } from "pvutils";
 import { getCrypto } from "common";
+import AlgorithmIdentifier from "AlgorithmIdentifier";
 import ECPublicKey from "ECPublicKey";
 import RSAPublicKey from "RSAPublicKey";
 //**************************************************************************************

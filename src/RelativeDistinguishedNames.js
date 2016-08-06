@@ -1,5 +1,5 @@
 import * as asn1js from "asn1js";
-import { getParametersValue, isEqualBuffer } from "common";
+import { getParametersValue, isEqualBuffer } from "pvutils";
 import AttributeTypeAndValue from "AttributeTypeAndValue";
 //**************************************************************************************
 export default class RelativeDistinguishedNames
@@ -51,6 +51,24 @@ export default class RelativeDistinguishedNames
 	}
 	//**********************************************************************************
 	/**
+	 * Compare values with default values for all class members
+	 * @param {string} memberName String name for a class member
+	 * @param {*} memberValue Value to compare with default value
+	 */
+	static compareWithDefault(memberName, memberValue)
+	{
+		switch(memberName)
+		{
+			case "typesAndValues":
+				return (memberValue.length === 0);
+			case "valueBeforeDecode":
+				return (memberValue.byteLength === 0);
+			default:
+				throw new Error(`Invalid member name for RelativeDistinguishedNames class: ${memberName}`);
+		}
+	}
+	//**********************************************************************************
+	/**
 	 * Return value of asn1js schema for current class
 	 * @param {Object} parameters Input parameters for the schema
 	 * @returns {Object} asn1js schema object
@@ -67,7 +85,7 @@ export default class RelativeDistinguishedNames
 		 * @property {string} [blockName] Name for entire block
 		 * @property {string} [repeatedSequence] Name for "repeatedSequence" block
 		 * @property {string} [repeatedSet] Name for "repeatedSet" block
-		 * @property {string} [attrTypeAndValue] Name for "attrTypeAndValue" block
+		 * @property {string} [typeAndValue] Name for "typeAndValue" block
 		 */
 		const names = getParametersValue(parameters, "names", {});
 
@@ -80,7 +98,7 @@ export default class RelativeDistinguishedNames
 						value: [
 							new asn1js.Repeated({
 								name: (names.repeatedSet || ""),
-								value: AttributeTypeAndValue.schema(names.attrTypeAndValue || {})
+								value: AttributeTypeAndValue.schema(names.typeAndValue || {})
 							})
 						]
 					})

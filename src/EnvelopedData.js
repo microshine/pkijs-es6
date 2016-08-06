@@ -1,10 +1,10 @@
 import * as asn1js from "asn1js";
+import { getParametersValue, utilConcatBuf } from "pvutils";
+import { getOIDByAlgorithm, getRandomValues, getCrypto, getAlgorithmByOID, kdf } from "common";
 import OriginatorInfo from "OriginatorInfo";
 import RecipientInfo from "RecipientInfo";
 import EncryptedContentInfo from "EncryptedContentInfo";
 import Attribute from "Attribute";
-import { getParametersValue } from "common";
-import { getOIDByAlgorithm, getRandomValues, getCrypto, getAlgorithmByOID, kdf, concatBuffers } from "common";
 import AlgorithmIdentifier from "AlgorithmIdentifier";
 import RSAESOAEPParams from "RSAESOAEPParams";
 import KeyTransRecipientInfo from "KeyTransRecipientInfo";
@@ -1631,7 +1631,7 @@ export default class EnvelopedData
 			else
 			{
 				for(const content of this.encryptedContentInfo.encryptedContent.valueBlock.value)
-					dataBuffer = concatBuffers(dataBuffer, content.valueBlock.valueHex);
+					dataBuffer = utilConcatBuf(dataBuffer, content.valueBlock.valueHex);
 			}
 			//endregion
 

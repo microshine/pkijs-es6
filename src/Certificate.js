@@ -1,12 +1,12 @@
 import * as asn1js from "asn1js";
+import { getParametersValue, bufferToHexCodes } from "pvutils";
+import { getCrypto, getHashAlgorithm, getAlgorithmByOID, createCMSECDSASignature, createECDSASignatureFromCMS, getAlgorithmParameters, getOIDByAlgorithm } from "common";
 import AlgorithmIdentifier from "AlgorithmIdentifier";
 import RelativeDistinguishedNames from "RelativeDistinguishedNames";
 import Time from "Time";
 import PublicKeyInfo from "PublicKeyInfo";
 import Extension from "Extension";
 import Extensions from "Extensions";
-import { getParametersValue } from "common";
-import { getCrypto, bufferToHexCodes, getHashAlgorithm, getAlgorithmByOID, createCMSECDSASignature, createECDSASignatureFromCMS, getAlgorithmParameters, getOIDByAlgorithm } from "common";
 import RSASSAPSSParams from "RSASSAPSSParams";
 //**************************************************************************************
 function tbsCertificate(parameters = {})
@@ -459,7 +459,7 @@ export default class Certificate
 			if(this.tbs.length === 0) // No stored certificate TBS part
 				return Certificate.schema().value[0];
 
-			tbsSchema = asn1js.fromBER(this.tbs);
+			tbsSchema = asn1js.fromBER(this.tbs).result;
 		}
 		//endregion
 		//region Create TBS schema via assembling from TBS parts

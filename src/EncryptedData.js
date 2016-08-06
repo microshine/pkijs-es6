@@ -1,8 +1,8 @@
 import * as asn1js from "asn1js";
+import { getParametersValue, utilConcatBuf } from "pvutils";
+import { getCrypto, getRandomValues, getOIDByAlgorithm, getAlgorithmByOID } from "common";
 import EncryptedContentInfo from "EncryptedContentInfo";
 import Attribute from "Attribute";
-import { getParametersValue } from "common";
-import { getCrypto, getRandomValues, getOIDByAlgorithm, getAlgorithmByOID, concatBuffers } from "common";
 import PBKDF2Params from "PBKDF2Params";
 import AlgorithmIdentifier from "AlgorithmIdentifier";
 import PBES2Params from "PBES2Params";
@@ -477,7 +477,7 @@ export default class EncryptedData
 			else
 			{
 				for(const content of this.encryptedContentInfo.encryptedContent.valueBlock.value)
-					dataBuffer = concatBuffers(dataBuffer, content.valueBlock.valueHex);
+					dataBuffer = utilConcatBuf(dataBuffer, content.valueBlock.valueHex);
 			}
 			//endregion
 

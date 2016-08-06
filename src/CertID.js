@@ -1,8 +1,8 @@
 import * as asn1js from "asn1js";
+import { getParametersValue, isEqualBuffer } from "pvutils";
+import { getCrypto, getOIDByAlgorithm } from "common";
 import AlgorithmIdentifier from "AlgorithmIdentifier";
 import Certificate from "Certificate";
-import { getParametersValue } from "common";
-import { getCrypto, getOIDByAlgorithm, isEqualBuffer } from "common";
 //**************************************************************************************
 export default class CertID
 {

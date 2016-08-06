@@ -1,5 +1,5 @@
 import * as asn1js from "asn1js";
-import { getParametersValue } from "common";
+import { getParametersValue } from "pvutils";
 import RelativeDistinguishedNames from "RelativeDistinguishedNames";
 //**************************************************************************************
 //region Additional asn1js schema elements existing inside GENERAL_NAME schema

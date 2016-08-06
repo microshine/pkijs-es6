@@ -1,5 +1,5 @@
 import * as asn1js from "asn1js";
-import { getParametersValue } from "common";
+import { getParametersValue } from "pvutils";
 import Attribute from "Attribute";
 //**************************************************************************************
 export default class SubjectDirectoryAttributes

@@ -1,4 +1,5 @@
-import { getParametersValue, getAlgorithmByOID, isEqualBuffer, stringPrep } from "common";
+import { getParametersValue, isEqualBuffer } from "pvutils";
+import { getAlgorithmByOID, stringPrep } from "common";
 import CertificateRevocationList from "CertificateRevocationList";
 import Certificate from "Certificate";
 import generatorsDriver from "GeneratorsDriver";

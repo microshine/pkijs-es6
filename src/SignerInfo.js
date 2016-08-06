@@ -1,5 +1,5 @@
 import * as asn1js from "asn1js";
-import { getParametersValue } from "common";
+import { getParametersValue } from "pvutils";
 import AlgorithmIdentifier from "AlgorithmIdentifier";
 import SignedAndUnsignedAttributes from "SignedAndUnsignedAttributes";
 import IssuerAndSerialNumber from "IssuerAndSerialNumber";
@@ -30,11 +30,14 @@ export default class SignerInfo
 		 * @description digestAlgorithm
 		 */
 		this.digestAlgorithm = getParametersValue(parameters, "digestAlgorithm", SignerInfo.defaultValues("digestAlgorithm"));
-		/**
-		 * @type {SignedAndUnsignedAttributes}
-		 * @description signedAttrs
-		 */
-		this.signedAttrs = getParametersValue(parameters, "signedAttrs", SignerInfo.defaultValues("signedAttrs"));
+		
+		if("signedAttrs" in parameters)
+			/**
+			 * @type {SignedAndUnsignedAttributes}
+			 * @description signedAttrs
+			 */
+			this.signedAttrs = getParametersValue(parameters, "signedAttrs", SignerInfo.defaultValues("signedAttrs"));
+		
 		/**
 		 * @type {AlgorithmIdentifier}
 		 * @description digestAlgorithm
@@ -45,11 +48,13 @@ export default class SignerInfo
 		 * @description signature
 		 */
 		this.signature = getParametersValue(parameters, "signature", SignerInfo.defaultValues("signature"));
-		/**
-		 * @type {SignedAndUnsignedAttributes}
-		 * @description unsignedAttrs
-		 */
-		this.unsignedAttrs = getParametersValue(parameters, "unsignedAttrs", SignerInfo.defaultValues("unsignedAttrs"));
+		
+		if("unsignedAttrs" in parameters)
+			/**
+			 * @type {SignedAndUnsignedAttributes}
+			 * @description unsignedAttrs
+			 */
+			this.unsignedAttrs = getParametersValue(parameters, "unsignedAttrs", SignerInfo.defaultValues("unsignedAttrs"));
 		//endregion
 		
 		//region If input argument array contains "schema" for this object
@@ -73,13 +78,13 @@ export default class SignerInfo
 			case "digestAlgorithm":
 				return new AlgorithmIdentifier();
 			case "signedAttrs":
-				return new SignedAndUnsignedAttributes();
+				return new SignedAndUnsignedAttributes({ type: 0 });
 			case "signatureAlgorithm":
 				return new AlgorithmIdentifier();
 			case "signature":
 				return new asn1js.OctetString();
 			case "unsignedAttrs":
-				return new SignedAndUnsignedAttributes();
+				return new SignedAndUnsignedAttributes({ type: 1 });
 			default:
 				throw new Error(`Invalid member name for SignerInfo class: ${memberName}`);
 		}
@@ -104,9 +109,9 @@ export default class SignerInfo
 
 				return memberValue.isEqual(SignerInfo.defaultValues("digestAlgorithm"));
 			case "signedAttrs":
-				return ((SignedAndUnsignedAttributes.compareWithDefault("type", this.signedAttrs.type))
-				&& (SignedAndUnsignedAttributes.compareWithDefault("attributes", this.signedAttrs.attributes))
-				&& (SignedAndUnsignedAttributes.compareWithDefault("encodedValue", this.signedAttrs.encodedValue)));
+				return ((SignedAndUnsignedAttributes.compareWithDefault("type", memberValue.type))
+				&& (SignedAndUnsignedAttributes.compareWithDefault("attributes", memberValue.attributes))
+				&& (SignedAndUnsignedAttributes.compareWithDefault("encodedValue", memberValue.encodedValue)));
 			case "signatureAlgorithm":
 				if((memberValue instanceof AlgorithmIdentifier) === false)
 					return false;
@@ -114,9 +119,9 @@ export default class SignerInfo
 				return memberValue.isEqual(SignerInfo.defaultValues("signatureAlgorithm"));
 			case "signature":
 			case "unsignedAttrs":
-				return ((SignedAndUnsignedAttributes.compareWithDefault("type", this.unsignedAttrs.type))
-				&& (SignedAndUnsignedAttributes.compareWithDefault("attributes", this.unsignedAttrs.attributes))
-				&& (SignedAndUnsignedAttributes.compareWithDefault("encodedValue", this.unsignedAttrs.encodedValue)));
+				return ((SignedAndUnsignedAttributes.compareWithDefault("type", memberValue.type))
+				&& (SignedAndUnsignedAttributes.compareWithDefault("attributes", memberValue.attributes))
+				&& (SignedAndUnsignedAttributes.compareWithDefault("encodedValue", memberValue.encodedValue)));
 			default:
 				throw new Error(`Invalid member name for SignerInfo class: ${memberName}`);
 		}
@@ -180,7 +185,7 @@ export default class SignerInfo
 							})
 						]
 					}),
-					AlgorithmIdentifier(names.digestAlgorithm || {
+					AlgorithmIdentifier.schema(names.digestAlgorithm || {
 						names: {
 							blockName: "SignerInfo.digestAlgorithm"
 						}
@@ -191,13 +196,13 @@ export default class SignerInfo
 							tagNumber: 0
 						}
 					}),
-					AlgorithmIdentifier(names.signatureAlgorithm || {
+					AlgorithmIdentifier.schema(names.signatureAlgorithm || {
 						names: {
 							blockName: "SignerInfo.signatureAlgorithm"
 						}
 					}),
 					new asn1js.OctetString({ name: (names.signature || "SignerInfo.signature") }),
-					SignedAndUnsignedAttributes(names.unsignedAttrs || {
+					SignedAndUnsignedAttributes.schema(names.unsignedAttrs || {
 						names: {
 							blockName: "SignerInfo.unsignedAttrs",
 							tagNumber: 1
@@ -235,15 +240,12 @@ export default class SignerInfo
 
 		this.digestAlgorithm = new AlgorithmIdentifier({ schema: asn1.result["SignerInfo.digestAlgorithm"] });
 		if("SignerInfo.signedAttrs" in asn1.result)
-			this.signedAttrs = new SignedAndUnsignedAttributes({ schema: asn1.result["SignerInfo.signedAttrs"] });
+			this.signedAttrs = new SignedAndUnsignedAttributes({ type: 0, schema: asn1.result["SignerInfo.signedAttrs"]} );
+		
 		this.signatureAlgorithm = new AlgorithmIdentifier({ schema: asn1.result["SignerInfo.signatureAlgorithm"] });
 		this.signature = asn1.result["SignerInfo.signature"];
 		if("SignerInfo.unsignedAttrs" in asn1.result)
-		{
-			this.unsignedAttrs = new SignedAndUnsignedAttributes();
-			this.unsignedAttrs.type = 1; // Unsigned attributes
-			this.unsignedAttrs.fromSchema(asn1.result["SignerInfo.unsignedAttrs"]);
-		}
+			this.unsignedAttrs = new SignedAndUnsignedAttributes({ type: 1, schema: asn1.result["SignerInfo.unsignedAttrs"] });
 		//endregion
 	}
 	//**********************************************************************************
@@ -253,6 +255,9 @@ export default class SignerInfo
 	 */
 	toSchema()
 	{
+		if(SignerInfo.compareWithDefault("sid", this.sid))
+			throw new Error("Incorrectly initialized \"SignerInfo\" class");
+		
 		//region Create array for output sequence 
 		const outputArray = [];
 		
@@ -285,6 +290,9 @@ export default class SignerInfo
 	 */
 	toJSON()
 	{
+		if(SignerInfo.compareWithDefault("sid", this.sid))
+			throw new Error("Incorrectly initialized \"SignerInfo\" class");
+		
 		const _object = {
 			version: this.version
 		};

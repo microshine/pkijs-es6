@@ -10228,7 +10228,7 @@
 			 * @property {string} [blockName] Name for entire block
 			 * @property {string} [repeatedSequence] Name for "repeatedSequence" block
 			 * @property {string} [repeatedSet] Name for "repeatedSet" block
-			 * @property {string} [attrTypeAndValue] Name for "attrTypeAndValue" block
+			 * @property {string} [typeAndValue] Name for "typeAndValue" block
 			 */
 			const names = getParametersValue(parameters, "names", {});
 
@@ -10241,7 +10241,7 @@
 							value: [
 								new Repeated({
 									name: (names.repeatedSet || ""),
-									value: AttributeTypeAndValue.schema(names.attrTypeAndValue || {})
+									value: AttributeTypeAndValue.schema(names.typeAndValue || {})
 								})
 							]
 						})

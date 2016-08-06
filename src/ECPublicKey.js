@@ -1,5 +1,5 @@
 import * as asn1js from "asn1js";
-import { getParametersValue, utilConcatBuf, isEqualBuffer, toBase64, fromBase64, arrayBufferToString, stringToArrayBuffer } from "common";
+import { getParametersValue, utilConcatBuf, isEqualBuffer, toBase64, fromBase64, arrayBufferToString, stringToArrayBuffer } from "pvutils";
 //**************************************************************************************
 export default class ECPublicKey
 {

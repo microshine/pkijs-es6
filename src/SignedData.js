@@ -1,5 +1,6 @@
 import * as asn1js from "asn1js";
-import { getParametersValue } from "common";
+import { getParametersValue, utilConcatBuf, isEqualBuffer } from "pvutils";
+import { getCrypto, getOIDByAlgorithm, createCMSECDSASignature, getAlgorithmByOID, createECDSASignatureFromCMS, getAlgorithmParameters } from "common";
 import AlgorithmIdentifier from "AlgorithmIdentifier";
 import EncapsulatedContentInfo from "EncapsulatedContentInfo";
 import Certificate from "Certificate";
@@ -9,7 +10,6 @@ import OtherRevocationInfoFormat from "OtherRevocationInfoFormat";
 import SignerInfo from "SignerInfo";
 import CertificateSet from "CertificateSet";
 import RevocationInfoChoices from "RevocationInfoChoices";
-import { getCrypto, getOIDByAlgorithm, isEqualBuffer, createCMSECDSASignature, concatBuffers, getAlgorithmByOID, createECDSASignatureFromCMS, getAlgorithmParameters } from "common";
 import IssuerAndSerialNumber from "IssuerAndSerialNumber";
 import TSTInfo from "TSTInfo";
 import CertificateChainValidationEngine from "CertificateChainValidationEngine";
@@ -135,9 +135,12 @@ export default class SignedData
 		/**
 		 * @type {Object}
 		 * @property {string} [blockName]
-		 * @property {string} [type]
-		 * @property {string} [setName]
-		 * @property {string} [values]
+		 * @property {string} [optional]
+		 * @property {string} [digestAlgorithms]
+		 * @property {string} [encapContentInfo]
+		 * @property {string} [certificates]
+		 * @property {string} [crls]
+		 * @property {string} [signerInfos]
 		 */
 		const names = getParametersValue(parameters, "names", {});
 		
@@ -731,7 +734,7 @@ export default class SignedData
 					else
 					{
 						for(const contentValue of this.encapContentInfo.eContent.valueBlock.value)
-							data = asn1js.utilConcatBuf(data, contentValue.valueBlock.valueHex);
+							data = utilConcatBuf(data, contentValue.valueBlock.valueHex);
 					}
 				}
 				else
@@ -1163,7 +1166,7 @@ export default class SignedData
 					else
 					{
 						for(const content of this.encapContentInfo.eContent.valueBlock.value)
-							data = concatBuffers(data, content.valueBlock.valueHex);
+							data = utilConcatBuf(data, content.valueBlock.valueHex);
 					}
 				}
 				else

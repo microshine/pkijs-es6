@@ -1,5 +1,5 @@
 import * as asn1js from "asn1js";
-import { getParametersValue } from "common";
+import { getParametersValue } from "pvutils";
 import PKIStatusInfo from "PKIStatusInfo";
 import ContentInfo from "ContentInfo";
 import SignedData from "SignedData";

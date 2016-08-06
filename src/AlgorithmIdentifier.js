@@ -1,5 +1,5 @@
 import * as asn1js from "asn1js";
-import { getParametersValue } from "common";
+import { getParametersValue } from "pvutils";
 //**************************************************************************************
 export default class AlgorithmIdentifier
 {
@@ -46,7 +46,25 @@ export default class AlgorithmIdentifier
 			case "algorithmParams":
 				return new asn1js.Any();
 			default:
-				throw new Error(`Invalid member name for Attribute class: ${memberName}`);
+				throw new Error(`Invalid member name for AlgorithmIdentifier class: ${memberName}`);
+		}
+	}
+	//**********************************************************************************
+	/**
+	 * Compare values with default values for all class members
+	 * @param {string} memberName String name for a class member
+	 * @param {*} memberValue Value to compare with default value
+	 */
+	static compareWithDefault(memberName, memberValue)
+	{
+		switch(memberName)
+		{
+			case "algorithmId":
+				return (memberValue === "");
+			case "algorithmParams":
+				return (memberValue instanceof asn1js.Any);
+			default:
+				throw new Error(`Invalid member name for AlgorithmIdentifier class: ${memberName}`);
 		}
 	}
 	//**********************************************************************************

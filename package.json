@@ -10,6 +10,10 @@
       "name": "Ryan Hurst"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/PeculiarVenturess/PKI.js.git"
+  },
   "devDependencies": {
     "babel-preset-es2015-rollup": "^1.1.1",
     "rollup-plugin-babel": "^2.6.1",
@@ -17,7 +21,8 @@
     "rollup-plugin-node-resolve": "^1.7.1"
   },
   "dependencies": {
-    "asn1js": "^2.0.0"
+    "asn1js": "^2.0.0",
+    "pvutils": "^1.0.0"
   },
   "scripts": {
     "build": "babel src --compact=false --out-dir build --source-maps",
@@ -39,5 +44,6 @@
     "PKCS"
   ],
   "name": "pkijs",
-  "version": "2.0.1"
+  "version": "2.0.1",
+  "license": "MIT"
 }
