@@ -1,9 +1,9 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import RelativeDistinguishedNames from "RelativeDistinguishedNames";
-import SingleResponse from "SingleResponse";
-import Extension from "Extension";
-import Extensions from "Extensions";
+import RelativeDistinguishedNames from "pkijs/src/RelativeDistinguishedNames";
+import SingleResponse from "pkijs/src/SingleResponse";
+import Extension from "pkijs/src/Extension";
+import Extensions from "pkijs/src/Extensions";
 //**************************************************************************************
 export default class ResponseData
 {

@@ -1,7 +1,7 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import GeneralName from "GeneralName";
-import RelativeDistinguishedNames from "RelativeDistinguishedNames";
+import GeneralName from "pkijs/src/GeneralName";
+import RelativeDistinguishedNames from "pkijs/src/RelativeDistinguishedNames";
 //**************************************************************************************
 export default class IssuingDistributionPoint
 {

@@ -1,9 +1,9 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import { getCrypto } from "common";
-import AlgorithmIdentifier from "AlgorithmIdentifier";
-import ECPublicKey from "ECPublicKey";
-import RSAPublicKey from "RSAPublicKey";
+import { getCrypto } from "pkijs/src/common";
+import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
+import ECPublicKey from "pkijs/src/ECPublicKey";
+import RSAPublicKey from "pkijs/src/RSAPublicKey";
 //**************************************************************************************
 export default class PublicKeyInfo
 {

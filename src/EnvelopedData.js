@@ -1,25 +1,25 @@
 import * as asn1js from "asn1js";
 import { getParametersValue, utilConcatBuf } from "pvutils";
-import { getOIDByAlgorithm, getRandomValues, getCrypto, getAlgorithmByOID, kdf } from "common";
-import OriginatorInfo from "OriginatorInfo";
-import RecipientInfo from "RecipientInfo";
-import EncryptedContentInfo from "EncryptedContentInfo";
-import Attribute from "Attribute";
-import AlgorithmIdentifier from "AlgorithmIdentifier";
-import RSAESOAEPParams from "RSAESOAEPParams";
-import KeyTransRecipientInfo from "KeyTransRecipientInfo";
-import IssuerAndSerialNumber from "IssuerAndSerialNumber";
-import RecipientEncryptedKey from "RecipientEncryptedKey";
-import KeyAgreeRecipientIdentifier from "KeyAgreeRecipientIdentifier";
-import KeyAgreeRecipientInfo from "KeyAgreeRecipientInfo";
-import RecipientEncryptedKeys from "RecipientEncryptedKeys";
-import KEKRecipientInfo from "KEKRecipientInfo";
-import KEKIdentifier from "KEKIdentifier";
-import PBKDF2Params from "PBKDF2Params";
-import PasswordRecipientinfo from "PasswordRecipientinfo";
-import ECCCMSSharedInfo from "ECCCMSSharedInfo";
-import OriginatorIdentifierOrKey from "OriginatorIdentifierOrKey";
-import OriginatorPublicKey from "OriginatorPublicKey";
+import { getOIDByAlgorithm, getRandomValues, getCrypto, getAlgorithmByOID, kdf } from "pkijs/src/common";
+import OriginatorInfo from "pkijs/src/OriginatorInfo";
+import RecipientInfo from "pkijs/src/RecipientInfo";
+import EncryptedContentInfo from "pkijs/src/EncryptedContentInfo";
+import Attribute from "pkijs/src/Attribute";
+import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
+import RSAESOAEPParams from "pkijs/src/RSAESOAEPParams";
+import KeyTransRecipientInfo from "pkijs/src/KeyTransRecipientInfo";
+import IssuerAndSerialNumber from "pkijs/src/IssuerAndSerialNumber";
+import RecipientEncryptedKey from "pkijs/src/RecipientEncryptedKey";
+import KeyAgreeRecipientIdentifier from "pkijs/src/KeyAgreeRecipientIdentifier";
+import KeyAgreeRecipientInfo from "pkijs/src/KeyAgreeRecipientInfo";
+import RecipientEncryptedKeys from "pkijs/src/RecipientEncryptedKeys";
+import KEKRecipientInfo from "pkijs/src/KEKRecipientInfo";
+import KEKIdentifier from "pkijs/src/KEKIdentifier";
+import PBKDF2Params from "pkijs/src/PBKDF2Params";
+import PasswordRecipientinfo from "pkijs/src/PasswordRecipientinfo";
+import ECCCMSSharedInfo from "pkijs/src/ECCCMSSharedInfo";
+import OriginatorIdentifierOrKey from "pkijs/src/OriginatorIdentifierOrKey";
+import OriginatorPublicKey from "pkijs/src/OriginatorPublicKey";
 //**************************************************************************************
 export default class EnvelopedData
 {
@@ -310,23 +310,16 @@ export default class EnvelopedData
 	addRecipientByCertificate(certificate, parameters, variant)
 	{
 		//region Initial variables 
-		let certificateType = 0;
 		const encryptionParameters = parameters || {};
 		//endregion 
 		
 		//region Check type of certificate
 		if(certificate.subjectPublicKeyInfo.algorithm.algorithmId.indexOf("1.2.840.113549") !== (-1))
-		{
-			certificateType = 1; // RSA-based certificate
 			variant = 1; // For the moment it is the only variant for RSA-based certificates
-		}
 		else
 		{
 			if(certificate.subjectPublicKeyInfo.algorithm.algorithmId.indexOf("1.2.840.10045") !== (-1))
-			{
-				certificateType = 2; // ECC-based certificate
 				variant = 2; // For the moment it is the only variant for ECC-based certificates
-			}
 			else
 				throw new Error(`Unknown type of certificate's public key: ${certificate.subjectPublicKeyInfo.algorithm.algorithmId}`);
 		}

@@ -1,13 +1,13 @@
 import * as asn1js from "asn1js";
 import { getParametersValue, isEqualBuffer } from "pvutils";
-import { getAlgorithmByOID, getOIDByAlgorithm, getAlgorithmParameters, getCrypto, createECDSASignatureFromCMS, getHashAlgorithm, createCMSECDSASignature } from "common";
-import ResponseData from "ResponseData";
-import AlgorithmIdentifier from "AlgorithmIdentifier";
-import Certificate from "Certificate";
-import CertID from "CertID";
-import RSASSAPSSParams from "RSASSAPSSParams";
-import RelativeDistinguishedNames from "RelativeDistinguishedNames";
-import CertificateChainValidationEngine from "CertificateChainValidationEngine";
+import { getAlgorithmByOID, getOIDByAlgorithm, getAlgorithmParameters, getCrypto, createECDSASignatureFromCMS, getHashAlgorithm, createCMSECDSASignature } from "pkijs/src/common";
+import ResponseData from "pkijs/src/ResponseData";
+import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
+import Certificate from "pkijs/src/Certificate";
+import CertID from "pkijs/src/CertID";
+import RSASSAPSSParams from "pkijs/src/RSASSAPSSParams";
+import RelativeDistinguishedNames from "pkijs/src/RelativeDistinguishedNames";
+import CertificateChainValidationEngine from "pkijs/src/CertificateChainValidationEngine";
 //**************************************************************************************
 export default class BasicOCSPResponse
 {
@@ -603,8 +603,6 @@ export default class BasicOCSPResponse
 					certs: additionalCerts,
 					trustedCerts
 				});
-				if("crls" in this)
-					certChain.crls = this.crls;
 
 				return certChain.verify().then(verificationResult => {
 					if(verificationResult.result === true)

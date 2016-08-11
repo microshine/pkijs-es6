@@ -1,7 +1,7 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import Time from "Time";
-import Extensions from "Extensions";
+import Time from "pkijs/src/Time";
+import Extensions from "pkijs/src/Extensions";
 //**************************************************************************************
 export default class RevokedCertificate
 {

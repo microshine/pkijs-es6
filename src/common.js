@@ -1,7 +1,8 @@
 import * as asn1js from "asn1js";
-import AlgorithmIdentifier from "AlgorithmIdentifier";
-import RSASSAPSSParams from "RSASSAPSSParams";
-import CryptoEngine from "CryptoEngine";
+import { utilConcatBuf } from "pvutils";
+import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
+import RSASSAPSSParams from "pkijs/src/RSASSAPSSParams";
+import CryptoEngine from "pkijs/src/CryptoEngine";
 //**************************************************************************************
 //region Crypto engine related function
 //**************************************************************************************
@@ -32,6 +33,11 @@ export function getEngine()
 		if("crypto" in window)
 		{
 			const engineName = "webcrypto";
+			/**
+			 * Standard crypto object
+			 * @type {Object}
+			 * @property {Object} [webkitSubtle] Subtle object from Apple
+			 */
 			const cryptoObject = window.crypto;
 			let subtleObject = null;
 
@@ -873,7 +879,7 @@ export function createECDSASignatureFromCMS(cmsSignature)
 	const rBuffer = transformInteger(cmsSignature.valueBlock.value[0]);
 	const sBuffer = transformInteger(cmsSignature.valueBlock.value[1]);
 	
-	return concatBuffers(rBuffer, sBuffer);
+	return utilConcatBuf(rBuffer, sBuffer);
 }
 //**************************************************************************************
 /**
@@ -1205,9 +1211,9 @@ export function kdfWithCounter(hashFunction, Zbuffer, Counter, SharedInfo)
 	//endregion
 
 	//region Create a combined ArrayBuffer for digesting
-	combinedBuffer = concatBuffers(combinedBuffer, Zbuffer);
-	combinedBuffer = concatBuffers(combinedBuffer, counterBuffer);
-	combinedBuffer = concatBuffers(combinedBuffer, SharedInfo);
+	combinedBuffer = utilConcatBuf(combinedBuffer, Zbuffer);
+	combinedBuffer = utilConcatBuf(combinedBuffer, counterBuffer);
+	combinedBuffer = utilConcatBuf(combinedBuffer, SharedInfo);
 	//endregion
 
 	//region Return digest of combined ArrayBuffer and information about current counter
@@ -1303,7 +1309,7 @@ export function kdf(hashFunction, Zbuffer, keydatalen, SharedInfo)
 			{
 				if(result.counter === currentCounter)
 				{
-					combinedBuffer = concatBuffers(combinedBuffer, result.result);
+					combinedBuffer = utilConcatBuf(combinedBuffer, result.result);
 					found = true;
 					break;
 				}

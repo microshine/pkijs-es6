@@ -1,7 +1,7 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import ResponseBytes from "ResponseBytes";
-import BasicOCSPResponse from "BasicOCSPResponse";
+import ResponseBytes from "pkijs/src/ResponseBytes";
+import BasicOCSPResponse from "pkijs/src/BasicOCSPResponse";
 //**************************************************************************************
 export default class OCSPResponse
 {

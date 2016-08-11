@@ -1,6 +1,6 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import GeneralSubtree from "GeneralSubtree";
+import GeneralSubtree from "pkijs/src/GeneralSubtree";
 //**************************************************************************************
 export default class NameConstraints
 {

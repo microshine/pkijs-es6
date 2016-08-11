@@ -1,6 +1,6 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import AccessDescription from "AccessDescription";
+import AccessDescription from "pkijs/src/AccessDescription";
 //**************************************************************************************
 export default class InfoAccess
 {

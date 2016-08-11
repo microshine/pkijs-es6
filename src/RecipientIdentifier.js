@@ -1,6 +1,6 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import IssuerAndSerialNumber from "IssuerAndSerialNumber";
+import IssuerAndSerialNumber from "pkijs/src/IssuerAndSerialNumber";
 //**************************************************************************************
 export default class RecipientIdentifier
 {

@@ -1,6 +1,6 @@
 import * as asn1js from "asn1js";
 import { getParametersValue, isEqualBuffer } from "pvutils";
-import AttributeTypeAndValue from "AttributeTypeAndValue";
+import AttributeTypeAndValue from "pkijs/src/AttributeTypeAndValue";
 //**************************************************************************************
 export default class RelativeDistinguishedNames
 {

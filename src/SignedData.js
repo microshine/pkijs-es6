@@ -1,20 +1,20 @@
 import * as asn1js from "asn1js";
 import { getParametersValue, utilConcatBuf, isEqualBuffer } from "pvutils";
-import { getCrypto, getOIDByAlgorithm, createCMSECDSASignature, getAlgorithmByOID, createECDSASignatureFromCMS, getAlgorithmParameters } from "common";
-import AlgorithmIdentifier from "AlgorithmIdentifier";
-import EncapsulatedContentInfo from "EncapsulatedContentInfo";
-import Certificate from "Certificate";
-import OtherCertificateFormat from "OtherCertificateFormat";
-import CertificateRevocationList from "CertificateRevocationList";
-import OtherRevocationInfoFormat from "OtherRevocationInfoFormat";
-import SignerInfo from "SignerInfo";
-import CertificateSet from "CertificateSet";
-import RevocationInfoChoices from "RevocationInfoChoices";
-import IssuerAndSerialNumber from "IssuerAndSerialNumber";
-import TSTInfo from "TSTInfo";
-import CertificateChainValidationEngine from "CertificateChainValidationEngine";
-import BasicOCSPResponse from "BasicOCSPResponse";
-import RSASSAPSSParams from "RSASSAPSSParams";
+import { getCrypto, getOIDByAlgorithm, createCMSECDSASignature, getAlgorithmByOID, createECDSASignatureFromCMS, getAlgorithmParameters } from "pkijs/src/common";
+import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
+import EncapsulatedContentInfo from "pkijs/src/EncapsulatedContentInfo";
+import Certificate from "pkijs/src/Certificate";
+import OtherCertificateFormat from "pkijs/src/OtherCertificateFormat";
+import CertificateRevocationList from "pkijs/src/CertificateRevocationList";
+import OtherRevocationInfoFormat from "pkijs/src/OtherRevocationInfoFormat";
+import SignerInfo from "pkijs/src/SignerInfo";
+import CertificateSet from "pkijs/src/CertificateSet";
+import RevocationInfoChoices from "pkijs/src/RevocationInfoChoices";
+import IssuerAndSerialNumber from "pkijs/src/IssuerAndSerialNumber";
+import TSTInfo from "pkijs/src/TSTInfo";
+import CertificateChainValidationEngine from "pkijs/src/CertificateChainValidationEngine";
+import BasicOCSPResponse from "pkijs/src/BasicOCSPResponse";
+import RSASSAPSSParams from "pkijs/src/RSASSAPSSParams";
 //**************************************************************************************
 export default class SignedData 
 {

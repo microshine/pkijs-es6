@@ -1,7 +1,7 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import IssuerAndSerialNumber from "IssuerAndSerialNumber";
-import OriginatorPublicKey from "OriginatorPublicKey";
+import IssuerAndSerialNumber from "pkijs/src/IssuerAndSerialNumber";
+import OriginatorPublicKey from "pkijs/src/OriginatorPublicKey";
 //**************************************************************************************
 export default class OriginatorIdentifierOrKey 
 {

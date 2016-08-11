@@ -1,8 +1,8 @@
 import { getParametersValue, isEqualBuffer } from "pvutils";
-import { getAlgorithmByOID, stringPrep } from "common";
-import CertificateRevocationList from "CertificateRevocationList";
-import Certificate from "Certificate";
-import generatorsDriver from "GeneratorsDriver";
+import { getAlgorithmByOID, stringPrep } from "pkijs/src/common";
+import CertificateRevocationList from "pkijs/src/CertificateRevocationList";
+import Certificate from "pkijs/src/Certificate";
+import generatorsDriver from "pkijs/src/GeneratorsDriver";
 //**************************************************************************************
 export default class CertificateChainValidationEngine
 {

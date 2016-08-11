@@ -1,13 +1,13 @@
 import * as asn1js from "asn1js";
 import { getParametersValue, bufferToHexCodes } from "pvutils";
-import { getOIDByAlgorithm,  getAlgorithmParameters, getCrypto, getAlgorithmByOID, createECDSASignatureFromCMS, createCMSECDSASignature, getHashAlgorithm } from "common";
-import AlgorithmIdentifier from "AlgorithmIdentifier";
-import RelativeDistinguishedNames from "RelativeDistinguishedNames";
-import Time from "Time";
-import RevokedCertificate from "RevokedCertificate";
-import Extensions from "Extensions";
-import RSASSAPSSParams from "RSASSAPSSParams";
-import PublicKeyInfo from "PublicKeyInfo";
+import { getOIDByAlgorithm,  getAlgorithmParameters, getCrypto, getAlgorithmByOID, createECDSASignatureFromCMS, createCMSECDSASignature, getHashAlgorithm } from "pkijs/src/common";
+import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
+import RelativeDistinguishedNames from "pkijs/src/RelativeDistinguishedNames";
+import Time from "pkijs/src/Time";
+import RevokedCertificate from "pkijs/src/RevokedCertificate";
+import Extensions from "pkijs/src/Extensions";
+import RSASSAPSSParams from "pkijs/src/RSASSAPSSParams";
+import PublicKeyInfo from "pkijs/src/PublicKeyInfo";
 //**************************************************************************************
 function tbsCertList(parameters = {})
 {

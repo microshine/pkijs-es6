@@ -1,11 +1,11 @@
 import * as asn1js from "asn1js";
 import { getParametersValue, bufferToHexCodes } from "pvutils";
-import { getOIDByAlgorithm, getAlgorithmParameters, getCrypto, createCMSECDSASignature, getHashAlgorithm, getAlgorithmByOID, createECDSASignatureFromCMS } from "common";
-import PublicKeyInfo from "PublicKeyInfo";
-import RelativeDistinguishedNames from "RelativeDistinguishedNames";
-import AlgorithmIdentifier from "AlgorithmIdentifier";
-import Attribute from "Attribute";
-import RSASSAPSSParams from "RSASSAPSSParams";
+import { getOIDByAlgorithm, getAlgorithmParameters, getCrypto, createCMSECDSASignature, getHashAlgorithm, getAlgorithmByOID, createECDSASignatureFromCMS } from "pkijs/src/common";
+import PublicKeyInfo from "pkijs/src/PublicKeyInfo";
+import RelativeDistinguishedNames from "pkijs/src/RelativeDistinguishedNames";
+import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
+import Attribute from "pkijs/src/Attribute";
+import RSASSAPSSParams from "pkijs/src/RSASSAPSSParams";
 //**************************************************************************************
 function CertificationRequestInfo(parameters = {})
 {

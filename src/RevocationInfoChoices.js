@@ -1,7 +1,7 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import CertificateRevocationList from "CertificateRevocationList";
-import OtherRevocationInfoFormat from "OtherRevocationInfoFormat";
+import CertificateRevocationList from "pkijs/src/CertificateRevocationList";
+import OtherRevocationInfoFormat from "pkijs/src/OtherRevocationInfoFormat";
 //**************************************************************************************
 export default class RevocationInfoChoices
 {

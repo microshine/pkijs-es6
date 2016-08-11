@@ -1,9 +1,9 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import GeneralName from "GeneralName";
-import Request from "Request";
-import Extension from "Extension";
-import Extensions from "Extensions";
+import GeneralName from "pkijs/src/GeneralName";
+import Request from "pkijs/src/Request";
+import Extension from "pkijs/src/Extension";
+import Extensions from "pkijs/src/Extensions";
 //**************************************************************************************
 export default class TBSRequest
 {

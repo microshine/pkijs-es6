@@ -1,6 +1,6 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import OtherKeyAttribute from "OtherKeyAttribute";
+import OtherKeyAttribute from "pkijs/src/OtherKeyAttribute";
 //**************************************************************************************
 export default class KEKIdentifier
 {

@@ -1,9 +1,9 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import AlgorithmIdentifier from "AlgorithmIdentifier";
-import Certificate from "Certificate";
-import RecipientIdentifier from "RecipientIdentifier";
-import IssuerAndSerialNumber from "IssuerAndSerialNumber";
+import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
+import Certificate from "pkijs/src/Certificate";
+import RecipientIdentifier from "pkijs/src/RecipientIdentifier";
+import IssuerAndSerialNumber from "pkijs/src/IssuerAndSerialNumber";
 //**************************************************************************************
 export default class KeyTransRecipientInfo
 {

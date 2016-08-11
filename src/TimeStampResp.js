@@ -1,8 +1,8 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import PKIStatusInfo from "PKIStatusInfo";
-import ContentInfo from "ContentInfo";
-import SignedData from "SignedData";
+import PKIStatusInfo from "pkijs/src/PKIStatusInfo";
+import ContentInfo from "pkijs/src/ContentInfo";
+import SignedData from "pkijs/src/SignedData";
 //**************************************************************************************
 export default class TimeStampResp
 {

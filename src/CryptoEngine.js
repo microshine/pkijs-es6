@@ -1,7 +1,7 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import PublicKeyInfo from "PublicKeyInfo";
-import PrivateKeyInfo from "PrivateKeyInfo";
+import PublicKeyInfo from "pkijs/src/PublicKeyInfo";
+import PrivateKeyInfo from "pkijs/src/PrivateKeyInfo";
 //**************************************************************************************
 export default class CryptoEngine
 {

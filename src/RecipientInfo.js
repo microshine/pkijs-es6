@@ -1,10 +1,10 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import KeyTransRecipientInfo from "KeyTransRecipientInfo";
-import KeyAgreeRecipientInfo from "KeyAgreeRecipientInfo";
-import KEKRecipientInfo from "KEKRecipientInfo";
-import PasswordRecipientinfo from "PasswordRecipientinfo";
-import OtherRecipientInfo from "OtherRecipientInfo";
+import KeyTransRecipientInfo from "pkijs/src/KeyTransRecipientInfo";
+import KeyAgreeRecipientInfo from "pkijs/src/KeyAgreeRecipientInfo";
+import KEKRecipientInfo from "pkijs/src/KEKRecipientInfo";
+import PasswordRecipientinfo from "pkijs/src/PasswordRecipientinfo";
+import OtherRecipientInfo from "pkijs/src/OtherRecipientInfo";
 //**************************************************************************************
 export default class RecipientInfo
 {
