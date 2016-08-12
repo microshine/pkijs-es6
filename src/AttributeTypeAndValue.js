@@ -180,6 +180,8 @@ export default class AttributeTypeAndValue
 				if(isEqualBuffer(this.value.valueBeforeDecode, compareTo.value.valueBeforeDecode) === false)
 					return false;
 			}
+			
+			return true;
 		}
 		
 		if(compareTo instanceof ArrayBuffer)
