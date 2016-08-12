@@ -1,5 +1,6 @@
 import * as asn1js from "asn1js";
-import { getParametersValue } from "pvutils";
+import { getParametersValue, isEqualBuffer } from "pvutils";
+import { stringPrep } from "pkijs/src/common";
 //**************************************************************************************
 export default class AttributeTypeAndValue
 {
@@ -141,6 +142,50 @@ export default class AttributeTypeAndValue
 			_object.value = this.value;
 
 		return _object;
+	}
+	//**********************************************************************************
+	/**
+	 * Compare two AttributeTypeAndValue values, or AttributeTypeAndValue with ArrayBuffer value
+	 * @param {(AttributeTypeAndValue|ArrayBuffer)} compareTo The value compare to current
+	 * @returns {boolean}
+	 */
+	isEqual(compareTo)
+	{
+		if(compareTo instanceof AttributeTypeAndValue)
+		{
+			if(this.type !== compareTo.type)
+				return false;
+			
+			if(((this.value instanceof asn1js.Utf8String) && (compareTo.value instanceof asn1js.Utf8String)) ||
+				((this.value instanceof asn1js.BmpString) && (compareTo.value instanceof asn1js.BmpString)) ||
+				((this.value instanceof asn1js.UniversalString) && (compareTo.value instanceof asn1js.UniversalString)) ||
+				((this.value instanceof asn1js.NumericString) && (compareTo.value instanceof asn1js.NumericString)) ||
+				((this.value instanceof asn1js.PrintableString) && (compareTo.value instanceof asn1js.PrintableString)) ||
+				((this.value instanceof asn1js.TeletexString) && (compareTo.value instanceof asn1js.TeletexString)) ||
+				((this.value instanceof asn1js.VideotexString) && (compareTo.value instanceof asn1js.VideotexString)) ||
+				((this.value instanceof asn1js.IA5String) && (compareTo.value instanceof asn1js.IA5String)) ||
+				((this.value instanceof asn1js.GraphicString) && (compareTo.value instanceof asn1js.GraphicString)) ||
+				((this.value instanceof asn1js.VisibleString) && (compareTo.value instanceof asn1js.VisibleString)) ||
+				((this.value instanceof asn1js.GeneralString) && (compareTo.value instanceof asn1js.GeneralString)) ||
+				((this.value instanceof asn1js.CharacterString) && (compareTo.value instanceof asn1js.CharacterString)))
+			{
+				var value1 = stringPrep(this.value.valueBlock.value);
+				var value2 = stringPrep(compareTo.value.valueBlock.value);
+				
+				if(value1.localeCompare(value2) !== 0)
+					return false;
+			}
+			else // Comparing as two ArrayBuffers
+			{
+				if(isEqualBuffer(this.value.valueBeforeDecode, compareTo.value.valueBeforeDecode) === false)
+					return false;
+			}
+		}
+		
+		if(compareTo instanceof ArrayBuffer)
+			return isEqualBuffer(this.value.valueBeforeDecode, compareTo);
+
+		return false;
 	}
 	//**********************************************************************************
 }
