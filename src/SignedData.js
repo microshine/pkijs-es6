@@ -884,6 +884,19 @@ export default class SignedData
 		
 		//region Verify signer's signature 
 		sequence = sequence.then(result => {
+			// #region Veify result of previous operation
+			if(typeof result == "boolean")
+				return false;
+			// #endregion
+			
+			publicKey = result;
+			
+			// #region Verify "message-digest" attribute in case of "signedAttrs"
+			if("signedAttrs" in this.signerInfos[signer])
+				return crypto.digest(shaAlgorithm, new Uint8Array(data));
+			
+			return true;
+			// #endregion
 		}).then(result => {
 			if("signedAttrs" in this.signerInfos[signer])
 			{
