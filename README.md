@@ -26,6 +26,7 @@ In the new version of library we have some new features:
 In order to make it easier to move from PKIjs 1.0 code to PKIjs 2.0 code we made [special file with name mapping](MAPPING.MD).
 
 ## Examples
+### Parse a X.509 certificate
 
 ```javascript
     // #region Parsing raw data as a X.509 certificate object
@@ -34,6 +35,7 @@ In order to make it easier to move from PKIjs 1.0 code to PKIjs 2.0 code we made
     // #endregion
 ```
 
+### Create a X.509 certificate
 ```javascript
     // #region Creation of a new X.509 certificate
     certificate.serialNumber = new asn1js.Integer({ value: 1 });
@@ -91,7 +93,7 @@ In order to make it easier to move from PKIjs 1.0 code to PKIjs 2.0 code we made
     // #endregion 
     // #endregion 
 ```
-
+### Create signed CMS message
 ```javascript
     // #region Creation of a new CMS Signed Data 
     cmsSigned = new SignedData({
@@ -115,13 +117,13 @@ In order to make it easier to move from PKIjs 1.0 code to PKIjs 2.0 code we made
 
 ```
 
-More examples could be found in [**"examples" folder**](https://github.com/GlobalSign/PKI.js/tree/master/examples). Live example can be found at [pkijs.org](https://pkijs.org).
+More examples could be found in [**"examples" folder**](https://github.com/PeculiarVentures/PKI.js/tree/master/examples). Live example can be found at [pkijs.org](https://pkijs.org).
 
 ## Limitations
 
 * Does not work with Internet Explorer's implementation of Web Cryptography API it is based on a old draft and also does not support all needed capabilities.
 * Does not work with PolyCrypt it is based on a old version of Web Cryptography API and is buggy.
-* You can use [PKIjs][] in almost all browsers. Please check [this page](http://caniuse.com/#feat=cryptography) for information about Web Cryptography API browser support.
+* You can use PKIjs in almost all browsers. Please check [this page](http://caniuse.com/#feat=cryptography) for information about Web Cryptography API browser support.
 
 ## Suitability
 At this time this library should be considered suitable for research and experimentation, futher code and security review is needed before utilization in a production application.
