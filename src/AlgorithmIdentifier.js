@@ -1,6 +1,9 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
 //**************************************************************************************
+/**
+ * Class from RFC5280
+ */
 export default class AlgorithmIdentifier
 {
 	//**********************************************************************************

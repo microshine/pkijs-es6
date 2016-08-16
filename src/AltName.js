@@ -2,6 +2,9 @@ import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
 import GeneralName from "pkijs/src/GeneralName";
 //**************************************************************************************
+/**
+ * Class from RFC5280
+ */
 export default class AltName
 {
 	//**********************************************************************************

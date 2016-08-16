@@ -111,7 +111,7 @@ export default class PrivateKeyInfo
 			name: (names.blockName || ""),
 			value: [
 				new asn1js.Integer({ name: (names.version || "") }),
-				AlgorithmIdentifier.schema(names.privateKeyAlgorithm || ""),
+				AlgorithmIdentifier.schema(names.privateKeyAlgorithm || {}),
 				new asn1js.OctetString({ name: (names.privateKey || "") }),
 				new asn1js.Constructed({
 					optional: true,

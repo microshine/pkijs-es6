@@ -1,6 +1,9 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
 //**************************************************************************************
+/**
+ * Class from RFC3161
+ */
 export default class Accuracy
 {
 	//**********************************************************************************

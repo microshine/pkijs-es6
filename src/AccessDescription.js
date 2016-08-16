@@ -2,6 +2,9 @@ import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
 import GeneralName from "pkijs/src/GeneralName";
 //**************************************************************************************
+/**
+ * Class from RFC5280
+ */
 export default class AccessDescription
 {
 	//**********************************************************************************
@@ -71,7 +74,7 @@ export default class AccessDescription
 			name: (names.blockName || ""),
 			value: [
 				new asn1js.ObjectIdentifier({ name: (names.accessMethod || "") }),
-				GeneralName.schema(names.accessLocation || "")
+				GeneralName.schema(names.accessLocation || {})
 			]
 		}));
 	}
