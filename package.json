@@ -21,7 +21,7 @@
     "rollup-plugin-node-resolve": "^1.7.1"
   },
   "dependencies": {
-    "asn1js": "^2.0.0",
+    "asn1js": "https://github.com/PeculiarVentures/asn1js-es6",
     "pvutils": "^1.0.0"
   },
   "scripts": {
