@@ -1,6 +1,5 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import RevocationInfoArchival from "pkijs/src/RevocationInfoArchival";
 //**************************************************************************************
 export default class Attribute
 {
@@ -128,16 +127,6 @@ export default class Attribute
 		//region Get internal properties from parsed schema
 		this.type = asn1.result.type.valueBlock.toString();
 		this.values = asn1.result.values;
-		
-		//region Get "parsedValue" for well-known attributes
-		switch(this.type)
-		{
-			case "1.2.840.113583.1.1.8": // Adobe "RevocationInfoArchival"
-				this.parsedValue = new in_window.org.pkijs.simpl.cades.RevocationInfoArchival({ schema: this.attrValues[0] });
-				break;
-			default:;
-		}
-		//endregion
 		//endregion
 	}
 	//**********************************************************************************
