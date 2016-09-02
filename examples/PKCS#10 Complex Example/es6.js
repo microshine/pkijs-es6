@@ -13,26 +13,26 @@ import { getCrypto, getAlgorithmParameters } from "pkijs/src/common";
 //*********************************************************************************
 // #region Auxiliary functions
 //*********************************************************************************
-export function formatPEM(pem_string)
+export function formatPEM(pemString)
 {
   /// <summary>Format string in order to have each line with length equal to 63</summary>
-  /// <param name="pem_string" type="String">String to format</param>
+  /// <param name="pemString" type="String">String to format</param>
 
-  var string_length = pem_string.length;
-  var result_string = "";
+  const stringLength = pemString.length;
+  let resultString = "";
 
-  for(var i = 0, count = 0; i < string_length; i++, count++)
+  for(let i = 0, count = 0; i < stringLength; i++, count++)
   {
     if(count > 63)
     {
-      result_string = result_string + "\r\n";
+      resultString = resultString + "\r\n";
       count = 0;
     }
 
-    result_string = result_string + pem_string[i];
+    resultString = resultString + pemString[i];
   }
 
-  return result_string;
+  return resultString;
 }
 //*********************************************************************************
 export function arrayBufferToString(buffer)
@@ -40,13 +40,13 @@ export function arrayBufferToString(buffer)
   /// <summary>Create a string from ArrayBuffer</summary>
   /// <param name="buffer" type="ArrayBuffer">ArrayBuffer to create a string from</param>
 
-  var result_string = "";
-  var view = new Uint8Array(buffer);
+  let resultString = "";
+  let view = new Uint8Array(buffer);
 
-  for(var i = 0; i < view.length; i++)
-    result_string = result_string + String.fromCharCode(view[i]);
+  for(let i = 0; i < view.length; i++)
+    resultString = resultString + String.fromCharCode(view[i]);
 
-  return result_string;
+  return resultString;
 }
 //*********************************************************************************
 export function stringToArrayBuffer(str)
@@ -54,12 +54,12 @@ export function stringToArrayBuffer(str)
   /// <summary>Create an ArrayBuffer from string</summary>
   /// <param name="str" type="String">String to create ArrayBuffer from</param>
 
-  var stringLength = str.length;
+  const stringLength = str.length;
 
-  var resultBuffer = new ArrayBuffer(stringLength);
-  var resultView = new Uint8Array(resultBuffer);
+  let resultBuffer = new ArrayBuffer(stringLength);
+  let resultView = new Uint8Array(resultBuffer);
 
-  for(var i = 0; i < stringLength; i++)
+  for(let i = 0; i < stringLength; i++)
     resultView[i] = str.charCodeAt(i);
 
   return resultBuffer;
@@ -72,15 +72,15 @@ export function stringToArrayBuffer(str)
 export function create_PKCS10()
 {
   // #region Initial variables
-  var sequence = Promise.resolve();
+  let sequence = Promise.resolve();
 
-  var pkcs10 = new CertificationRequest();
+  const pkcs10 = new CertificationRequest();
 
-  var publicKey;
-  var privateKey;
+  let publicKey;
+  let privateKey;
 
-  var hashAlgorithm;
-  var hashOption = document.getElementById("hashAlg").value;
+  let hashAlgorithm;
+  const hashOption = document.getElementById("hashAlg").value;
   switch(hashOption)
   {
     case "alg_SHA1":
@@ -98,8 +98,8 @@ export function create_PKCS10()
     default:;
   }
 
-  var signatureAlgorithmName;
-  var signOption = document.getElementById("signAlg").value;
+  let signatureAlgorithmName;
+  const signOption = document.getElementById("signAlg").value;
   switch(signOption)
   {
     case "alg_RSA15":
@@ -116,7 +116,7 @@ export function create_PKCS10()
   // #endregion
 
   // #region Get a "crypto" extension
-  var crypto = getCrypto();
+  const crypto = getCrypto();
   if(typeof crypto == "undefined")
   {
     alert("No WebCrypto extension found");
@@ -132,11 +132,9 @@ export function create_PKCS10()
   // #endregion
 
   // #region Create a new key pair
-  sequence = sequence.then(
-    function()
-    {
+  sequence = sequence.then(() => {
       // #region Get default algorithm parameters for key generation
-      var algorithm = getAlgorithmParameters(signatureAlgorithmName, "generatekey");
+      const algorithm = getAlgorithmParameters(signatureAlgorithmName, "generatekey");
       if("hash" in algorithm.algorithm)
         algorithm.algorithm.hash.name = hashAlgorithm;
       // #endregion
@@ -147,9 +145,7 @@ export function create_PKCS10()
   // #endregion
 
   // #region Store new key in an interim variables
-  sequence = sequence.then(
-    function(keyPair)
-    {
+  sequence = sequence.then(keyPair => {
       publicKey = keyPair.publicKey;
       privateKey = keyPair.privateKey;
     },
@@ -161,23 +157,17 @@ export function create_PKCS10()
   // #endregion
 
   // #region Exporting public key into "subjectPublicKeyInfo" value of PKCS#10
-  sequence = sequence.then(
-    function()
-    {
+  sequence = sequence.then(() => {
       return pkcs10.subjectPublicKeyInfo.importKey(publicKey);
     }
   );
   // #endregion
 
   // #region SubjectKeyIdentifier
-  sequence = sequence.then(
-    function(result)
-    {
+  sequence = sequence.then(() => {
       return crypto.digest({ name: "SHA-1" }, pkcs10.subjectPublicKeyInfo.subjectPublicKey.valueBlock.valueHex);
     }
-  ).then(
-    function(result)
-    {
+  ).then(result => {
       pkcs10.attributes.push(new Attribute({
         type: "1.2.840.113549.1.9.14", // pkcs-9-at-extensionRequest
         values: [(new Extensions({
@@ -195,32 +185,24 @@ export function create_PKCS10()
   // #endregion
 
   // #region Signing final PKCS#10 request
-  sequence = sequence.then(
-    function()
-    {
+  sequence = sequence.then(() => {
       return pkcs10.sign(privateKey, hashAlgorithm);
-    },
-    function(error)
-    {
+    }, error => {
       alert("Error during exporting public key: " + error);
     }
   );
   // #endregion
 
-  sequence.then(
-    function(result)
-    {
-      var pkcs10Schema = pkcs10.toSchema();
-      var pkcs10Encoded = pkcs10Schema.toBER(false);
+  sequence.then(() => {
+      const pkcs10Schema = pkcs10.toSchema();
+      const pkcs10Encoded = pkcs10Schema.toBER(false);
 
-      var result_string = "-----BEGIN CERTIFICATE REQUEST-----\r\n";
-      result_string = result_string + formatPEM(window.btoa(arrayBufferToString(pkcs10Encoded)));
-      result_string = result_string + "\r\n-----END CERTIFICATE REQUEST-----\r\n";
+      let resultString = "-----BEGIN CERTIFICATE REQUEST-----\r\n";
+      resultString = resultString + formatPEM(window.btoa(arrayBufferToString(pkcs10Encoded)));
+      resultString = resultString + "\r\n-----END CERTIFICATE REQUEST-----\r\n";
 
-      document.getElementById("pem-text-block").value = result_string;
-    },
-    function(error)
-    {
+      document.getElementById("pem-text-block").value = resultString;
+    }, error => {
       alert("Error signing PKCS#10: " + error);
     }
   );
@@ -241,14 +223,14 @@ export function parse_PKCS10()
   // #endregion
 
   // #region Decode existing PKCS#10
-  var stringPEM = document.getElementById("pem-text-block").value.replace(/(-----(BEGIN|END) CERTIFICATE REQUEST-----|\n)/g, '');
+  const stringPEM = document.getElementById("pem-text-block").value.replace(/(-----(BEGIN|END) CERTIFICATE REQUEST-----|\n)/g, '');
 
-  var asn1 = asn1js.fromBER(stringToArrayBuffer(window.atob(stringPEM)));
-  var pkcs10 = new CertificationRequest({ schema: asn1.result });
+  const asn1 = asn1js.fromBER(stringToArrayBuffer(window.atob(stringPEM)));
+  const pkcs10 = new CertificationRequest({ schema: asn1.result });
   // #endregion
 
   // #region Parse and display information about "subject"
-  var typemap = {
+  const typemap = {
     "2.5.4.6": "C",
     "2.5.4.11": "OU",
     "2.5.4.10": "O",
@@ -262,14 +244,14 @@ export function parse_PKCS10()
     "1.2.840.113549.1.9.1": "E-mail"
   };
 
-  for(var i = 0; i < pkcs10.subject.typesAndValues.length; i++)
+  for(let i = 0; i < pkcs10.subject.typesAndValues.length; i++)
   {
-    var typeval = typemap[pkcs10.subject.typesAndValues[i].type];
+    let typeval = typemap[pkcs10.subject.typesAndValues[i].type];
     if(typeof typeval === "undefined")
       typeval = pkcs10.subject.typesAndValues[i].type;
 
-    var subjval = pkcs10.subject.typesAndValues[i].value.valueBlock.value;
-    var ulrow = "<li><p><span>" + typeval + "</span> " + subjval + "</p></li>";
+    const subjval = pkcs10.subject.typesAndValues[i].value.valueBlock.value;
+    const ulrow = "<li><p><span>" + typeval + "</span> " + subjval + "</p></li>";
 
     document.getElementById("pkcs10-subject").innerHTML = document.getElementById("pkcs10-subject").innerHTML + ulrow;
     if(typeval == "CN")
@@ -278,14 +260,14 @@ export function parse_PKCS10()
   // #endregion
 
   // #region Put information about public key size
-  var publicKeySize = "< unknown >";
+  let publicKeySize = "< unknown >";
 
   if(pkcs10.subjectPublicKeyInfo.algorithm.algorithmId.indexOf("1.2.840.113549") !== (-1))
   {
-    var asn1PublicKey = asn1js.fromBER(pkcs10.subjectPublicKeyInfo.subjectPublicKey.valueBlock.valueHex);
-    var rsaPublicKeySimple = new RSAPublicKey({ schema: asn1PublicKey.result });
-    var modulusView = new Uint8Array(rsaPublicKeySimple.modulus.valueBlock.valueHex);
-    var modulusBitLength = 0;
+    const asn1PublicKey = asn1js.fromBER(pkcs10.subjectPublicKeyInfo.subjectPublicKey.valueBlock.valueHex);
+    const rsaPublicKeySimple = new RSAPublicKey({ schema: asn1PublicKey.result });
+    let modulusView = new Uint8Array(rsaPublicKeySimple.modulus.valueBlock.valueHex);
+    let modulusBitLength = 0;
 
     if(modulusView[0] === 0x00)
       modulusBitLength = (rsaPublicKeySimple.modulus.valueBlock.valueHex.byteLength - 1) * 8;
@@ -299,7 +281,7 @@ export function parse_PKCS10()
   // #endregion
 
   // #region Put information about signature algorithm
-  var algomap = {
+  const algomap = {
     "1.2.840.113549.1.1.2": "MD2 with RSA",
     "1.2.840.113549.1.1.4": "MD5 with RSA",
     "1.2.840.10040.4.3": "SHA1 with DSA",
@@ -314,7 +296,7 @@ export function parse_PKCS10()
     "1.2.840.113549.1.1.12": "SHA384 with RSA",
     "1.2.840.113549.1.1.13": "SHA512 with RSA"
   };
-  var signatureAlgorithm = algomap[pkcs10.signatureAlgorithm.algorithmId];
+  let signatureAlgorithm = algomap[pkcs10.signatureAlgorithm.algorithmId];
   if(typeof signatureAlgorithm === "undefined")
     signatureAlgorithm = pkcs10.signatureAlgorithm.algorithmId;
   else
@@ -326,12 +308,12 @@ export function parse_PKCS10()
   // #region Put information about PKCS#10 attributes
   if("attributes" in pkcs10)
   {
-    for(var i = 0; i < pkcs10.attributes.length; i++)
+    for(let i = 0; i < pkcs10.attributes.length; i++)
     {
-      var typeval = pkcs10.attributes[i].type;
-      var subjval = "";
+      const typeval = pkcs10.attributes[i].type;
+      let subjval = "";
 
-      for(var j = 0; j < pkcs10.attributes[i].values.length; j++)
+      for(let j = 0; j < pkcs10.attributes[i].values.length; j++)
       {
         if((pkcs10.attributes[i].values[j] instanceof asn1js.Utf8String) ||
           (pkcs10.attributes[i].values[j] instanceof asn1js.BmpString) ||
@@ -354,7 +336,7 @@ export function parse_PKCS10()
         }
       }
 
-      var ulrow = "<li><p><span>" + typeval + "</span> " + subjval + "</p></li>";
+      const ulrow = "<li><p><span>" + typeval + "</span> " + subjval + "</p></li>";
       document.getElementById("pkcs10-exten").innerHTML = document.getElementById("pkcs10-exten").innerHTML + ulrow;
     }
 
@@ -372,21 +354,17 @@ export function parse_PKCS10()
 export function verify_PKCS10()
 {
   // #region Decode existing PKCS#10
-  var stringPEM = document.getElementById("pem-text-block").value.replace(/(-----(BEGIN|END) CERTIFICATE REQUEST-----|\n)/g, '');
+  const stringPEM = document.getElementById("pem-text-block").value.replace(/(-----(BEGIN|END) CERTIFICATE REQUEST-----|\n)/g, '');
 
-  var asn1 = asn1js.fromBER(stringToArrayBuffer(window.atob(stringPEM)));
-  var pkcs10 = new CertificationRequest({ schema: asn1.result });
+  const asn1 = asn1js.fromBER(stringToArrayBuffer(window.atob(stringPEM)));
+  const pkcs10 = new CertificationRequest({ schema: asn1.result });
   // #endregion
 
   // #region Verify PKCS#10
   pkcs10.verify().
-  then(
-    function(result)
-    {
+  then(result => {
       alert("Verification passed: " + result);
-    },
-    function(error)
-    {
+    }, error => {
       alert("Error during verification: " + error);
     }
   );
