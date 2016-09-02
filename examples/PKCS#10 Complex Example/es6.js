@@ -9,7 +9,7 @@ import Extension from "pkijs/src/Extension";
 import Extensions from "pkijs/src/Extensions";
 import RSAPublicKey from "pkijs/src/RSAPublicKey";
 import { getCrypto, getAlgorithmParameters } from "pkijs/src/common";
-
+import {arrayBufferToString, stringToArrayBuffer} from "pvutils";
 
 //*********************************************************************************
 // #region Auxiliary functions
@@ -34,36 +34,6 @@ export function formatPEM(pemString)
   }
 
   return resultString;
-}
-//*********************************************************************************
-export function arrayBufferToString(buffer)
-{
-  /// <summary>Create a string from ArrayBuffer</summary>
-  /// <param name="buffer" type="ArrayBuffer">ArrayBuffer to create a string from</param>
-
-  let resultString = "";
-  let view = new Uint8Array(buffer);
-
-  for(let i = 0; i < view.length; i++)
-    resultString = resultString + String.fromCharCode(view[i]);
-
-  return resultString;
-}
-//*********************************************************************************
-export function stringToArrayBuffer(str)
-{
-  /// <summary>Create an ArrayBuffer from string</summary>
-  /// <param name="str" type="String">String to create ArrayBuffer from</param>
-
-  const stringLength = str.length;
-
-  let resultBuffer = new ArrayBuffer(stringLength);
-  let resultView = new Uint8Array(resultBuffer);
-
-  for(let i = 0; i < stringLength; i++)
-    resultView[i] = str.charCodeAt(i);
-
-  return resultBuffer;
 }
 //*********************************************************************************
 // #endregion

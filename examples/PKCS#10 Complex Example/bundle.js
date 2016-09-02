@@ -6015,7 +6015,7 @@ function fromBase64$1(input, useUrlTemplate = false)
 	return output;
 }
 //**************************************************************************************
-function arrayBufferToString$2(buffer)
+function arrayBufferToString$1(buffer)
 {
 	let resultString = "";
 	const view = new Uint8Array(buffer);
@@ -6026,7 +6026,7 @@ function arrayBufferToString$2(buffer)
 	return resultString;
 }
 //**************************************************************************************
-function stringToArrayBuffer$2(str)
+function stringToArrayBuffer$1(str)
 {
 	const stringLength = str.length;
 	
@@ -6673,8 +6673,8 @@ class ECPublicKey
 
 		return {
 			crv: crvName,
-			x: toBase64$1(arrayBufferToString$2(this.x), true, true),
-			y: toBase64$1(arrayBufferToString$2(this.y), true, true)
+			x: toBase64$1(arrayBufferToString$1(this.x), true, true),
+			y: toBase64$1(arrayBufferToString$1(this.y), true, true)
 		};
 	}
 	//**********************************************************************************
@@ -6709,12 +6709,12 @@ class ECPublicKey
 			throw new Error("Absent mandatory parameter \"crv\"");
 
 		if("x" in json)
-			this.x = stringToArrayBuffer$2(fromBase64$1(json.x, true)).slice(0, coodinateLength);
+			this.x = stringToArrayBuffer$1(fromBase64$1(json.x, true)).slice(0, coodinateLength);
 		else
 			throw new Error("Absent mandatory parameter \"x\"");
 
 		if("y" in json)
-			this.y = stringToArrayBuffer$2(fromBase64$1(json.y, true)).slice(0, coodinateLength);
+			this.y = stringToArrayBuffer$1(fromBase64$1(json.y, true)).slice(0, coodinateLength);
 		else
 			throw new Error("Absent mandatory parameter \"y\"");
 	}
@@ -6853,8 +6853,8 @@ class RSAPublicKey
 	toJSON()
 	{
 		return {
-			n: toBase64$1(arrayBufferToString$2(this.modulus.valueBlock.valueHex), true, true),
-			e: toBase64$1(arrayBufferToString$2(this.publicExponent.valueBlock.valueHex), true, true)
+			n: toBase64$1(arrayBufferToString$1(this.modulus.valueBlock.valueHex), true, true),
+			e: toBase64$1(arrayBufferToString$1(this.publicExponent.valueBlock.valueHex), true, true)
 		};
 	}
 	//**********************************************************************************
@@ -6865,12 +6865,12 @@ class RSAPublicKey
 	fromJSON(json)
 	{
 		if("n" in json)
-			this.modulus = new Integer({ valueHex: stringToArrayBuffer$2(fromBase64$1(json.n, true)).slice(0, 256) });
+			this.modulus = new Integer({ valueHex: stringToArrayBuffer$1(fromBase64$1(json.n, true)).slice(0, 256) });
 		else
 			throw new Error("Absent mandatory parameter \"n\"");
 
 		if("e" in json)
-			this.publicExponent = new Integer({ valueHex: stringToArrayBuffer$2(fromBase64$1(json.e, true)).slice(0, 3) });
+			this.publicExponent = new Integer({ valueHex: stringToArrayBuffer$1(fromBase64$1(json.e, true)).slice(0, 3) });
 		else
 			throw new Error("Absent mandatory parameter \"e\"");
 	}
@@ -7573,7 +7573,7 @@ class ECPrivateKey
 
 		const privateKeyJSON = {
 			crv: crvName,
-			d: toBase64$1(arrayBufferToString$2(this.privateKey.valueBlock.valueHex), true, true)
+			d: toBase64$1(arrayBufferToString$1(this.privateKey.valueBlock.valueHex), true, true)
 		};
 
 		if("publicKey" in this)
@@ -7618,7 +7618,7 @@ class ECPrivateKey
 			throw new Error("Absent mandatory parameter \"crv\"");
 
 		if("d" in json)
-			this.privateKey = new OctetString({ valueHex: stringToArrayBuffer$2(fromBase64$1(json.d, true)).slice(0, coodinateLength) });
+			this.privateKey = new OctetString({ valueHex: stringToArrayBuffer$1(fromBase64$1(json.d, true)).slice(0, coodinateLength) });
 		else
 			throw new Error("Absent mandatory parameter \"d\"");
 
@@ -7771,9 +7771,9 @@ class OtherPrimeInfo
 	toJSON()
 	{
 		return {
-			r: toBase64$1(arrayBufferToString$2(this.prime.valueBlock.valueHex), true, true),
-			d: toBase64$1(arrayBufferToString$2(this.exponent.valueBlock.valueHex), true, true),
-			t: toBase64$1(arrayBufferToString$2(this.coefficient.valueBlock.valueHex), true, true)
+			r: toBase64$1(arrayBufferToString$1(this.prime.valueBlock.valueHex), true, true),
+			d: toBase64$1(arrayBufferToString$1(this.exponent.valueBlock.valueHex), true, true),
+			t: toBase64$1(arrayBufferToString$1(this.coefficient.valueBlock.valueHex), true, true)
 		};
 	}
 	//**********************************************************************************
@@ -7784,17 +7784,17 @@ class OtherPrimeInfo
 	fromJSON(json)
 	{
 		if("r" in json)
-			this.prime = new Integer({ valueHex: stringToArrayBuffer$2(fromBase64$1(json.r, true)) });
+			this.prime = new Integer({ valueHex: stringToArrayBuffer$1(fromBase64$1(json.r, true)) });
 		else
 			throw new Error("Absent mandatory parameter \"r\"");
 
 		if("d" in json)
-			this.exponent = new Integer({ valueHex: stringToArrayBuffer$2(fromBase64$1(json.d, true)) });
+			this.exponent = new Integer({ valueHex: stringToArrayBuffer$1(fromBase64$1(json.d, true)) });
 		else
 			throw new Error("Absent mandatory parameter \"d\"");
 
 		if("t" in json)
-			this.coefficient = new Integer({ valueHex: stringToArrayBuffer$2(fromBase64$1(json.t, true)) });
+			this.coefficient = new Integer({ valueHex: stringToArrayBuffer$1(fromBase64$1(json.t, true)) });
 		else
 			throw new Error("Absent mandatory parameter \"t\"");
 	}
@@ -8065,14 +8065,14 @@ class RSAPrivateKey
 	toJSON()
 	{
 		const jwk = {
-			n: toBase64$1(arrayBufferToString$2(this.modulus.valueBlock.valueHex), true, true),
-			e: toBase64$1(arrayBufferToString$2(this.publicExponent.valueBlock.valueHex), true, true),
-			d: toBase64$1(arrayBufferToString$2(this.privateExponent.valueBlock.valueHex), true, true),
-			p: toBase64$1(arrayBufferToString$2(this.prime1.valueBlock.valueHex), true, true),
-			q: toBase64$1(arrayBufferToString$2(this.prime2.valueBlock.valueHex), true, true),
-			dp: toBase64$1(arrayBufferToString$2(this.exponent1.valueBlock.valueHex), true, true),
-			dq: toBase64$1(arrayBufferToString$2(this.exponent2.valueBlock.valueHex), true, true),
-			qi: toBase64$1(arrayBufferToString$2(this.coefficient.valueBlock.valueHex), true, true)
+			n: toBase64$1(arrayBufferToString$1(this.modulus.valueBlock.valueHex), true, true),
+			e: toBase64$1(arrayBufferToString$1(this.publicExponent.valueBlock.valueHex), true, true),
+			d: toBase64$1(arrayBufferToString$1(this.privateExponent.valueBlock.valueHex), true, true),
+			p: toBase64$1(arrayBufferToString$1(this.prime1.valueBlock.valueHex), true, true),
+			q: toBase64$1(arrayBufferToString$1(this.prime2.valueBlock.valueHex), true, true),
+			dp: toBase64$1(arrayBufferToString$1(this.exponent1.valueBlock.valueHex), true, true),
+			dq: toBase64$1(arrayBufferToString$1(this.exponent2.valueBlock.valueHex), true, true),
+			qi: toBase64$1(arrayBufferToString$1(this.coefficient.valueBlock.valueHex), true, true)
 		};
 
 		if("otherPrimeInfos" in this)
@@ -8088,42 +8088,42 @@ class RSAPrivateKey
 	fromJSON(json)
 	{
 		if("n" in json)
-			this.modulus = new Integer({ valueHex: stringToArrayBuffer$2(fromBase64$1(json.n, true, true)) });
+			this.modulus = new Integer({ valueHex: stringToArrayBuffer$1(fromBase64$1(json.n, true, true)) });
 		else
 			throw new Error("Absent mandatory parameter \"n\"");
 
 		if("e" in json)
-			this.publicExponent = new Integer({ valueHex: stringToArrayBuffer$2(fromBase64$1(json.e, true, true)) });
+			this.publicExponent = new Integer({ valueHex: stringToArrayBuffer$1(fromBase64$1(json.e, true, true)) });
 		else
 			throw new Error("Absent mandatory parameter \"e\"");
 
 		if("d" in json)
-			this.privateExponent = new Integer({ valueHex: stringToArrayBuffer$2(fromBase64$1(json.d, true, true)) });
+			this.privateExponent = new Integer({ valueHex: stringToArrayBuffer$1(fromBase64$1(json.d, true, true)) });
 		else
 			throw new Error("Absent mandatory parameter \"d\"");
 
 		if("p" in json)
-			this.prime1 = new Integer({ valueHex: stringToArrayBuffer$2(fromBase64$1(json.p, true, true)) });
+			this.prime1 = new Integer({ valueHex: stringToArrayBuffer$1(fromBase64$1(json.p, true, true)) });
 		else
 			throw new Error("Absent mandatory parameter \"p\"");
 
 		if("q" in json)
-			this.prime2 = new Integer({ valueHex: stringToArrayBuffer$2(fromBase64$1(json.q, true, true)) });
+			this.prime2 = new Integer({ valueHex: stringToArrayBuffer$1(fromBase64$1(json.q, true, true)) });
 		else
 			throw new Error("Absent mandatory parameter \"q\"");
 
 		if("dp" in json)
-			this.exponent1 = new Integer({ valueHex: stringToArrayBuffer$2(fromBase64$1(json.dp, true, true)) });
+			this.exponent1 = new Integer({ valueHex: stringToArrayBuffer$1(fromBase64$1(json.dp, true, true)) });
 		else
 			throw new Error("Absent mandatory parameter \"dp\"");
 
 		if("dq" in json)
-			this.exponent2 = new Integer({ valueHex: stringToArrayBuffer$2(fromBase64$1(json.dq, true, true)) });
+			this.exponent2 = new Integer({ valueHex: stringToArrayBuffer$1(fromBase64$1(json.dq, true, true)) });
 		else
 			throw new Error("Absent mandatory parameter \"dq\"");
 
 		if("qi" in json)
-			this.coefficient = new Integer({ valueHex: stringToArrayBuffer$2(fromBase64$1(json.qi, true, true)) });
+			this.coefficient = new Integer({ valueHex: stringToArrayBuffer$1(fromBase64$1(json.qi, true, true)) });
 		else
 			throw new Error("Absent mandatory parameter \"qi\"");
 
@@ -8807,7 +8807,7 @@ class CryptoEngine
 		if(this.name.toLowerCase() === "safari")
 		{
 			if((jwk instanceof ArrayBuffer) === false)
-				jwk = stringToArrayBuffer$2(JSON.stringify(jwk));
+				jwk = stringToArrayBuffer$1(JSON.stringify(jwk));
 		}
 		//endregion
 		
@@ -8826,7 +8826,7 @@ class CryptoEngine
 		
 		//region Currently Safari returns ArrayBuffer as JWK thus we need an additional transformation
 		if(this.name.toLowerCase() === "safari")
-			sequence = sequence.then(result => JSON.parse(arrayBufferToString$2(result)));
+			sequence = sequence.then(result => JSON.parse(arrayBufferToString$1(result)));
 		//endregion
 		
 		switch(format.toLowerCase())
@@ -15678,36 +15678,6 @@ function formatPEM(pemString)
   return resultString;
 }
 //*********************************************************************************
-function arrayBufferToString(buffer)
-{
-  /// <summary>Create a string from ArrayBuffer</summary>
-  /// <param name="buffer" type="ArrayBuffer">ArrayBuffer to create a string from</param>
-
-  let resultString = "";
-  let view = new Uint8Array(buffer);
-
-  for(let i = 0; i < view.length; i++)
-    resultString = resultString + String.fromCharCode(view[i]);
-
-  return resultString;
-}
-//*********************************************************************************
-function stringToArrayBuffer(str)
-{
-  /// <summary>Create an ArrayBuffer from string</summary>
-  /// <param name="str" type="String">String to create ArrayBuffer from</param>
-
-  const stringLength = str.length;
-
-  let resultBuffer = new ArrayBuffer(stringLength);
-  let resultView = new Uint8Array(resultBuffer);
-
-  for(let i = 0; i < stringLength; i++)
-    resultView[i] = str.charCodeAt(i);
-
-  return resultBuffer;
-}
-//*********************************************************************************
 // #endregion
 //*********************************************************************************
 // #region Create PKCS#10
@@ -15833,7 +15803,7 @@ function create_PKCS10()
       const pkcs10Encoded = pkcs10Schema.toBER(false);
 
       let resultString = "-----BEGIN CERTIFICATE REQUEST-----\r\n";
-      resultString = resultString + formatPEM(window.btoa(arrayBufferToString(pkcs10Encoded)));
+      resultString = resultString + formatPEM(window.btoa(arrayBufferToString$1(pkcs10Encoded)));
       resultString = resultString + "\r\n-----END CERTIFICATE REQUEST-----\r\n";
 
       document.getElementById("pem-text-block").value = resultString;
@@ -15857,7 +15827,7 @@ function parse_PKCS10()
   // #region Decode existing PKCS#10
   const stringPEM = document.getElementById("pem-text-block").value.replace(/(-----(BEGIN|END) CERTIFICATE REQUEST-----|\n)/g, '');
 
-  const asn1 = fromBER(stringToArrayBuffer(window.atob(stringPEM)));
+  const asn1 = fromBER(stringToArrayBuffer$1(window.atob(stringPEM)));
   const pkcs10 = new CertificationRequest({ schema: asn1.result });
   // #endregion
 
@@ -15988,7 +15958,7 @@ function verify_PKCS10()
   // #region Decode existing PKCS#10
   const stringPEM = document.getElementById("pem-text-block").value.replace(/(-----(BEGIN|END) CERTIFICATE REQUEST-----|\n)/g, '');
 
-  const asn1 = fromBER(stringToArrayBuffer(window.atob(stringPEM)));
+  const asn1 = fromBER(stringToArrayBuffer$1(window.atob(stringPEM)));
   const pkcs10 = new CertificationRequest({ schema: asn1.result });
   // #endregion
 
@@ -16002,8 +15972,6 @@ function verify_PKCS10()
 //*********************************************************************************
 
 exports.formatPEM = formatPEM;
-exports.arrayBufferToString = arrayBufferToString;
-exports.stringToArrayBuffer = stringToArrayBuffer;
 exports.create_PKCS10 = create_PKCS10;
 exports.parse_PKCS10 = parse_PKCS10;
 exports.verify_PKCS10 = verify_PKCS10;
