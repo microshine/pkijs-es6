@@ -15,18 +15,23 @@
     "url": "git://github.com/PeculiarVenturess/PKI.js.git"
   },
   "devDependencies": {
-    "babel-preset-es2015-rollup": "^1.1.1",
+    "babel-plugin-external-helpers": "^6.8.0",
+    "babel-register": "^6.11.6",
+    "mocha": "^3.0.2",
+    "rollup": "^0.34.7",
+    "babel-preset-es2015": "latest",
     "rollup-plugin-babel": "^2.6.1",
-    "rollup-plugin-includepaths": "^0.1.5",
     "rollup-plugin-node-resolve": "^1.7.1"
   },
   "dependencies": {
-    "asn1js": "^2.0.0",
+    "asn1js": "git+https://github.com/PeculiarVentures/asn1js-es6.git",
     "pvutils": "^1.0.0"
   },
   "scripts": {
     "build": "babel src --compact=false --out-dir build --source-maps",
-    "watch": "babel src --compact=false --out-dir build --source-maps --watch"
+    "watch": "babel src --compact=false --out-dir build --source-maps --watch",
+    "pretest": "rollup -i ./test/chainEngineTest.es6 -o ./test/chainEngine.js -c ./test/rollup.config.js",
+    "test": "mocha"
   },
   "keywords": [
     "ES6",
@@ -44,6 +49,6 @@
     "PKCS"
   ],
   "name": "pkijs",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "license": "MIT"
 }

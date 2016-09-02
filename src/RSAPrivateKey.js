@@ -287,42 +287,42 @@ export default class RSAPrivateKey
 	fromJSON(json)
 	{
 		if("n" in json)
-			this.modulus = new asn1js.Integer({ valueHex: stringToArrayBuffer(fromBase64(json.n, true)).slice(0, 256) });
+			this.modulus = new asn1js.Integer({ valueHex: stringToArrayBuffer(fromBase64(json.n, true, true)) });
 		else
 			throw new Error("Absent mandatory parameter \"n\"");
 
 		if("e" in json)
-			this.publicExponent = new asn1js.Integer({ valueHex: stringToArrayBuffer(fromBase64(json.e, true)).slice(0, 3) });
+			this.publicExponent = new asn1js.Integer({ valueHex: stringToArrayBuffer(fromBase64(json.e, true, true)) });
 		else
 			throw new Error("Absent mandatory parameter \"e\"");
 
 		if("d" in json)
-			this.privateExponent = new asn1js.Integer({ valueHex: stringToArrayBuffer(fromBase64(json.d, true)).slice(0, 256) });
+			this.privateExponent = new asn1js.Integer({ valueHex: stringToArrayBuffer(fromBase64(json.d, true, true)) });
 		else
 			throw new Error("Absent mandatory parameter \"d\"");
 
 		if("p" in json)
-			this.prime1 = new asn1js.Integer({ valueHex: stringToArrayBuffer(fromBase64(json.p, true)).slice(0, 128) });
+			this.prime1 = new asn1js.Integer({ valueHex: stringToArrayBuffer(fromBase64(json.p, true, true)) });
 		else
 			throw new Error("Absent mandatory parameter \"p\"");
 
 		if("q" in json)
-			this.prime2 = new asn1js.Integer({ valueHex: stringToArrayBuffer(fromBase64(json.q, true)).slice(0, 128) });
+			this.prime2 = new asn1js.Integer({ valueHex: stringToArrayBuffer(fromBase64(json.q, true, true)) });
 		else
 			throw new Error("Absent mandatory parameter \"q\"");
 
 		if("dp" in json)
-			this.exponent1 = new asn1js.Integer({ valueHex: stringToArrayBuffer(fromBase64(json.dp, true)).slice(0, 128) });
+			this.exponent1 = new asn1js.Integer({ valueHex: stringToArrayBuffer(fromBase64(json.dp, true, true)) });
 		else
 			throw new Error("Absent mandatory parameter \"dp\"");
 
 		if("dq" in json)
-			this.exponent2 = new asn1js.Integer({ valueHex: stringToArrayBuffer(fromBase64(json.dq, true)).slice(0, 128) });
+			this.exponent2 = new asn1js.Integer({ valueHex: stringToArrayBuffer(fromBase64(json.dq, true, true)) });
 		else
 			throw new Error("Absent mandatory parameter \"dq\"");
 
 		if("qi" in json)
-			this.coefficient = new asn1js.Integer({ valueHex: stringToArrayBuffer(fromBase64(json.qi, true)).slice(0, 128) });
+			this.coefficient = new asn1js.Integer({ valueHex: stringToArrayBuffer(fromBase64(json.qi, true, true)) });
 		else
 			throw new Error("Absent mandatory parameter \"qi\"");
 

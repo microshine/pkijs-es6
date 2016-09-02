@@ -1,5 +1,5 @@
 import * as asn1js from "asn1js";
-import { getParametersValue } from "pvutils";
+import { getParametersValue, stringToArrayBuffer, arrayBufferToString } from "pvutils";
 import PublicKeyInfo from "pkijs/src/PublicKeyInfo";
 import PrivateKeyInfo from "pkijs/src/PrivateKeyInfo";
 //**************************************************************************************
@@ -19,6 +19,12 @@ export default class CryptoEngine
 		 * @description Usually here we are expecting "window.crypto.subtle" or an equivalent from custom "crypto engine"
 		 */
 		this.crypto = getParametersValue(parameters, "crypto", {});
+		
+		/**
+		 * @type {string}
+		 * @description Name of the "crypto engine"
+		 */
+		this.name = getParametersValue(parameters, "name", "");
 		//endregion
 	}
 	//**********************************************************************************
@@ -62,7 +68,6 @@ export default class CryptoEngine
 						return Promise.reject("Incorrect keyData");
 					}
 
-					keyUsages = ["verify"]; // Override existing keyUsages value since the key is a public key
 
 					switch(algorithm.name.toUpperCase())
 					{
@@ -90,6 +95,8 @@ export default class CryptoEngine
 							}
 						case "RSASSA-PKCS1-V1_5":
 							{
+								keyUsages = ["verify"]; // Override existing keyUsages value since the key is a public key
+
 								jwk.kty = "RSA";
 								jwk.ext = extractable;
 								jwk.key_ops = keyUsages;
@@ -130,6 +137,8 @@ export default class CryptoEngine
 							break;
 						case "ECDSA":
 							{
+								keyUsages = ["verify"]; // Override existing keyUsages value since the key is a public key
+
 								//region Initial variables
 								jwk = {
 									kty: "EC",
@@ -151,6 +160,43 @@ export default class CryptoEngine
 								//endregion
 							}
 							break;
+						case "RSA-OAEP":
+							{
+								jwk.kty = "RSA";
+								jwk.ext = extractable;
+								jwk.key_ops = keyUsages;
+								
+								if(this.name.toLowerCase() === "safari")
+									jwk.alg = "RSA-OAEP";
+								else
+								{
+									switch(algorithm.hash.name.toUpperCase())
+									{
+										case "SHA-1":
+											jwk.alg = "RSA-OAEP-1";
+											break;
+										case "SHA-256":
+											jwk.alg = "RSA-OAEP-256";
+											break;
+										case "SHA-384":
+											jwk.alg = "RSA-OAEP-384";
+											break;
+										case "SHA-512":
+											jwk.alg = "RSA-OAEP-512";
+											break;
+										default:
+											return Promise.reject(`Incorrect public key algorithm: ${publicKeyInfo.algorithm.algorithmId}`);
+									}
+								}
+								
+								//region Create ECDSA Public Key elements
+								const publicKeyJSON = publicKeyInfo.toJSON();
+								
+								for(const key of Object.keys(publicKeyJSON))
+									jwk[key] = publicKeyJSON[key];
+								//endregion
+							}
+							break;
 						default:
 							return Promise.reject(`Incorrect algorithm name: ${algorithm.name.toUpperCase()}`);
 					}
@@ -159,7 +205,6 @@ export default class CryptoEngine
 			case "pkcs8":
 				{
 					const privateKeyInfo = new PrivateKeyInfo();
-					keyUsages = ["sign"]; // Override existing keyUsages value since the key is a private key
 
 					//region Parse "PrivateKeyInfo" object
 					const asn1 = asn1js.fromBER(keyData);
@@ -202,6 +247,8 @@ export default class CryptoEngine
 							}
 						case "RSASSA-PKCS1-V1_5":
 							{
+								keyUsages = ["sign"]; // Override existing keyUsages value since the key is a private key
+
 								jwk.kty = "RSA";
 								jwk.ext = extractable;
 								jwk.key_ops = keyUsages;
@@ -244,6 +291,8 @@ export default class CryptoEngine
 							break;
 						case "ECDSA":
 							{
+								keyUsages = ["sign"]; // Override existing keyUsages value since the key is a private key
+
 								//region Initial variables
 								jwk = {
 									kty: "EC",
@@ -265,6 +314,45 @@ export default class CryptoEngine
 								//endregion
 							}
 							break;
+						case "RSA-OAEP":
+							{
+								jwk.kty = "RSA";
+								jwk.ext = extractable;
+								jwk.key_ops = keyUsages;
+								
+								//region Get information about used hash function
+								if(this.name.toLowerCase() === "safari")
+									jwk.alg = "RSA-OAEP";
+								else
+								{
+									switch(algorithm.hash.name.toUpperCase())
+									{
+										case "SHA-1":
+											jwk.alg = "RSA-OAEP-1";
+											break;
+										case "SHA-256":
+											jwk.alg = "RSA-OAEP-256";
+											break;
+										case "SHA-384":
+											jwk.alg = "RSA-OAEP-384";
+											break;
+										case "SHA-512":
+											jwk.alg = "RSA-OAEP-512";
+											break;
+										default:
+											return Promise.reject(`Incorrect hash algorithm: ${algorithm.hash.name.toUpperCase()}`);
+									}
+								}
+								//endregion
+								
+								//region Create RSA Private Key elements
+								const privateKeyJSON = privateKeyInfo.toJSON();
+								
+								for(const key of Object.keys(privateKeyJSON))
+									jwk[key] = privateKeyJSON[key];
+								//endregion
+							}
+							break;
 						default:
 							return Promise.reject(`Incorrect algorithm name: ${algorithm.name.toUpperCase()}`);
 					}
@@ -276,7 +364,15 @@ export default class CryptoEngine
 			default:
 				return Promise.reject(`Incorrect format: ${format}`);
 		}
-
+		
+		//region Special case for Safari browser (since its acting not as WebCrypto standard describes)
+		if(this.name.toLowerCase() === "safari")
+		{
+			if((jwk instanceof ArrayBuffer) === false)
+				jwk = stringToArrayBuffer(JSON.stringify(jwk));
+		}
+		//endregion
+		
 		return this.crypto.importKey("jwk", jwk, algorithm, extractable, keyUsages);
 	}
 	//**********************************************************************************
@@ -289,7 +385,12 @@ export default class CryptoEngine
 	exportKey(format, key)
 	{
 		let sequence = this.crypto.exportKey("jwk", key);
-
+		
+		//region Currently Safari returns ArrayBuffer as JWK thus we need an additional transformation
+		if(this.name.toLowerCase() === "safari")
+			sequence = sequence.then(result => JSON.parse(arrayBufferToString(result)));
+		//endregion
+		
 		switch(format.toLowerCase())
 		{
 			case "raw":

@@ -31,12 +31,12 @@ function CertificationRequestInfo(parameters = {})
 		name: (names.CertificationRequestInfo || "CertificationRequestInfo"),
 		value: [
 			new asn1js.Integer({ name: (names.CertificationRequestInfoVersion || "CertificationRequestInfo.version") }),
-			new RelativeDistinguishedNames.schema(names.subject || {
+			RelativeDistinguishedNames.schema(names.subject || {
 				names: {
 					blockName: "CertificationRequestInfo.subject"
 				}
 			}),
-			new PublicKeyInfo({
+			PublicKeyInfo.schema({
 				names: {
 					blockName: "CertificationRequestInfo.subjectPublicKeyInfo"
 				}

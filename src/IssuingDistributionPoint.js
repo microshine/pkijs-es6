@@ -146,7 +146,7 @@ export default class IssuingDistributionPoint
 									value: [
 										new asn1js.Repeated({
 											name: (names.distributionPointNames || ""),
-											value: GeneralName
+											value: GeneralName.schema()
 										})
 									]
 								}),
