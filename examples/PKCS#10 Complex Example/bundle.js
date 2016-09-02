@@ -15800,10 +15800,7 @@ function create_PKCS10()
   // #endregion
 
   // #region Exporting public key into "subjectPublicKeyInfo" value of PKCS#10
-  sequence = sequence.then(() => {
-      return pkcs10.subjectPublicKeyInfo.importKey(publicKey);
-    }
-  );
+  sequence = sequence.then(() => pkcs10.subjectPublicKeyInfo.importKey(publicKey));
   // #endregion
 
   // #region SubjectKeyIdentifier
@@ -15828,12 +15825,7 @@ function create_PKCS10()
   // #endregion
 
   // #region Signing final PKCS#10 request
-  sequence = sequence.then(() => {
-      return pkcs10.sign(privateKey, hashAlgorithm);
-    }, error => {
-      alert("Error during exporting public key: " + error);
-    }
-  );
+  sequence = sequence.then(() => pkcs10.sign(privateKey, hashAlgorithm), error => alert("Error during exporting public key: " + error));
   // #endregion
 
   sequence.then(() => {
@@ -15845,10 +15837,7 @@ function create_PKCS10()
       resultString = resultString + "\r\n-----END CERTIFICATE REQUEST-----\r\n";
 
       document.getElementById("pem-text-block").value = resultString;
-    }, error => {
-      alert("Error signing PKCS#10: " + error);
-    }
-  );
+    }, error => alert("Error signing PKCS#10: " + error));
 }
 //*********************************************************************************
 // #endregion
@@ -16005,12 +15994,7 @@ function verify_PKCS10()
 
   // #region Verify PKCS#10
   pkcs10.verify().
-  then(result => {
-      alert("Verification passed: " + result);
-    }, error => {
-      alert("Error during verification: " + error);
-    }
-  );
+  then(result => alert("Verification passed: " + result), error => alert("Error during verification: " + error));
   // #endregion
 }
 //*********************************************************************************
