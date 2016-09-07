@@ -269,12 +269,21 @@ export default class SignerInfo
 			outputArray.push(this.sid);
 		
 		outputArray.push(this.digestAlgorithm.toSchema());
-		if(SignerInfo.compareWithDefault("signedAttrs", this.signedAttrs) === false)
-			outputArray.push(this.signedAttrs.toSchema());
+		
+		if("signedAttrs" in this)
+		{
+			if(SignerInfo.compareWithDefault("signedAttrs", this.signedAttrs) === false)
+				outputArray.push(this.signedAttrs.toSchema());
+		}
+		
 		outputArray.push(this.signatureAlgorithm.toSchema());
 		outputArray.push(this.signature);
-		if(SignerInfo.compareWithDefault("unsignedAttrs", this.unsignedAttrs) === false)
-			outputArray.push(this.unsignedAttrs.toSchema());
+		
+		if("unsignedAttrs" in this)
+		{
+			if(SignerInfo.compareWithDefault("unsignedAttrs", this.unsignedAttrs) === false)
+				outputArray.push(this.unsignedAttrs.toSchema());
+		}
 		//endregion 
 		
 		//region Construct and return new ASN.1 schema for this object 

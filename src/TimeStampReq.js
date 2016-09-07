@@ -165,7 +165,7 @@ export default class TimeStampReq
 					},
 					value: [new asn1js.Repeated({
 						name: (names.extensions || "TimeStampReq.extensions"),
-						value: Extension()
+						value: Extension.schema()
 					})]
 				}) // IMPLICIT SEQUENCE value
 			]

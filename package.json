@@ -29,9 +29,7 @@
   },
   "scripts": {
     "build": "babel src --compact=false --out-dir build --source-maps",
-    "watch": "babel src --compact=false --out-dir build --source-maps --watch",
-    "pretest": "rollup -i ./test/chainEngineTest.es6 -o ./test/chainEngine.js -c ./test/rollup.config.js",
-    "test": "mocha"
+    "watch": "babel src --compact=false --out-dir build --source-maps --watch"
   },
   "keywords": [
     "ES6",
@@ -49,6 +47,6 @@
     "PKCS"
   ],
   "name": "pkijs",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "license": "MIT"
 }
