@@ -1,11 +1,12 @@
 import * as asn1js from "asn1js";
-import Certificate from "../../src/Certificate";
-import AttributeTypeAndValue from "../../src/AttributeTypeAndValue";
-import Extension from "../../src/Extension";
-import RSAPublicKey from "../../src/RSAPublicKey";
-import CertificateChainValidationEngine from "../../src/CertificateChainValidationEngine";
-import CertificateRevocationList from "../../src/CertificateRevocationList";
-import { getCrypto, getAlgorithmParameters, stringToArrayBuffer, toHexCodes } from "../../src/common";
+import Certificate from "pkijs/src/Certificate";
+import AttributeTypeAndValue from "pkijs/src/AttributeTypeAndValue";
+import Extension from "pkijs/src/Extension";
+import RSAPublicKey from "pkijs/src/RSAPublicKey";
+import CertificateChainValidationEngine from "pkijs/src/CertificateChainValidationEngine";
+import CertificateRevocationList from "pkijs/src/CertificateRevocationList";
+import { stringToArrayBuffer, bufferToHexCodes } from "pvutils";
+import { getCrypto, getAlgorithmParameters  } from "pkijs/src/common";
 //*********************************************************************************
 let certificateBuffer = new ArrayBuffer(0); // ArrayBuffer with loaded or created CERT
 const trustedCertificates = []; // Array of root certificates from "CA Bundle"
@@ -114,7 +115,7 @@ export function parseCertificate()
 	//endregion
 
 	//region Put information about X.509 certificate serial number
-	document.getElementById("cert-serial-number").innerHTML = toHexCodes(certificate.serialNumber.valueBlock.valueHex);
+	document.getElementById("cert-serial-number").innerHTML = bufferToHexCodes(certificate.serialNumber.valueBlock.valueHex);
 	//endregion
 
 	//region Put information about issuance date

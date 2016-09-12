@@ -216,7 +216,12 @@ export default class SingleResponse
 					certStatus: "certStatus",
 					thisUpdate: "thisUpdate",
 					nextUpdate: "nextUpdate",
-					singleExtensions: "singleExtensions"
+					singleExtensions: {
+						names: {
+							blockName:
+								"singleExtensions"
+						}
+					}
 				}
 			})
 		);
