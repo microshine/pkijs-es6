@@ -153,8 +153,8 @@ export function createTSPResp()
 		value: new asn1js.BmpString({ value: "Test" })
 	}));
 	
-	certSimpl.notBefore.value = new Date(2013, 1, 1);
-	certSimpl.notAfter.value = new Date(2016, 1, 1);
+	certSimpl.notBefore.value = new Date(2016, 1, 1);
+	certSimpl.notAfter.value = new Date(2019, 1, 1);
 	
 	certSimpl.extensions = []; // Extensions are not a part of certificate by default, it's an optional array
 	

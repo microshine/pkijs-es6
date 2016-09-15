@@ -75,6 +75,7 @@ export default class CertificateChainValidationEngine
 	{
 		//region Initial variables
 		const localCerts = [];
+		const _this = this;
 		//endregion
 
 		//region Finding certificate issuer
@@ -86,7 +87,7 @@ export default class CertificateChainValidationEngine
 			{
 				try
 				{
-					const verificationResult = yield certificate.verify({ issuerCertificate: localCerts[i] });
+					const verificationResult = yield certificate.verify(localCerts[i]);
 					if(verificationResult)
 						result.push(i);
 				}
@@ -204,7 +205,7 @@ export default class CertificateChainValidationEngine
 			//endregion
 
 			//region Find all CRLs for crtificate's issuer
-			crls.push(...Array.filter(this.crls, element => element.issuer.isEqual(certificate.issuer)));
+			crls.push(...Array.filter(_this.crls, element => element.issuer.isEqual(certificate.issuer)));
 			if(crls.length === 0)
 			{
 				return {
@@ -221,7 +222,7 @@ export default class CertificateChainValidationEngine
 				// The "nextUpdate" is older than "checkDate".
 				// Thus we should do have another, updated CRL.
 				// Thus the CRL assumed to be invalid.
-				if(crls[i].nextUpdate.value < this.checkDate)
+				if(crls[i].nextUpdate.value < _this.checkDate)
 					continue;
 				//endregion
 
@@ -273,9 +274,9 @@ export default class CertificateChainValidationEngine
 			//endregion
 
 			//region Search for OCSP response for the certificate
-			for(let i = 0; i < this.ocsps.length; i++)
+			for(let i = 0; i < _this.ocsps.length; i++)
 			{
-				const result = yield this.ocsps[i].getCertificateStatus(certificate, issuerCertificate);
+				const result = yield _this.ocsps[i].getCertificateStatus(certificate, issuerCertificate);
 				if(result.isForCertificate)
 				{
 					if(result.status === 0)
@@ -291,13 +292,8 @@ export default class CertificateChainValidationEngine
 		//endregion
 
 		//region Check for certificate to be CA
-		function *checkForCA(certificate, needToCheckCRL)
+		function *checkForCA(certificate, needToCheckCRL = false)
 		{
-			//region Check input variables
-			if(typeof needToCheckCRL === "undefined")
-				needToCheckCRL = false;
-			//endregion
-
 			//region Initial variables
 			let isCA = false;
 			let mustBeCA = false;
@@ -436,7 +432,7 @@ export default class CertificateChainValidationEngine
 			//endregion
 
 			//region Check each certificate (except "trusted root") to be non-revoked
-			if((this.crls.length !== 0) || (this.ocsps.length !== 0)) // If CRLs and OCSPs are empty the we consider all certificates to be valid
+			if((_this.crls.length !== 0) || (_this.ocsps.length !== 0)) // If CRLs and OCSPs are empty the we consider all certificates to be valid
 			{
 				for(let i = 0; i < (path.length - 2); i++)
 				{
@@ -446,7 +442,7 @@ export default class CertificateChainValidationEngine
 					//endregion
 
 					//region Check OCSPs first
-					if(this.ocsps.length !== 0)
+					if(_this.ocsps.length !== 0)
 					{
 						ocspResult = yield findOCSP(path[i], path[i + 1]);
 
@@ -468,7 +464,7 @@ export default class CertificateChainValidationEngine
 					//endregion
 
 					//region Check CRLs
-					if(this.crls.length !== 0)
+					if(_this.crls.length !== 0)
 					{
 						crlResult = yield findCRL(path[i]);
 						if(crlResult.status)
@@ -546,9 +542,9 @@ export default class CertificateChainValidationEngine
 
 		return generatorsDriver(function *generatorFunction()
 		{
-			//region Initialize "localCerts" by value of "this.certs" + "this.trustedCerts" arrays
-			localCerts.push(...this.trustedCerts);
-			localCerts.push(...this.certs);
+			//region Initialize "localCerts" by value of "_this.certs" + "_this.trustedCerts" arrays
+			localCerts.push(..._this.trustedCerts);
+			localCerts.push(..._this.certs);
 			//endregion
 
 			//region Check all certificates for been unique
@@ -593,9 +589,9 @@ export default class CertificateChainValidationEngine
 				const latestItem = ((result[i]).length - 1);
 				const certificate = localCerts[(result[i])[latestItem]];
 
-				for(let j = 0; j < this.trustedCerts.length; j++)
+				for(let j = 0; j < _this.trustedCerts.length; j++)
 				{
-					if(isEqualBuffer(certificate.tbs, this.trustedCerts[j].tbs))
+					if(isEqualBuffer(certificate.tbs, _this.trustedCerts[j].tbs))
 					{
 						found = true;
 						break;
@@ -639,7 +635,7 @@ export default class CertificateChainValidationEngine
 			//endregion
 
 			//region Perform basic checking for all certificates in the path
-			result = yield basicCheck(certificatePath, this.checkDate);
+			result = yield basicCheck(certificatePath, _this.checkDate);
 			if(result.result === false)
 				throw result;
 			//endregion

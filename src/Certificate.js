@@ -786,7 +786,8 @@ export default class Certificate
 			return crypto.verify(algorithm.algorithm,
 				publicKey,
 				new Uint8Array(signatureValue),
-				new Uint8Array(tbs));
+				new Uint8Array(tbs)
+			);
 		});
 		//endregion
 

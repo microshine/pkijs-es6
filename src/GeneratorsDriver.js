@@ -1,9 +1,17 @@
 //**************************************************************************************
 //region Aux functions
 //**************************************************************************************
-const isGenerator = generator => ((typeof generator.next === "function") && (typeof generator.throw === "function"));
+const isGenerator = generator => {
+	if(typeof generator === "undefined")
+		return false;
+
+	return ((typeof generator.next === "function") && (typeof generator.throw === "function"))
+};
 //**************************************************************************************
 const isGeneratorFunction = generator => {
+	if(typeof generator === "undefined")
+		return false;
+	
 	const constructor = generator.constructor;
 
 	if(!constructor)

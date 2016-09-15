@@ -264,8 +264,8 @@ export function createCertificate(buffer)
 		value: new asn1js.BmpString({ value: "Test" })
 	}));
 	
-	certificate.notBefore.value = new Date(2013, 1, 1);
-	certificate.notAfter.value = new Date(2016, 1, 1);
+	certificate.notBefore.value = new Date(2016, 1, 1);
+	certificate.notAfter.value = new Date(2019, 1, 1);
 	
 	certificate.extensions = []; // Extensions are not a part of certificate by default, it's an optional array
 	

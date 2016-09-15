@@ -47,6 +47,6 @@
     "PKCS"
   ],
   "name": "pkijs",
-  "version": "2.0.11",
+  "version": "2.0.12",
   "license": "MIT"
 }
