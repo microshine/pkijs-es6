@@ -228,15 +228,15 @@ export default class SignedData
 				if(certificate.idBlock.tagClass === 1)
 					return new Certificate({ schema: certificate });
 
-				// if((certificate.idBlock.tagClass === 3) && (certificate.idBlock.tagNumber === 3))
-				// {
-				//region Create SEQUENCE from [3]
-				certificate.idBlock.tagClass = 1; // UNIVERSAL
-				certificate.idBlock.tagNumber = 16; // SEQUENCE
-				//endregion
-
-				return new OtherCertificateFormat({ schema: certificate });
-				// }
+				if((certificate.idBlock.tagClass === 3) && (certificate.idBlock.tagNumber === 3))
+				{
+					//region Create SEQUENCE from [3]
+					certificate.idBlock.tagClass = 1; // UNIVERSAL
+					certificate.idBlock.tagNumber = 16; // SEQUENCE
+					//endregion
+	
+					return new OtherCertificateFormat({ schema: certificate });
+				}
 				//else // For now we would ignore "AttributeCertificateV1" and "AttributeCertificateV1"
 			});
 		}

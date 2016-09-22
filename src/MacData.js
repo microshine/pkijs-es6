@@ -1,11 +1,12 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
+import DigestInfo from "pkijs/src/DigestInfo";
 //**************************************************************************************
-export default class Attribute
+export default class MacData
 {
 	//**********************************************************************************
 	/**
-	 * Constructor for Attribute class
+	 * Constructor for MacData class
 	 * @param {Object} [parameters={}]
 	 * @property {Object} [schema] asn1js parsed value
 	 */
@@ -13,17 +14,24 @@ export default class Attribute
 	{
 		//region Internal properties of the object
 		/**
-		 * @type {string}
-		 * @description type
+		 * @type {DigestInfo}
+		 * @description mac
 		 */
-		this.type = getParametersValue(parameters, "type", Attribute.defaultValues("type"));
+		this.mac = getParametersValue(parameters, "mac", MacData.defaultValues("mac"));
 		/**
-		 * @type {Array}
-		 * @description values
+		 * @type {OctetString}
+		 * @description macSalt
 		 */
-		this.values = getParametersValue(parameters, "values", Attribute.defaultValues("values"));
+		this.macSalt = getParametersValue(parameters, "macSalt", MacData.defaultValues("macSalt"));
+		
+		if("iterations" in parameters)
+			/**
+			 * @type {OctetString}
+			 * @description iterations
+			 */
+			this.iterations = getParametersValue(parameters, "iterations", MacData.defaultValues("iterations"));
 		//endregion
-
+		
 		//region If input argument array contains "schema" for this object
 		if("schema" in parameters)
 			this.fromSchema(parameters.schema);
@@ -38,12 +46,14 @@ export default class Attribute
 	{
 		switch(memberName)
 		{
-			case "type":
-				return "";
-			case "values":
-				return [];
+			case "mac":
+				return new DigestInfo();
+			case "macSalt":
+				return new asn1js.OctetString();
+			case "iterations":
+				return (-1);
 			default:
-				throw new Error(`Invalid member name for Attribute class: ${memberName}`);
+				throw new Error(`Invalid member name for MacData class: ${memberName}`);
 		}
 	}
 	//**********************************************************************************
@@ -56,12 +66,15 @@ export default class Attribute
 	{
 		switch(memberName)
 		{
-			case "type":
-				return (memberValue === "");
-			case "values":
-				return (memberValue.length === 0);
+			case "mac":
+				return ((DigestInfo.compareWithDefault("digestAlgorithm", memberValue.digestAlgorithm)) &&
+						(DigestInfo.compareWithDefault("digest", memberValue.digest)));
+			case "macSalt":
+				return (memberValue.isEqual(MacData.defaultValues(memberName)));
+			case "iterations":
+				return (memberValue === MacData.defaultValues(memberName));
 			default:
-				throw new Error(`Invalid member name for Attribute class: ${memberName}`);
+				throw new Error(`Invalid member name for MacData class: ${memberName}`);
 		}
 	}
 	//**********************************************************************************
@@ -72,32 +85,37 @@ export default class Attribute
 	 */
 	static schema(parameters = {})
 	{
-		// Attribute { ATTRIBUTE:IOSet } ::= SEQUENCE {
-		//    type   ATTRIBUTE.&id({IOSet}),
-		//    values SET SIZE(1..MAX) OF ATTRIBUTE.&Type({IOSet}{@type})
-		//}
-
+		//MacData ::= SEQUENCE {
+		//    mac 		DigestInfo,
+		//    macSalt       OCTET STRING,
+		//    iterations	INTEGER DEFAULT 1
+		//    -- Note: The default is for historical reasons and its use is
+		//    -- deprecated. A higher value, like 1024 is recommended.
+		//    }
+		
 		/**
 		 * @type {Object}
 		 * @property {string} [blockName]
-		 * @property {string} [type]
-		 * @property {string} [setName]
-		 * @property {string} [values]
+		 * @property {string} [optional]
+		 * @property {string} [mac]
+		 * @property {string} [macSalt]
+		 * @property {string} [iterations]
 		 */
-	    const names = getParametersValue(parameters, "names", {});
-
+		const names = getParametersValue(parameters, "names", {});
+		
 		return (new asn1js.Sequence({
 			name: (names.blockName || ""),
+			optional: (names.optional || true),
 			value: [
-				new asn1js.ObjectIdentifier({ name: (names.type || "") }),
-				new asn1js.Set({
-					name: (names.setName || ""),
-					value: [
-						new asn1js.Repeated({
-							name: (names.values || ""),
-							value: new asn1js.Any()
-						})
-					]
+				DigestInfo.schema(names.mac || {
+						names: {
+							blockName: "mac"
+						}
+					}),
+				new asn1js.OctetString({ name: (names.macSalt || "macSalt") }),
+				new asn1js.Integer({
+					optional: true,
+					name: (names.iterations || "iterations")
 				})
 			]
 		}));
@@ -112,21 +130,29 @@ export default class Attribute
 		//region Check the schema is valid
 		const asn1 = asn1js.compareSchema(schema,
 			schema,
-			Attribute.schema({
+			MacData.schema({
 				names: {
-					type: "type",
-					values: "values"
+					mac: {
+						names: {
+							blockName: "mac"
+						}
+					},
+					macSalt: "macSalt",
+					iterations: "iterations"
 				}
 			})
 		);
-
+		
 		if(asn1.verified === false)
-			throw new Error("Object's schema was not verified against input data for ATTRIBUTE");
+			throw new Error("Object's schema was not verified against input data for MacData");
 		//endregion
-
+		
 		//region Get internal properties from parsed schema
-		this.type = asn1.result.type.valueBlock.toString();
-		this.values = asn1.result.values;
+		this.mac = new DigestInfo({ schema: asn1.result.mac });
+		this.macSalt = asn1.result.macSalt;
+		
+		if("iterations" in asn1.result)
+			this.iterations = asn1.result.iterations.valueBlock.valueDec;
 		//endregion
 	}
 	//**********************************************************************************
@@ -137,13 +163,16 @@ export default class Attribute
 	toSchema()
 	{
 		//region Construct and return new ASN.1 schema for this object
+		const outputArray = [
+			this.mac.toSchema(),
+			this.macSalt
+		];
+		
+		if("iterations" in this)
+			outputArray.push(new asn1js.Integer({ value: this.iterations }));
+		
 		return (new asn1js.Sequence({
-			value: [
-				new asn1js.ObjectIdentifier({ value: this.type }),
-				new asn1js.Set({
-					value: this.values
-				})
-			]
+			value: outputArray
 		}));
 		//endregion
 	}
@@ -154,10 +183,15 @@ export default class Attribute
 	 */
 	toJSON()
 	{
-		return {
-			type: this.type,
-			values: Array.from(this.values, element => element.toJSON())
+		const output = {
+			mac: this.mac.toJSON(),
+			macSalt: this.macSalt.toJSON()
 		};
+		
+		if("iterations" in this)
+			output.iterations = this.iterations.toJSON();
+		
+		return output;
 	}
 	//**********************************************************************************
 }

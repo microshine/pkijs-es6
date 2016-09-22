@@ -1,11 +1,12 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
+import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
 //**************************************************************************************
-export default class Attribute
+export default class DigestInfo
 {
 	//**********************************************************************************
 	/**
-	 * Constructor for Attribute class
+	 * Constructor for DigestInfo class
 	 * @param {Object} [parameters={}]
 	 * @property {Object} [schema] asn1js parsed value
 	 */
@@ -13,17 +14,17 @@ export default class Attribute
 	{
 		//region Internal properties of the object
 		/**
-		 * @type {string}
-		 * @description type
+		 * @type {AlgorithmIdentifier}
+		 * @description digestAlgorithm
 		 */
-		this.type = getParametersValue(parameters, "type", Attribute.defaultValues("type"));
+		this.digestAlgorithm = getParametersValue(parameters, "digestAlgorithm", DigestInfo.defaultValues("digestAlgorithm"));
 		/**
-		 * @type {Array}
-		 * @description values
+		 * @type {OctetString}
+		 * @description digest
 		 */
-		this.values = getParametersValue(parameters, "values", Attribute.defaultValues("values"));
+		this.digest = getParametersValue(parameters, "digest", DigestInfo.defaultValues("digest"));
 		//endregion
-
+		
 		//region If input argument array contains "schema" for this object
 		if("schema" in parameters)
 			this.fromSchema(parameters.schema);
@@ -38,12 +39,12 @@ export default class Attribute
 	{
 		switch(memberName)
 		{
-			case "type":
-				return "";
-			case "values":
-				return [];
+			case "digestAlgorithm":
+				return new AlgorithmIdentifier();
+			case "digest":
+				return new asn1js.OctetString();
 			default:
-				throw new Error(`Invalid member name for Attribute class: ${memberName}`);
+				throw new Error(`Invalid member name for DigestInfo class: ${memberName}`);
 		}
 	}
 	//**********************************************************************************
@@ -56,12 +57,13 @@ export default class Attribute
 	{
 		switch(memberName)
 		{
-			case "type":
-				return (memberValue === "");
-			case "values":
-				return (memberValue.length === 0);
+			case "digestAlgorithm":
+				return ((AlgorithmIdentifier.compareWithDefault("algorithmId", memberValue.algorithmId)) &&
+				(("algorithmParams" in memberValue) === false));
+			case "digest":
+				return (memberValue.isEqual(this.constructor.defaultValues(memberName));
 			default:
-				throw new Error(`Invalid member name for Attribute class: ${memberName}`);
+				throw new Error(`Invalid member name for DigestInfo class: ${memberName}`);
 		}
 	}
 	//**********************************************************************************
@@ -72,10 +74,11 @@ export default class Attribute
 	 */
 	static schema(parameters = {})
 	{
-		// Attribute { ATTRIBUTE:IOSet } ::= SEQUENCE {
-		//    type   ATTRIBUTE.&id({IOSet}),
-		//    values SET SIZE(1..MAX) OF ATTRIBUTE.&Type({IOSet}{@type})
-		//}
+        //DigestInfo ::= SEQUENCE {
+        //    digestAlgorithm DigestAlgorithmIdentifier,
+        //    digest Digest }
+
+        //Digest ::= OCTET STRING
 
 		/**
 		 * @type {Object}
@@ -84,23 +87,19 @@ export default class Attribute
 		 * @property {string} [setName]
 		 * @property {string} [values]
 		 */
-	    const names = getParametersValue(parameters, "names", {});
+		const names = getParametersValue(parameters, "names", {});
 
-		return (new asn1js.Sequence({
-			name: (names.blockName || ""),
-			value: [
-				new asn1js.ObjectIdentifier({ name: (names.type || "") }),
-				new asn1js.Set({
-					name: (names.setName || ""),
-					value: [
-						new asn1js.Repeated({
-							name: (names.values || ""),
-							value: new asn1js.Any()
-						})
-					]
-				})
-			]
-		}));
+        return (new asn1js.Sequence({
+            name: (names.blockName || ""),
+            value: [
+                AlgorithmIdentifier.schema(names.digestAlgorithm || {
+                    names: {
+                        blockName: "digestAlgorithm"
+                    }
+                }),
+                new asn1js.OctetString({ name: (names.digest || "digest") })
+            ]
+        }));
 	}
 	//**********************************************************************************
 	/**
@@ -109,25 +108,29 @@ export default class Attribute
 	 */
 	fromSchema(schema)
 	{
-		//region Check the schema is valid
-		const asn1 = asn1js.compareSchema(schema,
-			schema,
-			Attribute.schema({
-				names: {
-					type: "type",
-					values: "values"
-				}
-			})
-		);
+        //region Check the schema is valid 
+        const asn1 = asn1js.compareSchema(schema,
+            schema,
+            DigestInfo.schema({
+                names: {
+                    digestAlgorithm: {
+                        names: {
+                            blockName: "digestAlgorithm"
+                        }
+                    },
+                    digest: "digest"
+                }
+            })
+            );
 
-		if(asn1.verified === false)
-			throw new Error("Object's schema was not verified against input data for ATTRIBUTE");
-		//endregion
+        if(asn1.verified === false)
+            throw new Error("Object's schema was not verified against input data for DigestInfo");
+        //endregion 
 
-		//region Get internal properties from parsed schema
-		this.type = asn1.result.type.valueBlock.toString();
-		this.values = asn1.result.values;
-		//endregion
+        //region Get internal properties from parsed schema 
+        this.digestAlgorithm = new AlgorithmIdentifier({ schema: asn1.result.digestAlgorithm });
+        this.digest = asn1.result.digest;
+        //endregion 
 	}
 	//**********************************************************************************
 	/**
@@ -139,10 +142,8 @@ export default class Attribute
 		//region Construct and return new ASN.1 schema for this object
 		return (new asn1js.Sequence({
 			value: [
-				new asn1js.ObjectIdentifier({ value: this.type }),
-				new asn1js.Set({
-					value: this.values
-				})
+				this.digestAlgorithm.toSchema(),
+				this.digest
 			]
 		}));
 		//endregion
@@ -155,8 +156,8 @@ export default class Attribute
 	toJSON()
 	{
 		return {
-			type: this.type,
-			values: Array.from(this.values, element => element.toJSON())
+			digestAlgorithm: this.digestAlgorithm.toJSON(),
+			digest: this.digest.toJSON()
 		};
 	}
 	//**********************************************************************************
