@@ -895,6 +895,7 @@ export function getAlgorithmByOID(oid)
 {
 	switch(oid)
 	{
+		case "1.2.840.113549.1.1.1":
 		case "1.2.840.113549.1.1.5":
 			return {
 				name: "RSASSA-PKCS1-v1_5",

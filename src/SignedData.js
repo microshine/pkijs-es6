@@ -835,7 +835,7 @@ export default class SignedData
 			//endregion
 
 			//region Get information about public key algorithm and default parameters for import
-			const algorithmObject = getAlgorithmByOID(signerCertificate.signatureAlgorithm.algorithmId);
+			const algorithmObject = getAlgorithmByOID(signerCertificate.subjectPublicKeyInfo.algorithm.algorithmId);
 			if(("name" in algorithmObject) === false)
 			{
 				if(extendedMode)
@@ -843,14 +843,14 @@ export default class SignedData
 					return Promise.reject({
 						date: checkDate,
 						code: 11,
-						message: `Unsupported public key algorithm: ${signerCertificate.signatureAlgorithm.algorithmId}`,
+						message: `Unsupported public key algorithm: ${signerCertificate.subjectPublicKeyInfo.algorithm.algorithmId}`,
 						signatureVerified: null,
 						signerCertificate,
 						signerCertificateVerified: true
 					});
 				}
 
-				return Promise.reject(`Unsupported public key algorithm: ${signerCertificate.signatureAlgorithm.algorithmId}`);
+				return Promise.reject(`Unsupported public key algorithm: ${signerCertificate.subjectPublicKeyInfo.algorithm.algorithmId}`);
 			}
 
 			const algorithm = getAlgorithmParameters(algorithmObject.name, "importkey");

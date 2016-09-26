@@ -621,9 +621,9 @@ export default class BasicOCSPResponse
 		//region Import public key from responder certificate
 		sequence = sequence.then(() => {
 			//region Get information about public key algorithm and default parameters for import
-			const algorithmObject = getAlgorithmByOID(this.certs[certIndex].signatureAlgorithm.algorithmId);
+			const algorithmObject = getAlgorithmByOID(this.certs[certIndex].subjectPublicKeyInfo.algorithm.algorithmId);
 			if(("name" in algorithmObject) === false)
-				return Promise.reject(`Unsupported public key algorithm: ${this.certs[certIndex].signatureAlgorithm.algorithmId}`);
+				return Promise.reject(`Unsupported public key algorithm: ${this.certs[certIndex].subjectPublicKeyInfo.algorithm.algorithmId}`);
 
 			const algorithmName = algorithmObject.name;
 

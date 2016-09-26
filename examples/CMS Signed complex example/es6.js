@@ -708,23 +708,3 @@ export function handleCABundle(evt)
 //*********************************************************************************
 //endregion
 //*********************************************************************************
-export function testIndef()
-{
-	const buffer = new ArrayBuffer(23000);
-	const view = new Uint8Array(buffer);
-	
-	for(let i = 0; i < 22999; i++)
-		view[i] = 0x01;
-	
-	const octetString = new asn1js.OctetString({
-		idBlock: { isConstructed: true },
-		lenBlock: { isIndefiniteForm: true },
-		isConstructed: true,
-		value: [
-			new asn1js.OctetString({ valueHex: buffer })
-		]
-	});
-	
-	document.getElementById("new_signed_data").innerHTML = formatPEM(window.btoa(arrayBufferToString(octetString.toBER(false))));
-}
-//*********************************************************************************

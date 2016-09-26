@@ -1,5 +1,5 @@
 import * as asn1js from "asn1js";
-import { arrayBufferToString, stringToArrayBuffer, bufferToHexCodes } from "pvutils";
+import { stringToArrayBuffer, bufferToHexCodes } from "pvutils";
 import { getCrypto, getAlgorithmParameters } from "pkijs/src/common";
 import Certificate from "pkijs/src/Certificate";
 import AttributeTypeAndValue from "pkijs/src/AttributeTypeAndValue";
@@ -15,6 +15,7 @@ import IssuerAndSerialNumber from "pkijs/src/IssuerAndSerialNumber";
 import ContentInfo from "pkijs/src/ContentInfo";
 import TimeStampResp from "pkijs/src/TimeStampResp";
 import PKIStatusInfo from "pkijs/src/PKIStatusInfo";
+import BasicConstraints from "pkijs/src/BasicConstraints";
 //*********************************************************************************
 let tspResponseBuffer = new ArrayBuffer(0); // ArrayBuffer with loaded or created TSP response
 let trustedCertificates = []; // Array of root certificates from "CA Bundle"
@@ -159,17 +160,17 @@ export function createTSPResp()
 	certSimpl.extensions = []; // Extensions are not a part of certificate by default, it's an optional array
 	
 	//region "BasicConstraints" extension
-	//let basic_constr = new org.pkijs.simpl.x509.BasicConstraints({
-	//    cA: true,
-	//    pathLenConstraint: 3
-	//});
+	let basic_constr = new BasicConstraints({
+	   cA: true,
+	   pathLenConstraint: 3
+	});
 	
-	//certSimpl.extensions.push(new org.pkijs.simpl.EXTENSION({
-	//    extnID: "2.5.29.19",
-	//    critical: false,
-	//    extnValue: basic_constr.toSchema().toBER(false),
-	//    parsedValue: basic_constr // Parsed value for well-known extensions
-	//}));
+	certSimpl.extensions.push(new Extension({
+	   extnID: "2.5.29.19",
+	   critical: false,
+	   extnValue: basic_constr.toSchema().toBER(false),
+	   parsedValue: basic_constr // Parsed value for well-known extensions
+	}));
 	//endregion
 	
 	//region "KeyUsage" extension
@@ -177,7 +178,7 @@ export function createTSPResp()
 	let bit_view = new Uint8Array(bit_array);
 	
 	bit_view[0] = bit_view[0] | 0x02; // Key usage "cRLSign" flag
-	//bit_view[0] = bit_view[0] | 0x04; // Key usage "keyCertSign" flag
+	bit_view[0] = bit_view[0] | 0x04; // Key usage "keyCertSign" flag
 	
 	let key_usage = new asn1js.BitString({ valueHex: bit_array });
 	
@@ -320,7 +321,7 @@ export function createTSPResp()
 				version: 1,
 				policy: "1.1.1",
 				messageImprint: new MessageImprint({
-					hashAlgorithm: new AlgorithmIdentifier({ algorithm_id: "1.3.14.3.2.26" }),
+					hashAlgorithm: new AlgorithmIdentifier({ algorithmId: "1.3.14.3.2.26" }),
 					hashedMessage: new asn1js.OctetString({ valueHex: result })
 				}),
 				serialNumber: new asn1js.Integer({ valueHex: hashedBuffer }),
@@ -514,9 +515,9 @@ export function parseTSPResp()
 		"2.16.840.1.101.3.4.2.3": "SHA-512"
 	};
 	
-	let hashAlgorithm = dgstmap[tstInfoSimpl.messageImprint.hashAlgorithm.algorithm_id];
+	let hashAlgorithm = dgstmap[tstInfoSimpl.messageImprint.hashAlgorithm.algorithmId];
 	if(typeof hashAlgorithm === "undefined")
-		hashAlgorithm = tstInfoSimpl.messageImprint.hashAlgorithm.algorithm_id;
+		hashAlgorithm = tstInfoSimpl.messageImprint.hashAlgorithm.algorithmId;
 	
 	let imprintTable = document.getElementById("resp-imprint");
 	
@@ -661,7 +662,7 @@ export function verifyTSPResp()
 	//endregion
 	
 	//region Verify TSP response
-	tspRespSimpl.verify({ trustedCerts: trustedCertificates, data: testData.buffer }).
+	tspRespSimpl.verify({ signer: 0, trustedCerts: trustedCertificates, data: testData.buffer }).
 	then(
 		function(result)
 		{

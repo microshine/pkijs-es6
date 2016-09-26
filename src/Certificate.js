@@ -533,9 +533,9 @@ export default class Certificate
 			//endregion
 
 			//region Get information about public key algorithm and default parameters for import
-			const algorithmObject = getAlgorithmByOID(this.signatureAlgorithm.algorithmId);
+			const algorithmObject = getAlgorithmByOID(this.subjectPublicKeyInfo.algorithm.algorithmId);
 			if(("name" in algorithmObject) === false)
-				return Promise.reject(`Unsupported public key algorithm: ${this.signatureAlgorithm.algorithmId}`);
+				return Promise.reject(`Unsupported public key algorithm: ${this.subjectPublicKeyInfo.algorithm.algorithmId}`);
 
 			algorithm = getAlgorithmParameters(algorithmObject.name, "importkey");
 			if("hash" in algorithm.algorithm)
@@ -714,9 +714,9 @@ export default class Certificate
 		//region Importing public key
 		sequence = sequence.then(() => {
 			//region Get information about public key algorithm and default parameters for import
-			const algorithmObject = getAlgorithmByOID(this.signatureAlgorithm.algorithmId);
+			const algorithmObject = getAlgorithmByOID(this.subjectPublicKeyInfo.algorithm.algorithmId);
 			if(("name" in algorithmObject) === false)
-				return Promise.reject(`Unsupported public key algorithm: ${this.signatureAlgorithm.algorithmId}`);
+				return Promise.reject(`Unsupported public key algorithm: ${this.subjectPublicKeyInfo.algorithm.algorithmId}`);
 
 			const algorithm = getAlgorithmParameters(algorithmObject.name, "importkey");
 			if("hash" in algorithm.algorithm)

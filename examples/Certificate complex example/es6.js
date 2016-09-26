@@ -7,6 +7,7 @@ import CertificateChainValidationEngine from "pkijs/src/CertificateChainValidati
 import CertificateRevocationList from "pkijs/src/CertificateRevocationList";
 import { stringToArrayBuffer, bufferToHexCodes } from "pvutils";
 import { getCrypto, getAlgorithmParameters  } from "pkijs/src/common";
+import BasicConstraints from "pkijs/src/BasicConstraints";
 //*********************************************************************************
 let certificateBuffer = new ArrayBuffer(0); // ArrayBuffer with loaded or created CERT
 const trustedCertificates = []; // Array of root certificates from "CA Bundle"
@@ -270,17 +271,17 @@ export function createCertificate(buffer)
 	certificate.extensions = []; // Extensions are not a part of certificate by default, it's an optional array
 	
 	//region "BasicConstraints" extension
-	//let basic_constr = new org.pkijs.simpl.x509.BasicConstraints({
-	//    cA: true,
-	//    pathLenConstraint: 3
-	//});
+	let basic_constr = new BasicConstraints({
+	   cA: true,
+	   pathLenConstraint: 3
+	});
 	
-	//certificate.extensions.push(new org.pkijs.simpl.EXTENSION({
-	//    extnID: "2.5.29.19",
-	//    critical: false,
-	//    extnValue: basic_constr.toSchema().toBER(false),
-	//    parsedValue: basic_constr // Parsed value for well-known extensions
-	//}));
+	certificate.extensions.push(new Extension({
+	   extnID: "2.5.29.19",
+	   critical: false,
+	   extnValue: basic_constr.toSchema().toBER(false),
+	   parsedValue: basic_constr // Parsed value for well-known extensions
+	}));
 	//endregion 
 	
 	//region "KeyUsage" extension 
@@ -288,7 +289,7 @@ export function createCertificate(buffer)
 	const bitView = new Uint8Array(bitArray);
 	
 	bitView[0] = bitView[0] | 0x02; // Key usage "cRLSign" flag
-	//bitView[0] = bitView[0] | 0x04; // Key usage "keyCertSign" flag
+	bitView[0] = bitView[0] | 0x04; // Key usage "keyCertSign" flag
 	
 	const keyUsage = new asn1js.BitString({ valueHex: bitArray });
 	
@@ -346,6 +347,8 @@ export function createCertificate(buffer)
 		resultString = `${resultString}${formatPEM(window.btoa(certificateString))}`;
 		resultString = `${resultString}\r\n-----END CERTIFICATE-----\r\n`;
 
+		trustedCertificates.push(certificate);
+		
 		document.getElementById("new_signed_data").innerHTML = resultString;
 
 		parseCertificate();
