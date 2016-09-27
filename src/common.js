@@ -932,6 +932,7 @@ export function getAlgorithmByOID(oid)
 			return {
 				name: "RSA-OAEP"
 			};
+		case "1.2.840.10045.2.1":
 		case "1.2.840.10045.4.1":
 			return {
 				name: "ECDSA",
