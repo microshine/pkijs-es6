@@ -515,7 +515,7 @@ export default class Certificate
 	/**
 	 * Importing public key for current certificate
 	 */
-	getPublicKey(algorithm = null)
+	getPublicKey({ algorithm = null })
 	{
 		//region Get a "crypto" extension
 		const crypto = getCrypto();

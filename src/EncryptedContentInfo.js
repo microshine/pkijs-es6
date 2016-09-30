@@ -25,11 +25,47 @@ export default class EncryptedContentInfo
 		this.contentEncryptionAlgorithm = getParametersValue(parameters, "contentEncryptionAlgorithm", EncryptedContentInfo.defaultValues("contentEncryptionAlgorithm"));
 
 		if("encryptedContent" in parameters)
+		{
 			/**
 			 * @type {OctetString}
 			 * @description encryptedContent (!!!) could be contructive or primitive value (!!!)
 			 */
-			this.encryptedContent = getParametersValue(parameters, "encryptedContent", EncryptedContentInfo.defaultValues("encryptedContent"));
+			this.encryptedContent = parameters.encryptedContent;
+			
+			if((this.encryptedContent.idBlock.tagClass === 1) &&
+				(this.encryptedContent.idBlock.tagNumber === 4))
+			{
+				//region Divide OCTETSTRING value down to small pieces
+				if(this.encryptedContent.idBlock.isConstructed === false)
+				{
+					const constrString = new asn1js.OctetString({
+						idBlock: { isConstructed: true },
+						isConstructed: true
+					});
+					
+					let offset = 0;
+					let length = this.encryptedContent.valueBlock.valueHex.byteLength;
+					
+					while(length > 0)
+					{
+						const pieceView = new Uint8Array(this.encryptedContent.valueBlock.valueHex, offset, ((offset + 1024) > this.encryptedContent.valueBlock.valueHex.byteLength) ? (this.encryptedContent.valueBlock.valueHex.byteLength - offset) : 1024);
+						const _array = new ArrayBuffer(pieceView.length);
+						const _view = new Uint8Array(_array);
+						
+						for(let i = 0; i < _view.length; i++)
+							_view[i] = pieceView[i];
+						
+						constrString.valueBlock.value.push(new asn1js.OctetString({ valueHex: _array }));
+						
+						length -= pieceView.length;
+						offset += pieceView.length;
+					}
+					
+					this.encryptedContent = constrString;
+				}
+				//endregion
+			}
+		}
 		//endregion
 
 		//region If input argument array contains "schema" for this object

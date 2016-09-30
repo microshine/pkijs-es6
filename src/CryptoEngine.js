@@ -136,9 +136,9 @@ export default class CryptoEngine
 							}
 							break;
 						case "ECDSA":
+							keyUsages = ["verify"]; // Override existing keyUsages value since the key is a public key
+						case "ECDH":
 							{
-								keyUsages = ["verify"]; // Override existing keyUsages value since the key is a public key
-
 								//region Initial variables
 								jwk = {
 									kty: "EC",
@@ -290,9 +290,9 @@ export default class CryptoEngine
 							}
 							break;
 						case "ECDSA":
+							keyUsages = ["sign"]; // Override existing keyUsages value since the key is a private key
+						case "ECDH":
 							{
-								keyUsages = ["sign"]; // Override existing keyUsages value since the key is a private key
-
 								//region Initial variables
 								jwk = {
 									kty: "EC",

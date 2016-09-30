@@ -17,7 +17,7 @@ export default class RecipientEncryptedKeys
 		 * @type {Array.<RecipientEncryptedKey>}
 		 * @description encryptedKeys
 		 */
-		this.encryptedKeys = getParametersValue(parameters, "values", RecipientEncryptedKeys.defaultValues("encryptedKeys"));
+		this.encryptedKeys = getParametersValue(parameters, "encryptedKeys", RecipientEncryptedKeys.defaultValues("encryptedKeys"));
 		//endregion
 
 		//region If input argument array contains "schema" for this object

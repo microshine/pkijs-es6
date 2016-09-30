@@ -14,7 +14,7 @@ const trustedCertificates = []; // Array of root certificates from "CA Bundle"
 const intermadiateCertificates = []; // Array of intermediate certificates
 const crls = []; // Array of CRLs for all certificates (trusted + intermediate)
 //*********************************************************************************
-export function formatPEM(pemString)
+function formatPEM(pemString)
 {
 	/// <summary>Format string in order to have each line with length equal to 63</summary>
 	/// <param name="pemString" type="String">String to format</param>
