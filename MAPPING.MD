@@ -1,3 +1,5 @@
+This file provides a mapping from PKIjs v1 (based on ES5) and PKIjs v2 (based on ES6) class names. This is intended to help with the migration from the older version to the newer version.
+
 | Old class name | New class name |
 |----------------|----------------|
 | TIME | Time |
