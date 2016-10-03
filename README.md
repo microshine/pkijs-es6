@@ -23,7 +23,7 @@ In the new version of library we have some new features:
 * New version of "certificate chaing verification engine" passed almost all tests from NIST PKITS. Tests are also shipped with the library;
 * Internal "WebCrypto shim" making it possible to work with "spki/pkcs8" formats in any environment;
 
-In order to make it easier to move from PKIjs 1.0 code to PKIjs 2.0 code we made [special file with name mapping](MAPPING.MD).
+In order to make it easier to move from PKIjs 1.0 code to PKIjs 2.0 code we made a file that provides a [mapping](MAPPING.MD) between old and new class names.
 
 ## Examples
 ### Parse a X.509 certificate
@@ -121,12 +121,12 @@ More examples could be found in [**"examples" folder**](https://github.com/Pecul
 
 ## Limitations
 
-* Does not work with Internet Explorer's implementation of Web Cryptography API it is based on a old draft and also does not support all needed capabilities.
-* Does not work with PolyCrypt it is based on a old version of Web Cryptography API and is buggy.
-* You can use PKIjs in almost all browsers. Please check [this page](http://caniuse.com/#feat=cryptography) for information about Web Cryptography API browser support.
+* Safari, Edge, and IE do not have complete, or correct implementations of Web Crypto. To work around these limitations you will probably need [`webcrypto-liner`](https://github.com/PeculiarVentures/webcrypto-liner/).
+* You can check the capabilities of your browser's Web Crypto implementation [here](https://peculiarventures.github.io/pv-webcrypto-tests/).
+* Web Crypto support in browsers is always improving. Please check [this page](http://caniuse.com/#feat=cryptography) for information about Web Cryptography API browser support.
 
 ## Suitability
-At this time this library should be considered suitable for research and experimentation, futher code and security review is needed before utilization in a production application.
+There are several commercial products, enterprise solitions as well as open source project based on versions of PKIjs. You should, however, do your own code and security review before utilization in a production application before utilizing any open source library to ensure it will meet your needs.
 
 ## Bug Reporting
 Please report bugs either as pull requests or as issues in the issue tracker. PKIjs has a full disclosure vulnerability policy. Please do NOT attempt to report any security vulnerability in this code privately to anybody.
