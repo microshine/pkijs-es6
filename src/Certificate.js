@@ -515,7 +515,7 @@ export default class Certificate
 	/**
 	 * Importing public key for current certificate
 	 */
-	getPublicKey({ algorithm = null })
+	getPublicKey(parameters = null)
 	{
 		//region Get a "crypto" extension
 		const crypto = getCrypto();
@@ -524,7 +524,7 @@ export default class Certificate
 		//endregion
 
 		//region Find correct algorithm for imported public key
-		if(algorithm === null)
+		if(parameters === null)
 		{
 			//region Find signer's hashing algorithm
 			const shaAlgorithm = getHashAlgorithm(this.signatureAlgorithm);
@@ -536,10 +536,10 @@ export default class Certificate
 			const algorithmObject = getAlgorithmByOID(this.subjectPublicKeyInfo.algorithm.algorithmId);
 			if(("name" in algorithmObject) === false)
 				return Promise.reject(`Unsupported public key algorithm: ${this.subjectPublicKeyInfo.algorithm.algorithmId}`);
-
-			algorithm = getAlgorithmParameters(algorithmObject.name, "importkey");
-			if("hash" in algorithm.algorithm)
-				algorithm.algorithm.hash.name = shaAlgorithm;
+			
+			parameters.algorithm = getAlgorithmParameters(algorithmObject.name, "importkey");
+			if("hash" in parameters.algorithm.algorithm)
+				parameters.algorithm.algorithm.hash.name = shaAlgorithm;
 			//endregion
 		}
 		//endregion
@@ -550,7 +550,7 @@ export default class Certificate
 		const publicKeyInfoView = new Uint8Array(publicKeyInfoBuffer);
 		//endregion
 
-		return crypto.importKey("spki", publicKeyInfoView, algorithm.algorithm, true, algorithm.usages);
+		return crypto.importKey("spki", publicKeyInfoView, parameters.algorithm.algorithm, true, parameters.algorithm.usages);
 	}
 	//**********************************************************************************
 	/**
