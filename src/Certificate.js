@@ -526,6 +526,10 @@ export default class Certificate
 		//region Find correct algorithm for imported public key
 		if(parameters === null)
 		{
+			//region Initial variables
+			parameters = {};
+			//endregion
+
 			//region Find signer's hashing algorithm
 			const shaAlgorithm = getHashAlgorithm(this.signatureAlgorithm);
 			if(shaAlgorithm === "")
