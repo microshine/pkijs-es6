@@ -25,41 +25,38 @@ export default class EncapsulatedContentInfo
 			 * @description eContent
 			 */
 			this.eContent = getParametersValue(parameters, "eContent", EncapsulatedContentInfo.defaultValues("eContent"));
-			if("eContent" in parameters)
+			if((this.eContent.idBlock.tagClass === 1) &&
+				(this.eContent.idBlock.tagNumber === 4))
 			{
-				if((this.eContent.idBlock.tagClass === 1) &&
-					(this.eContent.idBlock.tagNumber === 4))
+				// #region Divide OCTETSTRING value down to small pieces
+				if(this.eContent.idBlock.isConstructed === false)
 				{
-					// #region Divide OCTETSTRING value down to small pieces
-					if(this.eContent.idBlock.isConstructed === false)
+					const constrString = new asn1js.OctetString({
+						idBlock: { isConstructed: true },
+						isConstructed: true
+					});
+					
+					let offset = 0;
+					let length = this.eContent.valueBlock.valueHex.byteLength;
+					
+					while(length > 0)
 					{
-						const constrString = new asn1js.OctetString({
-							idBlock: { isConstructed: true },
-							isConstructed: true
-						});
+						const pieceView = new Uint8Array(this.eContent.valueBlock.valueHex, offset, ((offset + 65536) > this.eContent.valueBlock.valueHex.byteLength) ? (this.eContent.valueBlock.valueHex.byteLength - offset) : 65536);
+						const _array = new ArrayBuffer(pieceView.length);
+						const _view = new Uint8Array(_array);
 						
-						let offset = 0;
-						let length = this.eContent.valueBlock.valueHex.byteLength;
+						for(let i = 0; i < _view.length; i++)
+							_view[i] = pieceView[i];
 						
-						while(length > 0)
-						{
-							const pieceView = new Uint8Array(this.eContent.valueBlock.valueHex, offset, ((offset + 65536) > this.eContent.valueBlock.valueHex.byteLength) ? (this.eContent.valueBlock.valueHex.byteLength - offset) : 65536);
-							const _array = new ArrayBuffer(pieceView.length);
-							const _view = new Uint8Array(_array);
-							
-							for(let i = 0; i < _view.length; i++)
-								_view[i] = pieceView[i];
-							
-							constrString.valueBlock.value.push(new asn1js.OctetString({ valueHex: _array }));
-							
-							length -= pieceView.length;
-							offset += pieceView.length;
-						}
+						constrString.valueBlock.value.push(new asn1js.OctetString({ valueHex: _array }));
 						
-						this.eContent = constrString;
+						length -= pieceView.length;
+						offset += pieceView.length;
 					}
-					// #endregion
+					
+					this.eContent = constrString;
 				}
+				// #endregion
 			}
 		}
 		//endregion

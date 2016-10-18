@@ -35,7 +35,7 @@ export default class CertificateSet
 		switch(memberName)
 		{
 			case "certificates":
-				return [].length;
+				return [];
 			default:
 				throw new Error(`Invalid member name for Attribute class: ${memberName}`);
 		}

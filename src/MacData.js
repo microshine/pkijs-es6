@@ -26,7 +26,7 @@ export default class MacData
 		
 		if("iterations" in parameters)
 			/**
-			 * @type {OctetString}
+			 * @type {number}
 			 * @description iterations
 			 */
 			this.iterations = getParametersValue(parameters, "iterations", MacData.defaultValues("iterations"));
@@ -51,7 +51,7 @@ export default class MacData
 			case "macSalt":
 				return new asn1js.OctetString();
 			case "iterations":
-				return (-1);
+				return 1;
 			default:
 				throw new Error(`Invalid member name for MacData class: ${memberName}`);
 		}
