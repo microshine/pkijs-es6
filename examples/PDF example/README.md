@@ -2,6 +2,6 @@
 
 Signed PDF signature validation.
 
-CA bundle: (http://curl.haxx.se/ca/cacert.pem)
+Certificate data from Mozilla (CA bundle): http://curl.haxx.se/ca/cacert.pem
 
-PDF parser: (https://github.com/mozilla/pdf.js)
+PDF parser: https://github.com/mozilla/pdf.js
