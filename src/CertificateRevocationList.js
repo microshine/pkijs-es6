@@ -562,7 +562,7 @@ export default class CertificateRevocationList
 		//region Check the CRL for unknown critical extensions
 		if("crlExtensions" in this)
 		{
-			for(const extension of this.crlExtensions)
+			for(const extension of this.crlExtensions.extensions)
 			{
 				if(extension.critical)
 				{
