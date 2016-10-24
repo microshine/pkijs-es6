@@ -65,7 +65,7 @@ export default class BasicOCSPResponse
 			case "signature":
 				return new asn1js.BitString();
 			case "certs":
-				return new Certificate();
+				return [];
 			default:
 				throw new Error(`Invalid member name for BasicOCSPResponse class: ${memberName}`);
 		}

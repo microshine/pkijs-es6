@@ -14,7 +14,7 @@ export default class SignedAndUnsignedAttributes
 	{
 		//region Internal properties of the object
 		/**
-		 * @type {string}
+		 * @type {number}
 		 * @description type
 		 */
 		this.type = getParametersValue(parameters, "type", SignedAndUnsignedAttributes.defaultValues("type"));

@@ -14,13 +14,13 @@ export default class AttributeTypeAndValue
 	{
 		//region Internal properties of the object
 		/**
-		 * @type {number}
-		 * @description 0 - UTCTime; 1 - GeneralizedTime; 2 - empty value
+		 * @type {string}
+		 * @description type
 		 */
 		this.type = getParametersValue(parameters, "type", AttributeTypeAndValue.defaultValues("type"));
 		/**
 		 * @type {Object}
-		 * @description Value of the TIME class
+		 * @description Value of the AttributeTypeAndValue class
 		 */
 		this.value = getParametersValue(parameters, "value", AttributeTypeAndValue.defaultValues("value"));
 		//endregion
@@ -40,7 +40,7 @@ export default class AttributeTypeAndValue
 		switch(memberName)
 		{
 			case "type":
-				return 0;
+				return "";
 			case "value":
 				return {};
 			default:
