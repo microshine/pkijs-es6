@@ -155,7 +155,7 @@ export default class Certificate
 		 */
 		this.serialNumber = getParametersValue(parameters, "serialNumber", Certificate.defaultValues("serialNumber"));
 		/**
-		 * @type {Integer}
+		 * @type {AlgorithmIdentifier}
 		 * @description signature
 		 */
 		this.signature = getParametersValue(parameters, "signature", Certificate.defaultValues("signature"));

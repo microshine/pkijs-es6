@@ -297,9 +297,9 @@ export default class CertificationRequest
 	/**
 	 * Makes signature for currect certification request
 	 * @param {Object} privateKey WebCrypto private key
-	 * @param {string} hashAlgorithm String representing current hashing algorithm
+	 * @param {string} [hashAlgorithm=SHA-1] String representing current hashing algorithm
 	 */
-	sign(privateKey, hashAlgorithm)
+	sign(privateKey, hashAlgorithm = "SHA-1")
 	{
 		//region Get a private key from function parameter
 		if(typeof privateKey === "undefined")
@@ -307,16 +307,9 @@ export default class CertificationRequest
 		//endregion
 
 		//region Get hashing algorithm
-		if(typeof hashAlgorithm === "undefined")
-			hashAlgorithm = "SHA-1";
-		else
-		{
-			//region Simple check for supported algorithm
-			const oid = getOIDByAlgorithm({ name: hashAlgorithm });
-			if(oid === "")
-				return Promise.reject("Unsupported hash algorithm: {$hashAlgorithm}");
-			//endregion
-		}
+		const oid = getOIDByAlgorithm({ name: hashAlgorithm });
+		if(oid === "")
+			return Promise.reject("Unsupported hash algorithm: {$hashAlgorithm}");
 		//endregion
 
 		//region Get a "default parameters" for current algorithm
