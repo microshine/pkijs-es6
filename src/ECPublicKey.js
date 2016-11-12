@@ -102,28 +102,28 @@ export default class ECPublicKey
 		//endregion
 
 		//region Get internal properties from parsed schema
-		let coodinateLength;
+		let coordinateLength;
 
 		switch(this.namedCurve)
 		{
 			case "1.2.840.10045.3.1.7": // P-256
-				coodinateLength = 32;
+				coordinateLength = 32;
 				break;
 			case "1.3.132.0.34": // P-384
-				coodinateLength = 48;
+				coordinateLength = 48;
 				break;
 			case "1.3.132.0.35": // P-521
-				coodinateLength = 66;
+				coordinateLength = 66;
 				break;
 			default:
 				throw new Error(`Incorrect curve OID: ${this.namedCurve}`);
 		}
 
-		if(schema.byteLength !== (coodinateLength * 2 + 1))
+		if(schema.byteLength !== (coordinateLength * 2 + 1))
 			throw new Error("Object's schema was not verified against input data for ECPublicKey");
 		
-		this.x = schema.slice(1, coodinateLength + 1);
-		this.y = schema.slice(1 + coodinateLength, coodinateLength * 2 + 1);
+		this.x = schema.slice(1, coordinateLength + 1);
+		this.y = schema.slice(1 + coordinateLength, coordinateLength * 2 + 1);
 		//endregion
 	}
 	//**********************************************************************************
