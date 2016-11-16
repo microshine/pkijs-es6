@@ -48,6 +48,24 @@ export default class ContentInfo
 	}
 	//**********************************************************************************
 	/**
+	 * Compare values with default values for all class members
+	 * @param {string} memberName String name for a class member
+	 * @param {*} memberValue Value to compare with default value
+	 */
+	static compareWithDefault(memberName, memberValue)
+	{
+		switch(memberName)
+		{
+			case "contentType":
+				return (memberValue === "");
+			case "content":
+				return (memberValue instanceof asn1js.Any);
+			default:
+				throw new Error(`Invalid member name for ContentInfo class: ${memberName}`);
+		}
+	}
+	//**********************************************************************************
+	/**
 	 * Return value of asn1js schema for current class
 	 * @param {Object} parameters Input parameters for the schema
 	 * @returns {Object} asn1js schema object
