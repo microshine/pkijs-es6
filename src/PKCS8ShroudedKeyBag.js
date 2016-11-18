@@ -102,16 +102,15 @@ export default class PKCS8ShroudedKeyBag
 		/**
 		 * @type {Object}
 		 * @property {string} [blockName]
-		 * @property {string} [type]
-		 * @property {string} [setName]
-		 * @property {string} [values]
+		 * @property {string} [encryptionAlgorithm]
+		 * @property {string} [encryptedData]
 		 */
 		const names = getParametersValue(parameters, "names", {});
 		
 		return (new asn1js.Sequence({
 			name: (names.blockName || ""),
 			value: [
-				AlgorithmIdentifier.schema(names.hashAlgorithm || {
+				AlgorithmIdentifier.schema(names.encryptionAlgorithm || {
 						names: {
 							blockName: "encryptionAlgorithm"
 						}
