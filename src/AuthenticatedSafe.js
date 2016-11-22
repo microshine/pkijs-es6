@@ -333,7 +333,7 @@ export default class AuthenticatedSafe
 		//region Create internal values from already parsed values 
 		this.safeContents = [];
 		
-		for(const [index, content] of this.parsedValue.safeContents)
+		for(const [index, content] of this.parsedValue.safeContents.entries())
 		{
 			//region Check current "content" value
 			if(("privacyMode" in content) == false)
@@ -351,14 +351,14 @@ export default class AuthenticatedSafe
 				//region No privacy 
 				case 0:
 					{
-						let content = content.value.toSchema().toBER(false);
+						const contentBuffer = content.value.toSchema().toBER(false);
 						
 						sequence = sequence.then(
-							function()
+							() =>
 							{
 								this.safeContents.push(new ContentInfo({
 									contentType: "1.2.840.113549.1.7.1",
-									content: new asn1js.OctetString({ valueHex: content })
+									content: new asn1js.OctetString({ valueHex: contentBuffer })
 								}));
 							});
 					}
@@ -444,7 +444,7 @@ export default class AuthenticatedSafe
 						);
 						
 						sequence = sequence.then(
-							function()
+							() =>
 							{
 								this.safeContents.push(new ContentInfo({
 									contentType: "1.2.840.113549.1.7.3",
