@@ -18,26 +18,11 @@ export default class SafeContents
 		 * @description safeBags
 		 */
 		this.safeBags = getParametersValue(parameters, "safeBags", SafeContents.defaultValues("safeBags"));
-		/**
-		 * @type {number}
-		 * @description privacyMode 0 - "no privacy" mode, 1 - "password-based privacy" mode, 2 - "certificate-based privacy" mode
-		 */
-		this.privacyMode = getParametersValue(parameters, "privacyMode", SafeContents.defaultValues("privacyMode"));
-		/**
-		 * @type {Object}
-		 * @description privacyParameters
-		 */
-		this.privacyParameters = getParametersValue(parameters, "privacyParameters", SafeContents.defaultValues("privacyParameters"));
 		//endregion
 		
 		//region If input argument array contains "schema" for this object
 		if("schema" in parameters)
 			this.fromSchema(parameters.schema);
-		//endregion
-		
-		//region If input argument array contains "contentInfo" for this object
-		if("contentInfo" in parameters)
-			this.fromContentInfo(parameters.contentInfo);
 		//endregion
 	}
 	//**********************************************************************************
@@ -51,10 +36,6 @@ export default class SafeContents
 		{
 			case "safeBags":
 				return [];
-			case "privacyMode":
-				return 0;
-			case "privacyParameters":
-				return {};
 			default:
 				throw new Error(`Invalid member name for SafeContents class: ${memberName}`);
 		}
@@ -71,10 +52,6 @@ export default class SafeContents
 		{
 			case "safeBags":
 				return (memberValue.length === 0);
-			case "privacyMode":
-				return (memberValue === SafeContents.defaultValues(memberName));
-			case "privacyParameters":
-				return ((memberValue instanceof Object) && (Object.keys(memberValue).length === 0));
 			default:
 				throw new Error(`Invalid member name for SafeContents class: ${memberName}`);
 		}

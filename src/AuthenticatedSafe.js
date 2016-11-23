@@ -343,7 +343,7 @@ export default class AuthenticatedSafe
 				return Promise.reject("The \"value\" is a mandatory parameter for \"content\"");
 			
 			if((content.value instanceof SafeContents) == false)
-				return Promise.reject("The \"content.value\" must has \"in_window.org.pkijs.simpl.pkcs12.SafeContents\" type");
+				return Promise.reject("The \"content.value\" must has \"SafeContents\" type");
 			//endregion 
 			
 			switch(content.privacyMode)
