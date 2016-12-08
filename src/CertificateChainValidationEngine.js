@@ -194,7 +194,7 @@ export default class CertificateChainValidationEngine
 			//endregion
 
 			//region Find all possible CRL issuers
-			issuerCertificates.push(...Array.filter(localCerts, element => certificate.issuer.isEqual(element.subject)));
+			issuerCertificates.push(...localCerts.filter(element => certificate.issuer.isEqual(element.subject)));
 			if(issuerCertificates.length === 0)
 			{
 				return {
@@ -205,7 +205,7 @@ export default class CertificateChainValidationEngine
 			//endregion
 
 			//region Find all CRLs for crtificate's issuer
-			crls.push(...Array.filter(_this.crls, element => element.issuer.isEqual(certificate.issuer)));
+			crls.push(..._this.crls.filter(element => element.issuer.isEqual(certificate.issuer)));
 			if(crls.length === 0)
 			{
 				return {
