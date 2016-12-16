@@ -1,5 +1,4 @@
-﻿[![CircleCI](https://circleci.com/gh/PeculiarVentures/pkijs-es6.svg?style=svg)](https://circleci.com/gh/PeculiarVentures/pkijs-es6)
-
+﻿
 # !!! WARNING-WARNING-WARNING !!!
 
 THIS IS A **TEMPORARY** REPOSITORY ONLY! ITS "LIVE CYCLE" IS 30 DAYS ONLY. PLEASE DO NOT PUT STARS HERE (ISSUES WELCOME) AND DO NOT STORE A LINK TO THE REPOSITORY! AS SOON WE WOULD MOVE [INITIAL PKIJS REPOSITORY](https://github.com/GlobalSign/PKI.js) TO PECULIAR VENTURES REPOSITORY TREE THIS REPOSITORY CONTENT WOULD BE MOVED TO "PKIJS".
@@ -7,7 +6,7 @@ ALSO THIS IS A **PRELIMINARY VERSION** OF THE CODE AND WE WILL APPEND MORE TESTS
 
 # PKIjs
 
-[![license](https://img.shields.io/badge/license-BSD-green.svg?style=flat)](https://raw.githubusercontent.com/GlobalSign/PKI.js/master/LICENSE)
+[![license](https://img.shields.io/badge/license-BSD-green.svg?style=flat)](https://raw.githubusercontent.com/GlobalSign/PKI.js/master/LICENSE) [![CircleCI](https://circleci.com/gh/PeculiarVentures/pkijs-es6.svg?style=svg)](https://circleci.com/gh/PeculiarVentures/pkijs-es6)
 
 Public Key Infrastructure (PKI) is the basis of how identity and key management is performed on the web today. PKIjs is a pure JavaScript library implementing the formats that are used in PKI applications. It is built on WebCrypto ([Web Cryptography API](http://www.w3.org/TR/WebCryptoAPI/)) and aspires to make it possible to build native web applications that utilize X.509 and the related formats on the web without plug-ins.
 
