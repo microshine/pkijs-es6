@@ -1,13 +1,13 @@
 import * as asn1js from "asn1js";
-import Certificate from "pkijs/src/Certificate";
-import AttributeTypeAndValue from "pkijs/src/AttributeTypeAndValue";
-import Extension from "pkijs/src/Extension";
-import RSAPublicKey from "pkijs/src/RSAPublicKey";
-import CertificateChainValidationEngine from "pkijs/src/CertificateChainValidationEngine";
-import CertificateRevocationList from "pkijs/src/CertificateRevocationList";
+import Certificate from "../../src/Certificate";
+import AttributeTypeAndValue from "../../src/AttributeTypeAndValue";
+import Extension from "../../src/Extension";
+import RSAPublicKey from "../../src/RSAPublicKey";
+import CertificateChainValidationEngine from "../../src/CertificateChainValidationEngine";
+import CertificateRevocationList from "../../src/CertificateRevocationList";
 import { stringToArrayBuffer, bufferToHexCodes } from "pvutils";
-import { getCrypto, getAlgorithmParameters, setEngine  } from "pkijs/src/common";
-import BasicConstraints from "pkijs/src/BasicConstraints";
+import { getCrypto, getAlgorithmParameters, setEngine  } from "../../src/common";
+import BasicConstraints from "../../src/BasicConstraints";
 //*********************************************************************************
 let certificateBuffer = new ArrayBuffer(0); // ArrayBuffer with loaded or created CERT
 let privateKeyBuffer = new ArrayBuffer(0);
