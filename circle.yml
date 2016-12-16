@@ -7,6 +7,8 @@ dependencies:
     - npm install -g typescript mocha https://github.com/PeculiarVentures/rollem.git
 
 test:
+  override:
+    - mocha
 
 general:
   branches:
