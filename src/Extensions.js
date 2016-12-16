@@ -1,6 +1,6 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import Extension from "pkijs/src/Extension";
+import Extension from "./Extension";
 //**************************************************************************************
 export default class Extensions
 {

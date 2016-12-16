@@ -1,1 +1,0 @@
-Example demonstrating verifying a signed S/MIME email message.

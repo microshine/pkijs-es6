@@ -1,8 +1,8 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import CertID from "pkijs/src/CertID";
-import Extension from "pkijs/src/Extension";
-import Extensions from "pkijs/src/Extensions";
+import CertID from "./CertID";
+import Extension from "./Extension";
+import Extensions from "./Extensions";
 //**************************************************************************************
 export default class SingleResponse
 {

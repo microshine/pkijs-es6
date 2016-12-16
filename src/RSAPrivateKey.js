@@ -1,6 +1,6 @@
 import * as asn1js from "asn1js";
 import { getParametersValue, toBase64, arrayBufferToString, stringToArrayBuffer, fromBase64 } from "pvutils";
-import OtherPrimeInfo from "pkijs/src/OtherPrimeInfo";
+import OtherPrimeInfo from "./OtherPrimeInfo";
 //**************************************************************************************
 export default class RSAPrivateKey
 {

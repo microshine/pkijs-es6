@@ -1,6 +1,6 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import DigestInfo from "pkijs/src/DigestInfo";
+import DigestInfo from "./DigestInfo";
 //**************************************************************************************
 export default class MacData
 {

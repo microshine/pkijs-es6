@@ -1,8 +1,8 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
-import SignedAndUnsignedAttributes from "pkijs/src/SignedAndUnsignedAttributes";
-import IssuerAndSerialNumber from "pkijs/src/IssuerAndSerialNumber";
+import AlgorithmIdentifier from "./AlgorithmIdentifier";
+import SignedAndUnsignedAttributes from "./SignedAndUnsignedAttributes";
+import IssuerAndSerialNumber from "./IssuerAndSerialNumber";
 //**************************************************************************************
 export default class SignerInfo 
 {

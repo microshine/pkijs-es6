@@ -1,9 +1,9 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
-import EncryptedData from "pkijs/src/EncryptedData";
-import EncryptedContentInfo from "pkijs/src/EncryptedContentInfo";
-import PrivateKeyInfo from "pkijs/src/PrivateKeyInfo";
+import AlgorithmIdentifier from "./AlgorithmIdentifier";
+import EncryptedData from "./EncryptedData";
+import EncryptedContentInfo from "./EncryptedContentInfo";
+import PrivateKeyInfo from "./PrivateKeyInfo";
 //**************************************************************************************
 export default class PKCS8ShroudedKeyBag
 {

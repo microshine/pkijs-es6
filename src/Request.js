@@ -1,7 +1,7 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import CertID from "pkijs/src/CertID";
-import Extension from "pkijs/src/Extension";
+import CertID from "./CertID";
+import Extension from "./Extension";
 //**************************************************************************************
 export default class Request
 {

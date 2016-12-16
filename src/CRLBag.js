@@ -1,6 +1,6 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import CertificateRevocationList from "pkijs/src/CertificateRevocationList";
+import CertificateRevocationList from "./CertificateRevocationList";
 //**************************************************************************************
 export default class CRLBag
 {

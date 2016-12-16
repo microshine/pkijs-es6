@@ -1,17 +1,17 @@
 import * as asn1js from "asn1js";
 import { getParametersValue, utilConcatBuf } from "pvutils";
-import { getCrypto, getRandomValues, getOIDByAlgorithm, getAlgorithmByOID } from "pkijs/src/common";
-import ContentInfo from "pkijs/src/ContentInfo";
-import MacData from "pkijs/src/MacData";
-import DigestInfo from "pkijs/src/DigestInfo";
-import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
-import SignedData from "pkijs/src/SignedData";
-import EncapsulatedContentInfo from "pkijs/src/EncapsulatedContentInfo";
-import Attribute from "pkijs/src/Attribute";
-import SignerInfo from "pkijs/src/SignerInfo";
-import IssuerAndSerialNumber from "pkijs/src/IssuerAndSerialNumber";
-import SignedAndUnsignedAttributes from "pkijs/src/SignedAndUnsignedAttributes";
-import AuthenticatedSafe from "pkijs/src/AuthenticatedSafe";
+import { getCrypto, getRandomValues, getOIDByAlgorithm, getAlgorithmByOID } from "./common";
+import ContentInfo from "./ContentInfo";
+import MacData from "./MacData";
+import DigestInfo from "./DigestInfo";
+import AlgorithmIdentifier from "./AlgorithmIdentifier";
+import SignedData from "./SignedData";
+import EncapsulatedContentInfo from "./EncapsulatedContentInfo";
+import Attribute from "./Attribute";
+import SignerInfo from "./SignerInfo";
+import IssuerAndSerialNumber from "./IssuerAndSerialNumber";
+import SignedAndUnsignedAttributes from "./SignedAndUnsignedAttributes";
+import AuthenticatedSafe from "./AuthenticatedSafe";
 //**************************************************************************************
 export default class PFX
 {

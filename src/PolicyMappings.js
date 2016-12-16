@@ -1,6 +1,6 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import PolicyMapping from "pkijs/src/PolicyMapping";
+import PolicyMapping from "./PolicyMapping";
 //**************************************************************************************
 export default class PolicyMappings
 {

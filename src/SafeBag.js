@@ -1,12 +1,12 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import Attribute from "pkijs/src/Attribute";
-import PrivateKeyInfo from "pkijs/src/PrivateKeyInfo";
-import PKCS8ShroudedKeyBag from "pkijs/src/PKCS8ShroudedKeyBag";
-import CertBag from "pkijs/src/CertBag";
-import CRLBag from "pkijs/src/CRLBag";
-import SecretBag from "pkijs/src/SecretBag";
-import SafeContents from "pkijs/src/SafeContents";
+import Attribute from "./Attribute";
+import PrivateKeyInfo from "./PrivateKeyInfo";
+import PKCS8ShroudedKeyBag from "./PKCS8ShroudedKeyBag";
+import CertBag from "./CertBag";
+import CRLBag from "./CRLBag";
+import SecretBag from "./SecretBag";
+import SafeContents from "./SafeContents";
 //**************************************************************************************
 export default class SafeBag
 {

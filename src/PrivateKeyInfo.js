@@ -1,9 +1,9 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
-import Attribute from "pkijs/src/Attribute";
-import ECPrivateKey from "pkijs/src/ECPrivateKey";
-import RSAPrivateKey from "pkijs/src/RSAPrivateKey";
+import AlgorithmIdentifier from "./AlgorithmIdentifier";
+import Attribute from "./Attribute";
+import ECPrivateKey from "./ECPrivateKey";
+import RSAPrivateKey from "./RSAPrivateKey";
 //**************************************************************************************
 export default class PrivateKeyInfo
 {

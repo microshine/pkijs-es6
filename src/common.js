@@ -1,8 +1,8 @@
 import * as asn1js from "asn1js";
 import { utilConcatBuf } from "pvutils";
-import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
-import RSASSAPSSParams from "pkijs/src/RSASSAPSSParams";
-import CryptoEngine from "pkijs/src/CryptoEngine";
+import AlgorithmIdentifier from "./AlgorithmIdentifier";
+import RSASSAPSSParams from "./RSASSAPSSParams";
+import CryptoEngine from "./CryptoEngine";
 //**************************************************************************************
 //region Crypto engine related function
 //**************************************************************************************

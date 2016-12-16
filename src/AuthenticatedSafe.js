@@ -1,9 +1,9 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import ContentInfo from "pkijs/src/ContentInfo";
-import SafeContents from "pkijs/src/SafeContents";
-import EnvelopedData from "pkijs/src/EnvelopedData";
-import EncryptedData from "pkijs/src/EncryptedData";
+import ContentInfo from "./ContentInfo";
+import SafeContents from "./SafeContents";
+import EnvelopedData from "./EnvelopedData";
+import EncryptedData from "./EncryptedData";
 //**************************************************************************************
 export default class AuthenticatedSafe
 {

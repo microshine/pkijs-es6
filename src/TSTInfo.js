@@ -1,10 +1,10 @@
 import * as asn1js from "asn1js";
 import { getParametersValue, isEqualBuffer } from "pvutils";
-import { getCrypto, getAlgorithmByOID  } from "pkijs/src/common";
-import MessageImprint from "pkijs/src/MessageImprint";
-import Accuracy from "pkijs/src/Accuracy";
-import GeneralName from "pkijs/src/GeneralName";
-import Extension from "pkijs/src/Extension";
+import { getCrypto, getAlgorithmByOID  } from "./common";
+import MessageImprint from "./MessageImprint";
+import Accuracy from "./Accuracy";
+import GeneralName from "./GeneralName";
+import Extension from "./Extension";
 //**************************************************************************************
 export default class TSTInfo
 {

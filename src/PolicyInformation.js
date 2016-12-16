@@ -1,6 +1,6 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import PolicyQualifierInfo from "pkijs/src/PolicyQualifierInfo";
+import PolicyQualifierInfo from "./PolicyQualifierInfo";
 //**************************************************************************************
 export default class PolicyInformation
 {

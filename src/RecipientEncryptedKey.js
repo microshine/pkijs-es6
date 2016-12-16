@@ -1,6 +1,6 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import KeyAgreeRecipientIdentifier from "pkijs/src/KeyAgreeRecipientIdentifier";
+import KeyAgreeRecipientIdentifier from "./KeyAgreeRecipientIdentifier";
 //**************************************************************************************
 export default class RecipientEncryptedKey
 {

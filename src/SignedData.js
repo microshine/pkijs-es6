@@ -1,20 +1,20 @@
 import * as asn1js from "asn1js";
 import { getParametersValue, utilConcatBuf, isEqualBuffer } from "pvutils";
-import { getCrypto, getOIDByAlgorithm, createCMSECDSASignature, getAlgorithmByOID, createECDSASignatureFromCMS, getAlgorithmParameters } from "pkijs/src/common";
-import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
-import EncapsulatedContentInfo from "pkijs/src/EncapsulatedContentInfo";
-import Certificate from "pkijs/src/Certificate";
-import OtherCertificateFormat from "pkijs/src/OtherCertificateFormat";
-import CertificateRevocationList from "pkijs/src/CertificateRevocationList";
-import OtherRevocationInfoFormat from "pkijs/src/OtherRevocationInfoFormat";
-import SignerInfo from "pkijs/src/SignerInfo";
-import CertificateSet from "pkijs/src/CertificateSet";
-import RevocationInfoChoices from "pkijs/src/RevocationInfoChoices";
-import IssuerAndSerialNumber from "pkijs/src/IssuerAndSerialNumber";
-import TSTInfo from "pkijs/src/TSTInfo";
-import CertificateChainValidationEngine from "pkijs/src/CertificateChainValidationEngine";
-import BasicOCSPResponse from "pkijs/src/BasicOCSPResponse";
-import RSASSAPSSParams from "pkijs/src/RSASSAPSSParams";
+import { getCrypto, getOIDByAlgorithm, createCMSECDSASignature, getAlgorithmByOID, createECDSASignatureFromCMS, getAlgorithmParameters } from "./common";
+import AlgorithmIdentifier from "./AlgorithmIdentifier";
+import EncapsulatedContentInfo from "./EncapsulatedContentInfo";
+import Certificate from "./Certificate";
+import OtherCertificateFormat from "./OtherCertificateFormat";
+import CertificateRevocationList from "./CertificateRevocationList";
+import OtherRevocationInfoFormat from "./OtherRevocationInfoFormat";
+import SignerInfo from "./SignerInfo";
+import CertificateSet from "./CertificateSet";
+import RevocationInfoChoices from "./RevocationInfoChoices";
+import IssuerAndSerialNumber from "./IssuerAndSerialNumber";
+import TSTInfo from "./TSTInfo";
+import CertificateChainValidationEngine from "./CertificateChainValidationEngine";
+import BasicOCSPResponse from "./BasicOCSPResponse";
+import RSASSAPSSParams from "./RSASSAPSSParams";
 //**************************************************************************************
 export default class SignedData 
 {
@@ -835,7 +835,13 @@ export default class SignedData
 			//endregion
 
 			//region Get information about public key algorithm and default parameters for import
-			const algorithmObject = getAlgorithmByOID(signerCertificate.subjectPublicKeyInfo.algorithm.algorithmId);
+			let algorithmId;
+			if(signerCertificate.signatureAlgorithm.algorithmId === "1.2.840.113549.1.1.10")
+				algorithmId = signerCertificate.signatureAlgorithm.algorithmId;
+			else
+				algorithmId = signerCertificate.subjectPublicKeyInfo.algorithm.algorithmId;
+
+			const algorithmObject = getAlgorithmByOID(algorithmId);
 			if(("name" in algorithmObject) === false)
 			{
 				if(extendedMode)
@@ -843,14 +849,14 @@ export default class SignedData
 					return Promise.reject({
 						date: checkDate,
 						code: 11,
-						message: `Unsupported public key algorithm: ${signerCertificate.subjectPublicKeyInfo.algorithm.algorithmId}`,
+						message: `Unsupported public key algorithm: ${algorithmId}`,
 						signatureVerified: null,
 						signerCertificate,
 						signerCertificateVerified: true
 					});
 				}
 
-				return Promise.reject(`Unsupported public key algorithm: ${signerCertificate.subjectPublicKeyInfo.algorithm.algorithmId}`);
+				return Promise.reject(`Unsupported public key algorithm: ${algorithmId}`);
 			}
 
 			const algorithm = getAlgorithmParameters(algorithmObject.name, "importkey");

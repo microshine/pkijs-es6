@@ -1,7 +1,7 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import MessageImprint from "pkijs/src/MessageImprint";
-import Extension from "pkijs/src/Extension";
+import MessageImprint from "./MessageImprint";
+import Extension from "./Extension";
 //**************************************************************************************
 export default class TimeStampReq
 {

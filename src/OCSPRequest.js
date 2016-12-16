@@ -1,13 +1,13 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import { getOIDByAlgorithm, getAlgorithmParameters, getCrypto, createCMSECDSASignature } from "pkijs/src/common";
-import TBSRequest from "pkijs/src/TBSRequest";
-import Signature from "pkijs/src/Signature";
-import Request from "pkijs/src/Request";
-import CertID from "pkijs/src/CertID";
-import Certificate from "pkijs/src/Certificate";
-import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
-import RSASSAPSSParams from "pkijs/src/RSASSAPSSParams";
+import { getOIDByAlgorithm, getAlgorithmParameters, getCrypto, createCMSECDSASignature } from "./common";
+import TBSRequest from "./TBSRequest";
+import Signature from "./Signature";
+import Request from "./Request";
+import CertID from "./CertID";
+import Certificate from "./Certificate";
+import AlgorithmIdentifier from "./AlgorithmIdentifier";
+import RSASSAPSSParams from "./RSASSAPSSParams";
 //**************************************************************************************
 export default class OCSPRequest
 {

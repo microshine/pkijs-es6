@@ -1,6 +1,6 @@
 import * as asn1js from "asn1js";
 import { getParametersValue, toBase64, arrayBufferToString, stringToArrayBuffer, fromBase64 } from "pvutils";
-import ECPublicKey from "pkijs/src/ECPublicKey";
+import ECPublicKey from "./ECPublicKey";
 //**************************************************************************************
 export default class ECPrivateKey
 {

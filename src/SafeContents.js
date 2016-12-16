@@ -1,6 +1,6 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import SafeBag from "pkijs/src/SafeBag";
+import SafeBag from "./SafeBag";
 //**************************************************************************************
 export default class SafeContents
 {

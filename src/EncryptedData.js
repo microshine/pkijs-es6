@@ -1,11 +1,11 @@
 import * as asn1js from "asn1js";
 import { getParametersValue, utilConcatBuf } from "pvutils";
-import { getCrypto, getRandomValues, getOIDByAlgorithm, getAlgorithmByOID } from "pkijs/src/common";
-import EncryptedContentInfo from "pkijs/src/EncryptedContentInfo";
-import Attribute from "pkijs/src/Attribute";
-import PBKDF2Params from "pkijs/src/PBKDF2Params";
-import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
-import PBES2Params from "pkijs/src/PBES2Params";
+import { getCrypto, getRandomValues, getOIDByAlgorithm, getAlgorithmByOID } from "./common";
+import EncryptedContentInfo from "./EncryptedContentInfo";
+import Attribute from "./Attribute";
+import PBKDF2Params from "./PBKDF2Params";
+import AlgorithmIdentifier from "./AlgorithmIdentifier";
+import PBES2Params from "./PBES2Params";
 //**************************************************************************************
 export default class EncryptedData
 {

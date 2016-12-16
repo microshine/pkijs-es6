@@ -1,19 +1,19 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import SubjectDirectoryAttributes from "pkijs/src/SubjectDirectoryAttributes";
-import PrivateKeyUsagePeriod from "pkijs/src/PrivateKeyUsagePeriod";
-import AltName from "pkijs/src/AltName";
-import BasicConstraints from "pkijs/src/BasicConstraints";
-import IssuingDistributionPoint from "pkijs/src/IssuingDistributionPoint";
-import GeneralNames from "pkijs/src/GeneralNames";
-import NameConstraints from "pkijs/src/NameConstraints";
-import CRLDistributionPoints from "pkijs/src/CRLDistributionPoints";
-import CertificatePolicies from "pkijs/src/CertificatePolicies";
-import PolicyMappings from "pkijs/src/PolicyMappings";
-import AuthorityKeyIdentifier from "pkijs/src/AuthorityKeyIdentifier";
-import PolicyConstraints from "pkijs/src/PolicyConstraints";
-import ExtKeyUsage from "pkijs/src/ExtKeyUsage";
-import InfoAccess from "pkijs/src/InfoAccess";
+import SubjectDirectoryAttributes from "./SubjectDirectoryAttributes";
+import PrivateKeyUsagePeriod from "./PrivateKeyUsagePeriod";
+import AltName from "./AltName";
+import BasicConstraints from "./BasicConstraints";
+import IssuingDistributionPoint from "./IssuingDistributionPoint";
+import GeneralNames from "./GeneralNames";
+import NameConstraints from "./NameConstraints";
+import CRLDistributionPoints from "./CRLDistributionPoints";
+import CertificatePolicies from "./CertificatePolicies";
+import PolicyMappings from "./PolicyMappings";
+import AuthorityKeyIdentifier from "./AuthorityKeyIdentifier";
+import PolicyConstraints from "./PolicyConstraints";
+import ExtKeyUsage from "./ExtKeyUsage";
+import InfoAccess from "./InfoAccess";
 //**************************************************************************************
 export default class Extension
 {

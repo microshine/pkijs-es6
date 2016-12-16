@@ -1,7 +1,7 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import CertificateSet from "pkijs/src/CertificateSet";
-import RevocationInfoChoices from "pkijs/src/RevocationInfoChoices";
+import CertificateSet from "./CertificateSet";
+import RevocationInfoChoices from "./RevocationInfoChoices";
 //**************************************************************************************
 export default class OriginatorInfo
 {

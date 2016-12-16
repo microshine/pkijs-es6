@@ -1,13 +1,13 @@
 import * as asn1js from "asn1js";
 import { getParametersValue, isEqualBuffer } from "pvutils";
-import { getAlgorithmByOID, getOIDByAlgorithm, getAlgorithmParameters, getCrypto, createECDSASignatureFromCMS, getHashAlgorithm, createCMSECDSASignature } from "pkijs/src/common";
-import ResponseData from "pkijs/src/ResponseData";
-import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
-import Certificate from "pkijs/src/Certificate";
-import CertID from "pkijs/src/CertID";
-import RSASSAPSSParams from "pkijs/src/RSASSAPSSParams";
-import RelativeDistinguishedNames from "pkijs/src/RelativeDistinguishedNames";
-import CertificateChainValidationEngine from "pkijs/src/CertificateChainValidationEngine";
+import { getAlgorithmByOID, getOIDByAlgorithm, getAlgorithmParameters, getCrypto, createECDSASignatureFromCMS, getHashAlgorithm, createCMSECDSASignature } from "./common";
+import ResponseData from "./ResponseData";
+import AlgorithmIdentifier from "./AlgorithmIdentifier";
+import Certificate from "./Certificate";
+import CertID from "./CertID";
+import RSASSAPSSParams from "./RSASSAPSSParams";
+import RelativeDistinguishedNames from "./RelativeDistinguishedNames";
+import CertificateChainValidationEngine from "./CertificateChainValidationEngine";
 //**************************************************************************************
 export default class BasicOCSPResponse
 {
@@ -621,9 +621,15 @@ export default class BasicOCSPResponse
 		//region Import public key from responder certificate
 		sequence = sequence.then(() => {
 			//region Get information about public key algorithm and default parameters for import
-			const algorithmObject = getAlgorithmByOID(this.certs[certIndex].subjectPublicKeyInfo.algorithm.algorithmId);
+			let algorithmId;
+			if(this.certs[certIndex].signatureAlgorithm.algorithmId === "1.2.840.113549.1.1.10")
+				algorithmId = this.certs[certIndex].signatureAlgorithm.algorithmId;
+			else
+				algorithmId = this.certs[certIndex].subjectPublicKeyInfo.algorithm.algorithmId;
+
+			const algorithmObject = getAlgorithmByOID(algorithmId);
 			if(("name" in algorithmObject) === false)
-				return Promise.reject(`Unsupported public key algorithm: ${this.certs[certIndex].subjectPublicKeyInfo.algorithm.algorithmId}`);
+				return Promise.reject(`Unsupported public key algorithm: ${algorithmId}`);
 
 			const algorithmName = algorithmObject.name;
 

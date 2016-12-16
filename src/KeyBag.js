@@ -1,4 +1,4 @@
-import PrivateKeyInfo from "pkijs/src/PrivateKeyInfo";
+import PrivateKeyInfo from "./PrivateKeyInfo";
 //**************************************************************************************
 export default class KeyBag extends PrivateKeyInfo
 {

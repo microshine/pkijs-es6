@@ -1,11 +1,11 @@
 import * as asn1js from "asn1js";
 import { getParametersValue, bufferToHexCodes } from "pvutils";
-import { getOIDByAlgorithm, getAlgorithmParameters, getCrypto, createCMSECDSASignature, getHashAlgorithm, getAlgorithmByOID, createECDSASignatureFromCMS } from "pkijs/src/common";
-import PublicKeyInfo from "pkijs/src/PublicKeyInfo";
-import RelativeDistinguishedNames from "pkijs/src/RelativeDistinguishedNames";
-import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
-import Attribute from "pkijs/src/Attribute";
-import RSASSAPSSParams from "pkijs/src/RSASSAPSSParams";
+import { getOIDByAlgorithm, getAlgorithmParameters, getCrypto, createCMSECDSASignature, getHashAlgorithm, getAlgorithmByOID, createECDSASignatureFromCMS } from "./common";
+import PublicKeyInfo from "./PublicKeyInfo";
+import RelativeDistinguishedNames from "./RelativeDistinguishedNames";
+import AlgorithmIdentifier from "./AlgorithmIdentifier";
+import Attribute from "./Attribute";
+import RSASSAPSSParams from "./RSASSAPSSParams";
 //**************************************************************************************
 function CertificationRequestInfo(parameters = {})
 {
@@ -436,9 +436,15 @@ export default class CertificationRequest
 		//region Importing public key
 		sequence = sequence.then(() => {
 			//region Get information about public key algorithm and default parameters for import
-			const algorithmObject = getAlgorithmByOID(this.subjectPublicKeyInfo.algorithm.algorithmId);
+			let algorithmId;
+			if(this.signatureAlgorithm.algorithmId === "1.2.840.113549.1.1.10")
+				algorithmId = this.signatureAlgorithm.algorithmId;
+			else
+				algorithmId = this.subjectPublicKeyInfo.algorithm.algorithmId;
+
+			const algorithmObject = getAlgorithmByOID(algorithmId);
 			if(("name" in algorithmObject) === false)
-				return Promise.reject(`Unsupported public key algorithm: ${this.subjectPublicKeyInfo.algorithm.algorithmId}`);
+				return Promise.reject(`Unsupported public key algorithm: ${algorithmId}`);
 
 			const algorithmName = algorithmObject.name;
 

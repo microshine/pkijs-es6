@@ -15,13 +15,13 @@
     "url": "git://github.com/PeculiarVenturess/PKI.js.git"
   },
   "devDependencies": {
-    "babel-plugin-external-helpers": "^6.8.0",
-    "babel-register": "^6.11.6",
     "mocha": "^3.0.2",
-    "rollup": "^0.34.7",
+    "rollup": "0.34.7",
+    "rollup-plugin-node-resolve": "^1.7.1",
+    "babel-cli": "latest",
     "babel-preset-es2015": "latest",
-    "rollup-plugin-babel": "^2.6.1",
-    "rollup-plugin-node-resolve": "^1.7.1"
+    "node-webcrypto-ossl": "latest",
+    "rollem": "git+https://github.com/PeculiarVentures/rollem.git"
   },
   "dependencies": {
     "asn1js": "git+https://github.com/PeculiarVentures/asn1js-es6.git",
@@ -29,7 +29,13 @@
   },
   "scripts": {
     "build": "babel src --compact=false --out-dir build --source-maps",
-    "watch": "babel src --compact=false --out-dir build --source-maps --watch"
+    "watch": "babel src --compact=false --out-dir build --source-maps --watch",
+    "ex1": "cd examples/CMSSignedComplexExample && rollem -c && cd ../..",
+    "ex2": "cd examples/CertificateComplexExample && rollem -c && cd ../..",
+    "ex3": "cd examples/NISTPKITS && rollem -c && cd ../..",
+    "build:examples": "npm run ex1; npm run ex2; npm run ex3;",
+    "build:tests": "npm run build:examples",
+    "test": "mocha"
   },
   "keywords": [
     "ES6",
@@ -46,7 +52,9 @@
     "timestamp",
     "PKCS"
   ],
+  "jsnext:main": "./src/index.js",
+  "main": "./build/index.js",
   "name": "pkijs",
-  "version": "2.0.31",
+  "version": "2.0.32",
   "license": "MIT"
 }

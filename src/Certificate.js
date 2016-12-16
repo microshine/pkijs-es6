@@ -1,13 +1,13 @@
 import * as asn1js from "asn1js";
 import { getParametersValue, bufferToHexCodes } from "pvutils";
-import { getCrypto, getHashAlgorithm, getAlgorithmByOID, createCMSECDSASignature, createECDSASignatureFromCMS, getAlgorithmParameters, getOIDByAlgorithm } from "pkijs/src/common";
-import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
-import RelativeDistinguishedNames from "pkijs/src/RelativeDistinguishedNames";
-import Time from "pkijs/src/Time";
-import PublicKeyInfo from "pkijs/src/PublicKeyInfo";
-import Extension from "pkijs/src/Extension";
-import Extensions from "pkijs/src/Extensions";
-import RSASSAPSSParams from "pkijs/src/RSASSAPSSParams";
+import { getCrypto, getHashAlgorithm, getAlgorithmByOID, createCMSECDSASignature, createECDSASignatureFromCMS, getAlgorithmParameters, getOIDByAlgorithm } from "./common";
+import AlgorithmIdentifier from "./AlgorithmIdentifier";
+import RelativeDistinguishedNames from "./RelativeDistinguishedNames";
+import Time from "./Time";
+import PublicKeyInfo from "./PublicKeyInfo";
+import Extension from "./Extension";
+import Extensions from "./Extensions";
+import RSASSAPSSParams from "./RSASSAPSSParams";
 //**************************************************************************************
 function tbsCertificate(parameters = {})
 {
@@ -718,9 +718,15 @@ export default class Certificate
 		//region Importing public key
 		sequence = sequence.then(() => {
 			//region Get information about public key algorithm and default parameters for import
-			const algorithmObject = getAlgorithmByOID(subjectPublicKeyInfo.algorithm.algorithmId);
+			let algorithmId;
+			if(this.signatureAlgorithm.algorithmId === "1.2.840.113549.1.1.10")
+				algorithmId = this.signatureAlgorithm.algorithmId;
+			else
+				algorithmId = subjectPublicKeyInfo.algorithm.algorithmId;
+			
+			const algorithmObject = getAlgorithmByOID(algorithmId);
 			if(("name" in algorithmObject) === false)
-				return Promise.reject(`Unsupported public key algorithm: ${subjectPublicKeyInfo.algorithm.algorithmId}`);
+				return Promise.reject(`Unsupported public key algorithm: ${algorithmId}`);
 
 			const algorithm = getAlgorithmParameters(algorithmObject.name, "importkey");
 			if("hash" in algorithm.algorithm)

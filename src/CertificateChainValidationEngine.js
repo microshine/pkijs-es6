@@ -1,8 +1,8 @@
 import { getParametersValue, isEqualBuffer } from "pvutils";
-import { getAlgorithmByOID, stringPrep } from "pkijs/src/common";
-import CertificateRevocationList from "pkijs/src/CertificateRevocationList";
-import Certificate from "pkijs/src/Certificate";
-import generatorsDriver from "pkijs/src/GeneratorsDriver";
+import { getAlgorithmByOID, stringPrep } from "./common";
+import CertificateRevocationList from "./CertificateRevocationList";
+import Certificate from "./Certificate";
+import generatorsDriver from "./GeneratorsDriver";
 //**************************************************************************************
 export default class CertificateChainValidationEngine
 {
@@ -479,7 +479,7 @@ export default class CertificateChainValidationEngine
 						for(let j = 0; j < crlResult.result.length; j++)
 						{
 							//region Check that the CRL issuer certificate have not been revoked
-							const isCertificateRevoked = crlResult.result[j].crl.isCertificateRevoked({ certificate: path[i] });
+							const isCertificateRevoked = crlResult.result[j].crl.isCertificateRevoked(path[i]);
 							if(isCertificateRevoked)
 							{
 								return {
@@ -1698,6 +1698,16 @@ export default class CertificateChainValidationEngine
 		});
 		//endregion
 
+		//region Error handling stub
+		sequence = sequence.then(result => result, error => {
+			return {
+				result: false,
+				resultCode: -1,
+				resultMessage: error.message
+			};
+		});
+		//endregion
+		
 		return sequence;
 	}
 	//**********************************************************************************

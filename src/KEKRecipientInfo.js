@@ -1,7 +1,7 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import KEKIdentifier from "pkijs/src/KEKIdentifier";
-import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
+import KEKIdentifier from "./KEKIdentifier";
+import AlgorithmIdentifier from "./AlgorithmIdentifier";
 //**************************************************************************************
 export default class KEKRecipientInfo
 {

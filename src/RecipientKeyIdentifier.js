@@ -1,6 +1,6 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import OtherKeyAttribute from "pkijs/src/OtherKeyAttribute";
+import OtherKeyAttribute from "./OtherKeyAttribute";
 //**************************************************************************************
 export default class RecipientKeyIdentifier
 {

@@ -1,7 +1,7 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import AlgorithmIdentifier from "pkijs/src/AlgorithmIdentifier";
-import Certificate from "pkijs/src/Certificate";
+import AlgorithmIdentifier from "./AlgorithmIdentifier";
+import Certificate from "./Certificate";
 //**************************************************************************************
 export default class Signature
 {

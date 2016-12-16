@@ -1,6 +1,6 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import Certificate from "pkijs/src/Certificate";
+import Certificate from "./Certificate";
 //**************************************************************************************
 export default class CertBag
 {

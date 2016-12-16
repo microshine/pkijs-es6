@@ -1,6 +1,6 @@
 import * as asn1js from "asn1js";
 import { getParametersValue } from "pvutils";
-import DistributionPoint from "pkijs/src/DistributionPoint";
+import DistributionPoint from "./DistributionPoint";
 //**************************************************************************************
 export default class CRLDistributionPoints
 {
