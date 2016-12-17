@@ -5,10 +5,13 @@ machine:
 dependencies:
   pre:
     - npm install -g typescript rollup@0.34.7 https://github.com/PeculiarVentures/rollem.git
+    - npm install coveralls
 
 test:
   pre:
     - npm run build:tests
+  post:
+    - npm run coveralls
 
 general:
   branches:
