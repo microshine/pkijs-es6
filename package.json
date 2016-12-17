@@ -38,7 +38,12 @@
     "build:tests": "npm run build:examples",
     "test": "mocha",
     "clean": "rm -rf build/ buildjs/ coverage/ .nyc_output/ npm-debug.log npm-debug.log.*",
+    "watch": "watch 'npm run coveragehtml' lib/ src/ test/",
+    "live": "live-server -q --port=4005 --ignorePattern='(js|css|png)$' coverage",
+    "predev": "if [ ! -f coverage/index.html ]; then mkdir coverage; cp .waiting.html coverage/index.html; fi",
+    "dev": "npm-run-all -p --silent watch live",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "precoveragehtml": "npm run coverage",
     "coveragehtml": "nyc report -r html",
     "coverage": "nyc npm test"
   },
