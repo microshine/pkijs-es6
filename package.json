@@ -21,9 +21,7 @@
     "babel-cli": "latest",
     "babel-preset-es2015": "latest",
     "node-webcrypto-ossl": "latest",
-    "rollem": "git+https://github.com/PeculiarVentures/rollem.git",
-    "npm-run-all": "^3",
-    "nyc": "^8"
+    "rollem": "git+https://github.com/PeculiarVentures/rollem.git"
   },
   "dependencies": {
     "asn1js": "git+https://github.com/PeculiarVentures/asn1js-es6.git",
@@ -38,15 +36,6 @@
     "build:examples": "npm run ex1; npm run ex2; npm run ex3;",
     "build:tests": "npm run build:examples",
     "test": "mocha",
-    "clean": "rm -rf build/ buildjs/ coverage/ .nyc_output/ npm-debug.log npm-debug.log.*",
-    "watch": "watch 'npm run coveragehtml' lib/ src/ test/",
-    "live": "live-server -q --port=4005 --ignorePattern='(js|css|png)$' coverage",
-    "predev": "if [ ! -f coverage/index.html ]; then mkdir coverage; cp .waiting.html coverage/index.html; fi",
-    "dev": "npm-run-all -p --silent watch live",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "precoveragehtml": "npm run coverage",
-    "coveragehtml": "nyc report -r html",
-    "coverage": "nyc npm test"
   },
   "keywords": [
     "ES6",
@@ -66,6 +55,6 @@
   "jsnext:main": "./src/index.js",
   "main": "./build/index.js",
   "name": "pkijs",
-  "version": "2.0.32",
+  "version": "2.0.33",
   "license": "MIT"
 }
