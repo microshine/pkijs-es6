@@ -21,7 +21,8 @@
     "babel-cli": "latest",
     "babel-preset-es2015": "latest",
     "node-webcrypto-ossl": "latest",
-    "rollem": "git+https://github.com/PeculiarVentures/rollem.git"
+    "rollem": "git+https://github.com/PeculiarVentures/rollem.git",
+    "nyc": "^8"
   },
   "dependencies": {
     "asn1js": "git+https://github.com/PeculiarVentures/asn1js-es6.git",
@@ -35,7 +36,11 @@
     "ex3": "cd examples/NISTPKITS && rollem -c && cd ../..",
     "build:examples": "npm run ex1; npm run ex2; npm run ex3;",
     "build:tests": "npm run build:examples",
-    "test": "mocha"
+    "test": "mocha",
+    "clean": "rm -rf build/ buildjs/ coverage/ .nyc_output/ npm-debug.log npm-debug.log.*",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "coveragehtml": "nyc report -r html",
+    "coverage": "nyc npm test"
   },
   "keywords": [
     "ES6",
