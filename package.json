@@ -35,7 +35,7 @@
     "ex3": "cd examples/NISTPKITS && rollem -c && cd ../..",
     "build:examples": "npm run ex1; npm run ex2; npm run ex3;",
     "build:tests": "npm run build:examples",
-    "test": "mocha",
+    "test": "mocha"
   },
   "keywords": [
     "ES6",
