@@ -22,6 +22,7 @@
     "babel-preset-es2015": "latest",
     "node-webcrypto-ossl": "latest",
     "rollem": "git+https://github.com/PeculiarVentures/rollem.git",
+    "npm-run-all": "^3",
     "nyc": "^8"
   },
   "dependencies": {
