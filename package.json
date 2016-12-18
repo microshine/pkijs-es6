@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "asn1js": "git+https://github.com/PeculiarVentures/asn1js-es6#build",
-    "pvutils": "^1.0.0"
+    "pvutils": "git+https://github.com/PeculiarVentures/pvutils#build"
   },
   "scripts": {
     "build": "babel src --compact=false --out-dir build --source-maps",
