@@ -24,7 +24,7 @@
     "rollem": "git+https://github.com/PeculiarVentures/rollem.git"
   },
   "dependencies": {
-    "asn1js": "git+https://github.com/PeculiarVentures/asn1js-es6.git",
+    "asn1js": "git+https://github.com/PeculiarVentures/asn1js-es6#build",
     "pvutils": "^1.0.0"
   },
   "scripts": {
