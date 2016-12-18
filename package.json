@@ -54,6 +54,7 @@
   ],
   "jsnext:main": "./src/index.js",
   "main": "./build/index.js",
+  "types": "index.d.ts",
   "name": "pkijs",
   "version": "2.0.33",
   "license": "MIT"
