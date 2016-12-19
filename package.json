@@ -32,7 +32,8 @@
     "ex1": "cd examples/CMSSignedComplexExample && rollem -c && cd ../..",
     "ex2": "cd examples/CertificateComplexExample && rollem -c && cd ../..",
     "ex3": "cd examples/NISTPKITS && rollem -c && cd ../..",
-    "build:examples": "npm run ex1; npm run ex2; npm run ex3;",
+    "ex4": "cd examples/HowToEncryptCMSviaCertificate && rollem -c && cd ../..",
+    "build:examples": "npm run ex1; npm run ex2; npm run ex3; npm run ex4;",
     "build:tests": "npm run build:examples",
     "test": "mocha",
     "postinstall": "npm run build"
@@ -55,6 +56,6 @@
   "jsnext:main": "./src/index.js",
   "main": "./build/index.js",
   "name": "pkijs",
-  "version": "2.0.35",
+  "version": "2.0.36",
   "license": "MIT"
 }
