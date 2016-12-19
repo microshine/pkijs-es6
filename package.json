@@ -24,8 +24,8 @@
     "rollem": "git+https://github.com/PeculiarVentures/rollem.git"
   },
   "dependencies": {
-    "asn1js": "git+https://github.com/PeculiarVentures/asn1js-es6.git",
-    "pvutils": "^1.0.0"
+    "asn1js": "git+https://github.com/PeculiarVentures/asn1js-es6#build",
+    "pvutils": "git+https://github.com/PeculiarVentures/pvutils#build"
   },
   "scripts": {
     "build": "babel src --compact=false --out-dir build --source-maps",
@@ -54,6 +54,7 @@
   ],
   "jsnext:main": "./src/index.js",
   "main": "./build/index.js",
+  "types": "index.d.ts",
   "name": "pkijs",
   "version": "2.0.33",
   "license": "MIT"
