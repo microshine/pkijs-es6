@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "asn1js": "git+https://github.com/PeculiarVentures/asn1js-es6.git",
-    "pvutils": "^1.0.0",
+    "pvutils": "git+https://github.com/PeculiarVentures/pvutils.git",
     "babel-cli": "latest",
     "babel-preset-es2015": "latest"
   },
