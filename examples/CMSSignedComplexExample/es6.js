@@ -1,5 +1,5 @@
 import * as asn1js from "asn1js";
-import { arrayBufferToString, stringToArrayBuffer, bufferToHexCodes } from "pvutils";
+import { stringToArrayBuffer, bufferToHexCodes } from "pvutils";
 import { getCrypto, getAlgorithmParameters, setEngine } from "../../src/common";
 import Certificate from "../../src/Certificate";
 import AttributeTypeAndValue from "../../src/AttributeTypeAndValue";
@@ -334,10 +334,7 @@ function createCMSSignedInternal()
 	//region Get a "crypto" extension
 	const crypto = getCrypto();
 	if(typeof crypto === "undefined")
-	{
-		alert("No WebCrypto extension found");
-		return;
-	}
+		return Promise.reject("No WebCrypto extension found");
 	//endregion
 	
 	//region Put a static values
@@ -385,7 +382,8 @@ function createCMSSignedInternal()
 	
 	//region Create a new key pair
 	sequence = sequence.then(
-		() => {
+		() =>
+		{
 			//region Get default algorithm parameters for key generation
 			const algorithm = getAlgorithmParameters(signAlg, "generatekey");
 			if("hash" in algorithm.algorithm)
@@ -399,7 +397,8 @@ function createCMSSignedInternal()
 	
 	//region Store new key in an interim variables
 	sequence = sequence.then(
-		keyPair => {
+		keyPair =>
+		{
 			publicKey = keyPair.publicKey;
 			privateKey = keyPair.privateKey;
 		},
@@ -422,7 +421,8 @@ function createCMSSignedInternal()
 	
 	//region Encode and store certificate
 	sequence = sequence.then(
-		() => {
+		() =>
+		{
 			trustedCertificates.push(certSimpl);
 			certificateBuffer = certSimpl.toSchema(true).toBER(false);
 		},
@@ -438,7 +438,8 @@ function createCMSSignedInternal()
 	
 	//region Store exported key on Web page
 	sequence = sequence.then(
-		result => {
+		result =>
+		{
 			privateKeyBuffer = result;
 		},
 		error => alert(`Error during exporting of private key: ${error}`)
@@ -456,7 +457,8 @@ function createCMSSignedInternal()
 		
 		//region Combine all signed extensions
 		sequence = sequence.then(
-			result => {
+			result =>
+			{
 				const signedAttr = [];
 				
 				signedAttr.push(new Attribute({
@@ -489,7 +491,8 @@ function createCMSSignedInternal()
 	
 	//region Initialize CMS Signed Data structures and sign it
 	sequence = sequence.then(
-		result => {
+		result =>
+		{
 			cmsSignedSimpl = new SignedData({
 				version: 1,
 				encapContentInfo: new EncapsulatedContentInfo({
@@ -533,7 +536,8 @@ function createCMSSignedInternal()
 	
 	//region Create final result
 	sequence.then(
-		() => {
+		() =>
+		{
 			const cmsSignedSchema = cmsSignedSimpl.toSchema(true);
 			
 			const cmsContentSimp = new ContentInfo({
@@ -573,7 +577,8 @@ function createCMSSignedInternal()
 //*********************************************************************************
 function createCMSSigned()
 {
-	return createCMSSignedInternal().then(() => {
+	return createCMSSignedInternal().then(() =>
+	{
 		const certSimplString = String.fromCharCode.apply(null, new Uint8Array(certificateBuffer));
 		
 		let resultString = "-----BEGIN CERTIFICATE-----\r\n";
@@ -621,8 +626,8 @@ function verifyCMSSignedInternal()
 	{
 		//region Decode existing CMS_Signed
 		const asn1 = asn1js.fromBER(cmsSignedBuffer);
-		const cmsContentSimpl = new ContentInfo({schema: asn1.result});
-		const cmsSignedSimpl = new SignedData({schema: cmsContentSimpl.content});
+		const cmsContentSimpl = new ContentInfo({ schema: asn1.result });
+		const cmsSignedSimpl = new SignedData({ schema: cmsContentSimpl.content });
 		//endregion
 		
 		//region Verify CMS_Signed
@@ -666,10 +671,11 @@ function handleFileBrowse(evt)
 	const currentFiles = evt.target.files;
 	
 	tempReader.onload =
-		event => {
-		dataBuffer = event.target.result
-		createCMSSigned();
-	};
+		event =>
+		{
+			dataBuffer = event.target.result;
+			createCMSSigned();
+		};
 	
 	tempReader.readAsArrayBuffer(currentFiles[0]);
 }
@@ -681,7 +687,8 @@ function handleParsingFile(evt)
 	const currentFiles = evt.target.files;
 	
 	tempReader.onload =
-		event => {
+		event =>
+		{
 			cmsSignedBuffer = event.target.result;
 			parseCMSSigned();
 		};
@@ -747,13 +754,14 @@ function handleAddExtOnChange()
 //*********************************************************************************
 function handleDetachedSignatureOnChange()
 {
-	detachedSignature = ocument.getElementById("detached_signature").checked;
+	detachedSignature = document.getElementById("detached_signature").checked;
 }
 //*********************************************************************************
 //endregion
 //*********************************************************************************
-context("Hack for Rollup.js", () => {
-	return ;
+context("Hack for Rollup.js", () =>
+{
+	return;
 	
 	parseCMSSigned();
 	createCMSSigned();
@@ -769,7 +777,8 @@ context("Hack for Rollup.js", () => {
 	setEngine();
 });
 //*********************************************************************************
-context("CMS Signed Complex Example", () => {
+context("CMS Signed Complex Example", () =>
+{
 	//region Initial variables
 	const hashAlgs = ["SHA-1", "SHA-256", "SHA-384", "SHA-512"];
 	const signAlgs = ["RSASSA-PKCS1-V1_5", "ECDSA", "RSA-PSS"];
@@ -800,8 +809,8 @@ context("CMS Signed Complex Example", () => {
 						{
 							//region Simple test for decoding data
 							const asn1 = asn1js.fromBER(cmsSignedBuffer);
-							const cmsContentSimpl = new ContentInfo({schema: asn1.result});
-							const cmsSignedSimpl = new SignedData({schema: cmsContentSimpl.content});
+							const cmsContentSimpl = new ContentInfo({ schema: asn1.result });
+							const cmsSignedSimpl = new SignedData({ schema: cmsContentSimpl.content });
 							//endregion
 							
 							return verifyCMSSignedInternal().then(result =>

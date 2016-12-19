@@ -8,7 +8,7 @@ import CertificateChainValidationEngine from "../../src/CertificateChainValidati
 //region Testing constants
 //**************************************************************************************
 const PKITS = {
-	"certpairs": {
+	certpairs: {
 		"anyPolicyCACertforwardcrossCertificatePair.cp": "MIIDk6CCA48wggOLMIICc6ADAgECAgEmMA0GCSqGSIb3DQEBCwUAMEUxCzAJBgNVBAYTAlVTMR8wHQYDVQQKExZUZXN0IENlcnRpZmljYXRlcyAyMDExMRUwEwYDVQQDEwxUcnVzdCBBbmNob3IwHhcNMTAwMTAxMDgzMDAwWhcNMzAxMjMxMDgzMDAwWjBFMQswCQYDVQQGEwJVUzEfMB0GA1UEChMWVGVzdCBDZXJ0aWZpY2F0ZXMgMjAxMTEVMBMGA1UEAxMMYW55UG9saWN5IENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvugn3U80zcC88V4+KbMsCee/4FHBBKupp8Gb+eF5dctW06181KhOoFaijm4XisbJgcUxEc85E1mNlEGjEeGj9JYzYnuvuE44v4kmMxjBmEI+TFeMBNc0hciiVpwfEBFpP1peN+c8C2YCi0j73VkxoeJG6nzvKAce24PcC2l7Q01ueptDOakDb5vCq/w6Oi77jSLU0dVOBUOTaYfcdBs/OHYLenYIiuE+/wgOnFlx2QSQBoxQr5zNe3c4QyerN6spI5nxRXF2Ni0mg54ODY+rSo2pvBbeVcvr480f/NTrd+vc2rPlt58fJNLjbU6UQgrwW1SURDdXb8kFAQ12W6DBewIDAQABo4GFMIGCMB8GA1UdIwQYMBaAFOR9X9FclYYILAWuvnW2ZafZXahmMB0GA1UdDgQWBBS7yd7IHJXnQuKQoo6uA1yrJGB+hTAOBgNVHQ8BAf8EBAMCAQYwDwYDVR0TAQH/BAUwAwEB/zAMBgNVHSQEBTADgAEAMBEGA1UdIAQKMAgwBgYEVR0gADANBgkqhkiG9w0BAQsFAAOCAQEAPXUg8E6BdqWMzDkC+YBcEsYs/HjOFf9SZPns2Vbdj+NsNvozGCVmv9ixfJSjw27c+R2ps72bB/N9yYuue4et1KO53aOVHVURnP7u7M8M/M/z277CMDRRiUpqEe+AVNF51RnkWE3pjuLI/lvoirgZvoBuEkurn13RFdGxU6GABYGjTFM7mzh7u+HMocJAseRNsPWD8ctbRp7toV8JPfQ+kU9SEEd/CQPm11b/ypx6NuzR+l6BqJW07PATr9HCS6HjAOizNdAmjvI6wXIa2fv6it0zc9LzSy5XTWrrsGZbYzoXqgBTdqBviC7MwLD/d3sX47D13tCrkKNptpbfwZv84M==",
 		"anyPolicyCACertreversecrossCertificatePair.cp": "MIIDk6GCA48wggOLMIICc6ADAgECAgEmMA0GCSqGSIb3DQEBCwUAMEUxCzAJBgNVBAYTAlVTMR8wHQYDVQQKExZUZXN0IENlcnRpZmljYXRlcyAyMDExMRUwEwYDVQQDEwxUcnVzdCBBbmNob3IwHhcNMTAwMTAxMDgzMDAwWhcNMzAxMjMxMDgzMDAwWjBFMQswCQYDVQQGEwJVUzEfMB0GA1UEChMWVGVzdCBDZXJ0aWZpY2F0ZXMgMjAxMTEVMBMGA1UEAxMMYW55UG9saWN5IENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvugn3U80zcC88V4+KbMsCee/4FHBBKupp8Gb+eF5dctW06181KhOoFaijm4XisbJgcUxEc85E1mNlEGjEeGj9JYzYnuvuE44v4kmMxjBmEI+TFeMBNc0hciiVpwfEBFpP1peN+c8C2YCi0j73VkxoeJG6nzvKAce24PcC2l7Q01ueptDOakDb5vCq/w6Oi77jSLU0dVOBUOTaYfcdBs/OHYLenYIiuE+/wgOnFlx2QSQBoxQr5zNe3c4QyerN6spI5nxRXF2Ni0mg54ODY+rSo2pvBbeVcvr480f/NTrd+vc2rPlt58fJNLjbU6UQgrwW1SURDdXb8kFAQ12W6DBewIDAQABo4GFMIGCMB8GA1UdIwQYMBaAFOR9X9FclYYILAWuvnW2ZafZXahmMB0GA1UdDgQWBBS7yd7IHJXnQuKQoo6uA1yrJGB+hTAOBgNVHQ8BAf8EBAMCAQYwDwYDVR0TAQH/BAUwAwEB/zAMBgNVHSQEBTADgAEAMBEGA1UdIAQKMAgwBgYEVR0gADANBgkqhkiG9w0BAQsFAAOCAQEAPXUg8E6BdqWMzDkC+YBcEsYs/HjOFf9SZPns2Vbdj+NsNvozGCVmv9ixfJSjw27c+R2ps72bB/N9yYuue4et1KO53aOVHVURnP7u7M8M/M/z277CMDRRiUpqEe+AVNF51RnkWE3pjuLI/lvoirgZvoBuEkurn13RFdGxU6GABYGjTFM7mzh7u+HMocJAseRNsPWD8ctbRp7toV8JPfQ+kU9SEEd/CQPm11b/ypx6NuzR+l6BqJW07PATr9HCS6HjAOizNdAmjvI6wXIa2fv6it0zc9LzSy5XTWrrsGZbYzoXqgBTdqBviC7MwLD/d3sX47D13tCrkKNptpbfwZv84M==",
 		"BadCRLIssuerNameCACertforwardcrossCertificatePair.cp": "MIIDk6CCA48wggOLMIICc6ADAgECAgEJMA0GCSqGSIb3DQEBCwUAMEUxCzAJBgNVBAYTAlVTMR8wHQYDVQQKExZUZXN0IENlcnRpZmljYXRlcyAyMDExMRUwEwYDVQQDEwxUcnVzdCBBbmNob3IwHhcNMTAwMTAxMDgzMDAwWhcNMzAxMjMxMDgzMDAwWjBPMQswCQYDVQQGEwJVUzEfMB0GA1UEChMWVGVzdCBDZXJ0aWZpY2F0ZXMgMjAxMTEfMB0GA1UEAxMWQmFkIENSTCBJc3N1ZXIgTmFtZSBDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMXsbwsaN2H8xh23qVC+tZBftpAE4YcVJ2F5qifx/qkWR5DqQThogqojD77s5Dph/ORV9lFElcL1LGqN1H6EaNSUZzBXiDmEMdHNnDINrXj74AyOZIwz5UGP2pzPc6+IzjOYl/RGW3rOcLFU7vZwBEYnZDOXL5EqWQ37+4p1rK8cqGdWn5hV/KsLuC3tt+rumM1dKt9LwXpQBTm71/bPjq+iUlgRoLMChZrzw8a01uDyHDDJ2xnG5nha1kW6iBxkkb4bX6A4DQXPvnFvxYvl1UuPhIKKrCOadzLXHeeixaNqVveSYcXlFdCYuVVfpNG46VLUyg665wURQukLuE1wIO0CAwEAAaN8MHowHwYDVR0jBBgwFoAU5H1f0VyVhggsBa6+dbZlp9ldqGYwHQYDVR0OBBYEFBFy8jVdBNUOSiAHB0Eo/ZRwABxxMA4GA1UdDwEB/wQEAwIBBjAXBgNVHSAEEDAOMAwGCmCGSAFlAwIBMAEwDwYDVR0TAQH/BAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEAKyz0q7oF2IuDBVmrgNf43oR1lbLlrfN9NFWjtdv2ctO7PGW7456gLCAx//6EK0XEmgC5BZa+FTTQBphAcbIbuiWh2loDViz++oSDdecOkiUdZtNgTk9JFLkpx+HZtST6jYGKZXDExhrNqW12S1yU5cNqM+7loTl+AsegKL98uCEsZyvlYTMFHaX+li8rjQK2xS624DU+AvUYgaqXzJh5lPSNDqiFQzsj+RPO9BwyMwvusU8mTLOMS6OLZ3n/hV6GHb3CDeRqn8W4OI9JjACzG2jT649P1S7++Bwyr+Ozmw/rkAnoDc2JyJhqrj8yB+Jz7M4rPkwOrr5YgvOhadj3os==",
@@ -358,7 +358,7 @@ const PKITS = {
 		"WrongCRLCACertforwardcrossCertificatePair.cp": "MIIDiaCCA4UwggOBMIICaaADAgECAgEKMA0GCSqGSIb3DQEBCwUAMEUxCzAJBgNVBAYTAlVTMR8wHQYDVQQKExZUZXN0IENlcnRpZmljYXRlcyAyMDExMRUwEwYDVQQDEwxUcnVzdCBBbmNob3IwHhcNMTAwMTAxMDgzMDAwWhcNMzAxMjMxMDgzMDAwWjBFMQswCQYDVQQGEwJVUzEfMB0GA1UEChMWVGVzdCBDZXJ0aWZpY2F0ZXMgMjAxMTEVMBMGA1UEAxMMV3JvbmcgQ1JMIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAt9J2pT599t4hQofzLXjUe4LC1XSkVdtBYDyXi6UEo239X7Tf846SgVcUh3m3K71O9mui5Cu6GI6tZbXxtY6KlYmeWv9LifQlsh0hh26EwIP+Lskig6C1b/ds3hP49+8vXYIHu2/IZOLhGXvLougMwxex7VVpPNLoz0wlmumYZr/JVHdZUrMtZJyormCowNfNwAeYSjRxGcZ0uanuEfOQCJZkRn1fRtXkr9rByNR6txELXEmmd8lfNSA5pAmnvjSTatAP1A8ZIzh5AhQLQm+ouMg3Pc6a5C2TJBOouRT7v1aySJGUzvIw1sp2W+lnkT6KpFgElqotAfmNVNbt+9bAAwIDAQABo3wwejAfBgNVHSMEGDAWgBTkfV/RXJWGCCwFrr51tmWn2V2oZjAdBgNVHQ4EFgQUDCVG4Il6UQdKrzWvzZDEcg63qAYwDgYDVR0PAQH/BAQDAgEGMBcGA1UdIAQQMA4wDAYKYIZIAWUDAgEwATAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQA3SIyS3zyQLdb94umwxG0M1jCa0xRkjpO0U0Ogt1eXCE6NGM05fSryDq94dGJlO11cjzc/gpBhvdhitz4vj8GmIY1XwszcoMbh+k5Sp+PzOryPFk1p76tuXBcyCzVwjQOnER0le0W/irvggu9a35ankfZK3uck+ht46fVJMZmh7gcYhDrZd0d88Jpwtgip6OlkkPdBgE8dCVMokoXaJ8wAXRBqha2O84Q0FFCvyx+YOpaWLEKFmkwNkxGEsdQuIBLbYCiqqX7K56H8b4eBU5oD+sHyIPwKzGi3bcxAzeSiKOd04WDMMYyFMl/ARD3o1cv4mm26hw/DMpY7MuJ4xhjD",
 		"WrongCRLCACertreversecrossCertificatePair.cp": "MIIDiaGCA4UwggOBMIICaaADAgECAgEKMA0GCSqGSIb3DQEBCwUAMEUxCzAJBgNVBAYTAlVTMR8wHQYDVQQKExZUZXN0IENlcnRpZmljYXRlcyAyMDExMRUwEwYDVQQDEwxUcnVzdCBBbmNob3IwHhcNMTAwMTAxMDgzMDAwWhcNMzAxMjMxMDgzMDAwWjBFMQswCQYDVQQGEwJVUzEfMB0GA1UEChMWVGVzdCBDZXJ0aWZpY2F0ZXMgMjAxMTEVMBMGA1UEAxMMV3JvbmcgQ1JMIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAt9J2pT599t4hQofzLXjUe4LC1XSkVdtBYDyXi6UEo239X7Tf846SgVcUh3m3K71O9mui5Cu6GI6tZbXxtY6KlYmeWv9LifQlsh0hh26EwIP+Lskig6C1b/ds3hP49+8vXYIHu2/IZOLhGXvLougMwxex7VVpPNLoz0wlmumYZr/JVHdZUrMtZJyormCowNfNwAeYSjRxGcZ0uanuEfOQCJZkRn1fRtXkr9rByNR6txELXEmmd8lfNSA5pAmnvjSTatAP1A8ZIzh5AhQLQm+ouMg3Pc6a5C2TJBOouRT7v1aySJGUzvIw1sp2W+lnkT6KpFgElqotAfmNVNbt+9bAAwIDAQABo3wwejAfBgNVHSMEGDAWgBTkfV/RXJWGCCwFrr51tmWn2V2oZjAdBgNVHQ4EFgQUDCVG4Il6UQdKrzWvzZDEcg63qAYwDgYDVR0PAQH/BAQDAgEGMBcGA1UdIAQQMA4wDAYKYIZIAWUDAgEwATAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQA3SIyS3zyQLdb94umwxG0M1jCa0xRkjpO0U0Ogt1eXCE6NGM05fSryDq94dGJlO11cjzc/gpBhvdhitz4vj8GmIY1XwszcoMbh+k5Sp+PzOryPFk1p76tuXBcyCzVwjQOnER0le0W/irvggu9a35ankfZK3uck+ht46fVJMZmh7gcYhDrZd0d88Jpwtgip6OlkkPdBgE8dCVMokoXaJ8wAXRBqha2O84Q0FFCvyx+YOpaWLEKFmkwNkxGEsdQuIBLbYCiqqX7K56H8b4eBU5oD+sHyIPwKzGi3bcxAzeSiKOd04WDMMYyFMl/ARD3o1cv4mm26hw/DMpY7MuJ4xhjD",
 	},
-	"certs": {
+	certs: {
 		"AllCertificatesanyPolicyTest11EE.crt": "MIIDjjCCAnagAwIBAgIBATANBgkqhkiG9w0BAQsFADBFMQswCQYDVQQGEwJVUzEfMB0GA1UEChMWVGVzdCBDZXJ0aWZpY2F0ZXMgMjAxMTEVMBMGA1UEAxMMYW55UG9saWN5IENBMB4XDTEwMDEwMTA4MzAwMFoXDTMwMTIzMTA4MzAwMFowaTELMAkGA1UEBhMCVVMxHzAdBgNVBAoTFlRlc3QgQ2VydGlmaWNhdGVzIDIwMTExOTA3BgNVBAMTMEFsbCBDZXJ0aWZpY2F0ZXMgYW55UG9saWN5IEVFIENlcnRpZmljYXRlIFRlc3QxMTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMKLRwAzuUEtOy/V47M/rUpbPiMDRXuhXbrcDN+erHgrUrGHJA5FpjmB6PRYL7fR1mJl+yGRCDrquNaHkEoiiUVGpuC59jBUIguJr46ZPrAg4XYzWe/Wh8JTCDubDKEVlbN5F3c+ih8N8aKxQpGWZPm/CWaMljKSBgZeyFzDN4lrAvQYfFeR5yvRQ1rZbQPi3mLjUHG0JwsaCbPYSv3yv8XSye1NENSaPaDQ9H/CzLfUKldvkNCnZmeFaI6UKkaqr7RMvqymdIpSjz/Ic7fR96ZZgQzCX3EPZ5k4qyaTDgvuLCvlMrYVmHRy3oj8XHkb0VP1zEFmVYyx8gM1UBk0HKkCAwEAAaNlMGMwHwYDVR0jBBgwFoAUu8neyByV50LikKKOrgNcqyRgfoUwHQYDVR0OBBYEFP0x7qhv8jhIP4wDRMsNB2Ztq9jpMA4GA1UdDwEB/wQEAwIE8DARBgNVHSAECjAIMAYGBFUdIAAwDQYJKoZIhvcNAQELBQADggEBAGpQqQ5cWZS64sgYSqdCNW7g6xU43pbHIqs0NxBefMaYoHRcnBZKZZ51mesxhLHBqOQmJZfEGmUVDJvdOfDDN2ShmiO9sZhVqkPZ+PMu3M1hNcnuhyNO7XnlmKKzWXApasvMivL9qM6ZNa0yHELY2sgKEo3y/pL4Pxld5usNH+dBib7FrhEvCZzgOKZcfC6ZQskkVDiduhtPlRM8FRtlwlrWwLPEPMrYe9rtqGozEOKS7HP8SWI2zzkhIZK5dVXYUpJ+oRAYtLmKuiIAJ+PYhWFAwNYtyafe1P164tjeT/JtHAGPQ5ogzcelmzRk8UDG+G/V/MW9wqQTCDzkCR1cFmr=",
 		"AllCertificatesNoPoliciesTest2EE.crt": "MIIDfjCCAmagAwIBAgIBATANBgkqhkiG9w0BAQsFADBHMQswCQYDVQQGEwJVUzEfMB0GA1UEChMWVGVzdCBDZXJ0aWZpY2F0ZXMgMjAxMTEXMBUGA1UEAxMOTm8gUG9saWNpZXMgQ0EwHhcNMTAwMTAxMDgzMDAwWhcNMzAxMjMxMDgzMDAwWjBqMQswCQYDVQQGEwJVUzEfMB0GA1UEChMWVGVzdCBDZXJ0aWZpY2F0ZXMgMjAxMTE6MDgGA1UEAxMxQWxsIENlcnRpZmljYXRlcyBObyBQb2xpY2llcyBFRSBDZXJ0aWZpY2F0ZSBUZXN0MjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAL6WDyHxhLZpA4geLxU8BbeIOR03CkUXr/Vvnl1X/ncT1gvBBBnQ7Po7o90+gGpGzBPMjif4gMSkUJ8qQ+R0STU5SIHBBPl3mxEKU6htvRX47h0hvUzRWKnN2lvQyzD4GkwQhJC7Tv2TDLCrtVm5E324xPUAmBYLnbILJ4yQjLXWIa+usF0r1rm0L77cjkVz7HQp9hT/VAOEof8u/TWuHTr6CoPEJQLsybS6/tP9WbyD3aPS0F/X//QGM2jwbVVcwlkuodxKrFz5DaMbD4EaG5cr5NdDyjbnd71OUXG6j/LuQYuRb2fmXo3YQE3KK6/iStbqEudSUqma7DdD7PhI3McCAwEAAaNSMFAwHwYDVR0jBBgwFoAUQiQD7aVLdpyXmFx06gU6G/w15JwwHQYDVR0OBBYEFNpNr/S+ZFlUsYAeWIckHljqxZp+MA4GA1UdDwEB/wQEAwIE8DANBgkqhkiG9w0BAQsFAAOCAQEA0xqFOkeCtxlsvCwBTB4pfZNN6qpoRnJFjYD7vmaU6XJQAO2EUUCVefK8eYoxPYwgbg2uTYk4HtTTF4cbvsr04hNjh0rBm7F0X7BlyvcFTLBW7FEk5aAKjtNGca9kJw7aPo/5vaDkPjnrwTwkUBzEfRveXJE8JqS7KIL/0+SSQCNhqf/Fn9KOpcwhQRKZXLcLlvVGtAqkexNM8ZNWuSLidt1Aeihudf0h/dC7g/fxNTGfhBSvoKVyGS3AdadQvv9Ce3l2IY3P1NAczdaY/RY+gE2ccmEiRSc3IXETiUXjgyzsUXK129XEY9fOQ88ns7RLifh3JBp4NhIvCx0oDWcezc==",
 		"AllCertificatesSamePoliciesTest10EE.crt": "MIIDqTCCApGgAwIBAgIBAjANBgkqhkiG9w0BAQsFADBIMQswCQYDVQQGEwJVUzEfMB0GA1UEChMWVGVzdCBDZXJ0aWZpY2F0ZXMgMjAxMTEYMBYGA1UEAxMPUG9saWNpZXMgUDEyIENBMB4XDTEwMDEwMTA4MzAwMFoXDTMwMTIzMTA4MzAwMFowbTELMAkGA1UEBhMCVVMxHzAdBgNVBAoTFlRlc3QgQ2VydGlmaWNhdGVzIDIwMTExPTA7BgNVBAMTNEFsbCBDZXJ0aWZpY2F0ZXMgU2FtZSBQb2xpY2llcyBFRSBDZXJ0aWZpY2F0ZSBUZXN0MTAwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDQIvsOjHjYcsCDpWm9SJNK2Lwz8/4bpvlcdaG59lROqyk6OL+0/Rd214G74S26m6BrgZuzoLbHMlAaCjdFDbUSjh086jFDMgXHwdud78f442+V3ms02gqmijFPvSsOWWyRu0BzTz0PbW9IWYtIAG8DDqGflBISatXkxS8wQHCuZdY/x+XjjISn7oSOjPamfdoqT5jEThof50jzBxDEdW1vbjU4afAwQBD28t6fZCdCG5kUO1uZ3CED0R44ZV0gajS1Oah9qvrHjeCFGGRmoi1biVzNqe9N9tyqw4PWZ+TnzANsaf+InI09mZGyPoiQXB6mbfJFnuCDZQ7AcQiP1VPbAgMBAAGjeTB3MB8GA1UdIwQYMBaAFNhfNeKawTcqJs6DzHMOcBUqOuIxMB0GA1UdDgQWBBQKlt4EYF5FmsVHFjO1gRk49P4KtzAOBgNVHQ8BAf8EBAMCBPAwJQYDVR0gBB4wHDAMBgpghkgBZQMCATABMAwGCmCGSAFlAwIBMAIwDQYJKoZIhvcNAQELBQADggEBACu8kiAp80ujcBGHavjXgp+HpVSQTqRzTLKbf0EFFib6KedEsT67cvLjuTZMcPmwYHnUjBk/KGdyn9IwetblMTj3hueKNx1yKXfYYNVmE13KPPpNNcPe4Eal9g4I2noPVt8Eg3SgNIghPFz3XJQNGjN5hMdhmcQfeaEJe1Mlwv2cdgs3D02kpjI/KGca9whyDpE0jpu77gkO4ZmRXZxaGe8i35xaRrrs124Zhz0qtJn7iIaVs7ouezKkvE1UinCY2pdTZHMTs8LSklBE/IL0Ojwqpt81FptUFMihOaMtMrg01E/DrahtaL5Nbj8nVUGlVwiEkUy1CII3ALs50xqw8gP=",
@@ -765,7 +765,7 @@ const PKITS = {
 		"ValidUTF8StringEncodedNamesTest9EE.crt": "MIIDmDCCAoCgAwIBAgIBATANBgkqhkiG9w0BAQsFADBGMQswCQYDVQQGEwJVUzEfMB0GA1UECgwWVGVzdCBDZXJ0aWZpY2F0ZXMgMjAxMTEWMBQGA1UEAwwNVVRGOFN0cmluZyBDQTAeFw0xMDAxMDEwODMwMDBaFw0zMDEyMzEwODMwMDBaMGwxCzAJBgNVBAYTAlVTMR8wHQYDVQQKDBZUZXN0IENlcnRpZmljYXRlcyAyMDExMTwwOgYDVQQDDDNWYWxpZCBVVEY4U3RyaW5nIEVuY29kZWQgTmFtZXMgRUUgQ2VydGlmaWNhdGUgVGVzdDkwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDiQyHe+Qlww7JGF56OLnXVa6/PwDW5nMyghTVjB/9SVbOF2cOOtFS/pGw9Qbc42wajSZuKP0tEBph0SkZlyhpyHwcGn2UMrWolAnAGDugxr83ijb/AElL+Orzm5lxPcuVG8+D1w9EW7JOqI4iwhHe70XKdM5RaGRzQpQmfvGMuj6VsMUJaIv+9/5RLycevwNEZl3yiLTV6APuihoI8LQQc9C+YQfAzRqz+e9adZIBayMhshpAJtgZ9pdNRPiUXt/NDw4jSbHp+fABs3x0i5GMDGBQMI44rUVY4odIM7GcIFZ14HyLY0stkp2PsHCvmd2DBS9QbCA7rWhHu8gcdQ021AgMBAAGjazBpMB8GA1UdIwQYMBaAFDtnW0TyDadIfXMpjJOf1STjEmAmMB0GA1UdDgQWBBS4qOG97iGSGhivTSqPnNsjcsGavzAOBgNVHQ8BAf8EBAMCBPAwFwYDVR0gBBAwDjAMBgpghkgBZQMCATABMA0GCSqGSIb3DQEBCwUAA4IBAQAeayInZVW7XoaTBtQWUmvNBO3bMOq/FsCioTns6lSZp3JeTMG0yj6HmxJGNLuDNMzcfN88piQ7sfvNf+lcWb0gwdB2HXWTU4TcpAHUkn83Fid9og3gZv4YDh+fIQtcaL4/Yja0cSDiy/OYHvV3ehEuTAnMPh8Utd5UI72eFwznL+7lFdJMp6IMTa0GD5iVjkYDSOE8CBFv1vyFZOpiM3US56Kuo93VQdDUSXZdbHphgddospcnlW1fQ4wvMUTZpXeqcbu0kDqNIM10ooUbnkpa8Zsf1aOdna1p3GcFyJTdpKiellXrtc52azNxwHgPwvchG4k9RqHAGNJlDwsEHMB2",
 		"WrongCRLCACert.crt": "MIIDgTCCAmmgAwIBAgIBCjANBgkqhkiG9w0BAQsFADBFMQswCQYDVQQGEwJVUzEfMB0GA1UEChMWVGVzdCBDZXJ0aWZpY2F0ZXMgMjAxMTEVMBMGA1UEAxMMVHJ1c3QgQW5jaG9yMB4XDTEwMDEwMTA4MzAwMFoXDTMwMTIzMTA4MzAwMFowRTELMAkGA1UEBhMCVVMxHzAdBgNVBAoTFlRlc3QgQ2VydGlmaWNhdGVzIDIwMTExFTATBgNVBAMTDFdyb25nIENSTCBDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALfSdqU+ffbeIUKH8y141HuCwtV0pFXbQWA8l4ulBKNt/V+03/OOkoFXFId5tyu9TvZrouQruhiOrWW18bWOipWJnlr/S4n0JbIdIYduhMCD/i7JIoOgtW/3bN4T+PfvL12CB7tvyGTi4Rl7y6LoDMMXse1VaTzS6M9MJZrpmGa/yVR3WVKzLWScqK5gqMDXzcAHmEo0cRnGdLmp7hHzkAiWZEZ9X0bV5K/awcjUercRC1xJpnfJXzUgOaQJp740k2rQD9QPGSM4eQIUC0JvqLjINz3OmuQtkyQTqLkU+79WskiRlM7yMNbKdlvpZ5E+iqRYBJaqLQH5jVTW7fvWwAMCAwEAAaN8MHowHwYDVR0jBBgwFoAU5H1f0VyVhggsBa6+dbZlp9ldqGYwHQYDVR0OBBYEFAwlRuCJelEHSq81r82QxHIOt6gGMA4GA1UdDwEB/wQEAwIBBjAXBgNVHSAEEDAOMAwGCmCGSAFlAwIBMAEwDwYDVR0TAQH/BAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEAN0iMkt88kC3W/eLpsMRtDNYwmtMUZI6TtFNDoLdXlwhOjRjNOX0q8g6veHRiZTtdXI83P4KQYb3YYrc+L4/BpiGNV8LM3KDG4fpOUqfj8zq8jxZNae+rblwXMgs1cI0DpxEdJXtFv4q74ILvWt+Wp5H2St7nJPobeOn1STGZoe4HGIQ62XdHfPCacLYIqejpZJD3QYBPHQlTKJKF2ifMAF0QaoWtjvOENBRQr8sfmDqWlixChZpMDZMRhLHULiAS22Aoqql+yueh/G+HgVOaA/rB8iD8Csxot23MQM3koijndOFgzDGMhTJfwEQ96NXL+JptuocPwzKWOzLieMYYw8==",
 	},
-	"crls": {
+	crls: {
 		"anyPolicyCACRL.crl": "MIIBvzCBqAIBATANBgkqhkiG9w0BAQsFADBFMQswCQYDVQQGEwJVUzEfMB0GA1UEChMWVGVzdCBDZXJ0aWZpY2F0ZXMgMjAxMTEVMBMGA1UEAxMMYW55UG9saWN5IENBFw0xMDAxMDEwODMwMDBaFw0zMDEyMzEwODMwMDBaoC8wLTAfBgNVHSMEGDAWgBS7yd7IHJXnQuKQoo6uA1yrJGB+hTAKBgNVHRQEAwIBATANBgkqhkiG9w0BAQsFAAOCAQEAW7i6zdMI6ytGpku8kYKf2WVx9tqIMFh+vvcagsWR/9oPNp1kXgdfv/tfRS9FJRQ3RVYaKY2bWDVc8ISsrwZpBMe3RjfDEdqAyuNcy4B/C+O7OAtyNinAvtsYASAUgfDoW3s1V53iLbLDfY1uRCq7F78dHwjuuIob+tpHFR9EVUx3MgkPAyq8oLrbDdaVFAsq2XTgry00qj82bR0rSY7UdNMOhDy32qeoH4ZEEh0XHdBEM3xuMjwn6x6J2SiV96FDpO+UNcTr/VeV9sx0xJAJOqmSU+e8nL8FKCGhm02fI9CIZBV4TOICDgacRgOn+aSLkS+XcWlyrkZL2FakdOWiXc==",
 		"BadCRLIssuerNameCACRL.crl": "MIIBzDCBtQIBATANBgkqhkiG9w0BAQsFADBSMQswCQYDVQQGEwJVUzEfMB0GA1UEChMWVGVzdCBDZXJ0aWZpY2F0ZXMgMjAxMTEiMCAGA1UEAxMZSW5jb3JyZWN0IENSTCBJc3N1ZXIgTmFtZRcNMTAwMTAxMDgzMDAwWhcNMzAxMjMxMDgzMDAwWqAvMC0wHwYDVR0jBBgwFoAUEXLyNV0E1Q5KIAcHQSj9lHAAHHEwCgYDVR0UBAMCAQEwDQYJKoZIhvcNAQELBQADggEBAIIk/+6+dqID/yKmKYDaVgXh/yLWZO4uV1m6OYRSrdfa8aqYcgwChIaIIX465VDCpGO2LMOXV1Z/COerJguUNRGaiSQCSrsIpNGGZTQE+HNNC5mabMfPuSVaBgBMzQZTY3ggLNr6x1G7dXlm+Fpo+q/fSznBVsGFHCgtp53FJHBiXcd3LTBFyZLiyhITqm2xvTwyzl/URcDYBp+tWTmn7ZxADdoThK7OkY2U13O0vxKj/haiS1NuVbX2QkS+eH399jGQHAHiBOFlRPs8FGdshTWOJxmLMMTIuS7cIEH3Oz8tb1Go7j4qHIYr/b2uKHb9RBMFNRKsZfqVKEQ+1J8TPNf=",
 		"BadCRLSignatureCACRL.crl": "MIIBxzCBsAIBATANBgkqhkiG9w0BAQsFADBNMQswCQYDVQQGEwJVUzEfMB0GA1UEChMWVGVzdCBDZXJ0aWZpY2F0ZXMgMjAxMTEdMBsGA1UEAxMUQmFkIENSTCBTaWduYXR1cmUgQ0EXDTEwMDEwMTA4MzAwMFoXDTMwMTIzMTA4MzAwMFqgLzAtMB8GA1UdIwQYMBaAFDGLNY2eRGEwFN7nCy4UGUgk2/m9MAoGA1UdFAQDAgEBMA0GCSqGSIb3DQEBCwUAA4IBAQFsPfAbIcqMI+lzJmY396TIwn2ubAkQgm95U712CIuw00auDjGMiebAOLbNLgSktivN23rc5rPxSOqeWsNfgVxwCPKvBv7v4PsLQhzK2OyonV5Cmdl1biEymv88bEUcEnibvH3O0Lg3RySMNjPYqZgPfwF9b0iTYeb2JYk+lX+m3WGr5UPgM9nuC6sychRxGgF1AQOd/N6spvgSAazEyNqCWhcwdrOeM+HEDPAFOOFAhmCp+jjhFgh2E2Gq1vbxGSzzKlRBDrO1hovT9XhvEa2SjopbWMbfOR/wPTjxEImIQDWw69RLKnTL/OdnUXifoSNJIJK3ffPTSG5AEHFUm6j+",
@@ -955,27 +955,27 @@ function pkitsToArrayBuffer(pkitsValue)
 //*********************************************************************************
 //region Context for PKITS's certificates parsing test
 //*********************************************************************************
-context("PKITS's certificates parsing test", function()
+context("PKITS's certificates parsing test", () =>
 {
 	function parsingCheck(buffer)
 	{
-		let asn1 = asn1js.fromBER(buffer);
-		let cert = new Certificate({ schema: asn1.result });
+		const asn1 = asn1js.fromBER(buffer);
+		const cert = new Certificate({ schema: asn1.result });
 	}
 	
-	let keys = Object.keys(PKITS.certs);
+	const keys = Object.keys(PKITS.certs);
 	
 	for(let i = 0; i < keys.length; i++)
 	{
-		let runningFunction = function(buffer, func)
+		const runningFunction = (buffer, func) =>
 		{
-			return function()
+			return () =>
 			{
-				assert.doesNotThrow(function()
+				assert.doesNotThrow(() =>
 				{
 					func(buffer);
 				}, Error, "Correct convertion to CERT");
-			}
+			};
 		};
 		
 		it(keys[i], runningFunction(pkitsToArrayBuffer(PKITS.certs[keys[i]]), parsingCheck));
@@ -986,27 +986,27 @@ context("PKITS's certificates parsing test", function()
 //*********************************************************************************
 //region Context for PKITS's CRL parsing test
 //*********************************************************************************
-context("PKITS's CRL parsing test", function()
+context("PKITS's CRL parsing test", () =>
 {
 	function parsingCheck(buffer)
 	{
-		let asn1 = asn1js.fromBER(buffer);
-		let cert = new CertificateRevocationList({ schema: asn1.result });
+		const asn1 = asn1js.fromBER(buffer);
+		const crl = new CertificateRevocationList({ schema: asn1.result });
 	}
 	
-	let keys = Object.keys(PKITS.crls);
+	const keys = Object.keys(PKITS.crls);
 	
 	for(let i = 0; i < keys.length; i++)
 	{
-		let runningFunction = function(buffer, func)
+		const runningFunction = (buffer, func) =>
 		{
-			return function()
+			return () =>
 			{
-				assert.doesNotThrow(function()
+				assert.doesNotThrow(() =>
 				{
 					func(buffer);
 				}, Error, "Correct convertion to CRL");
-			}
+			};
 		};
 		
 		it(keys[i], runningFunction(pkitsToArrayBuffer(PKITS.crls[keys[i]]), parsingCheck));
@@ -1017,51 +1017,50 @@ context("PKITS's CRL parsing test", function()
 //*********************************************************************************
 //region Context for PKITS's certificate pairs parsing test
 //*********************************************************************************
-context("PKITS's certificate pairs parsing test", function()
+context("PKITS's certificate pairs parsing test", () =>
 {
 	function parsingCheck(buffer)
 	{
-		let asn1 = asn1js.fromBER(buffer);
-		let cert = new Certificate({ schema: asn1.result });
+		const asn1 = asn1js.fromBER(buffer);
+		const cert = new Certificate({ schema: asn1.result });
 	}
 	
-	let keys = Object.keys(PKITS.certpairs);
+	const keys = Object.keys(PKITS.certpairs);
 	
 	for(let i = 0; i < keys.length; i++)
 	{
-		let runningFunction = function(buffer, func)
+		const runningFunction = (buffer, func) =>
 		{
-			return function()
+			return () =>
 			{
-				let asn1 = asn1js.fromBER(buffer);
+				const asn1 = asn1js.fromBER(buffer);
 				
-				for(let i = 0; i < asn1.result.valueBlock.value.length; i++)
+				for(let j = 0; j < asn1.result.valueBlock.value.length; j++)
 				{
 					//region Initial variables
-					let value = asn1.result.valueBlock.value[i];
+					const value = asn1.result.valueBlock.value[j];
 					let name = null;
 					//endregion
 					
 					//region Check that we have "forward" certificate
-					if(value.idBlock.tagNumber == 0)
+					if(value.idBlock.tagNumber === 0)
 						name = "FORWARD";
 					//endregion
 					
 					//region Check that we have "reverse" certificate
-					if(value.idBlock.tagNumber == 1)
+					if(value.idBlock.tagNumber === 1)
 						name = "REVERSE";
 					//endregion
 					
-					if(name != null)
+					if(name !== null)
 					{
-						assert.doesNotThrow(function()
+						assert.doesNotThrow(() =>
 						{
 							func(value.valueBlock.value[0].valueBeforeDecode);
-						}, Error, "Correct convertion to CERT for " + name);
+						}, Error, `Correct convertion to CERT for ${name}`);
 					}
 				}
-				
-			}
+			};
 		};
 		
 		it(keys[i], runningFunction(pkitsToArrayBuffer(PKITS.certpairs[keys[i]]), parsingCheck));
@@ -1074,12 +1073,12 @@ context("PKITS's certificate pairs parsing test", function()
 //*********************************************************************************
 function simpleVerification(params)
 {
-	return function()
+	return () =>
 	{
 		//region Initial variables
-		let trustedCerts = new Array();
-		let certs = new Array();
-		let crls = new Array();
+		const trustedCerts = [];
+		const certs = [];
+		const crls = [];
 		//endregion
 		
 		//region Initialize certificates
@@ -1087,7 +1086,7 @@ function simpleVerification(params)
 		{
 			for(let i = 0; i < params.trustedCertificates.length; i++)
 			{
-				let asn1 = asn1js.fromBER(pkitsToArrayBuffer(PKITS.certs[params.trustedCertificates[i]]));
+				const asn1 = asn1js.fromBER(pkitsToArrayBuffer(PKITS.certs[params.trustedCertificates[i]]));
 				trustedCerts.push(new Certificate({ schema: asn1.result }));
 			}
 		}
@@ -1100,7 +1099,7 @@ function simpleVerification(params)
 		{
 			for(let i = 0; i < params.certificates.length; i++)
 			{
-				let asn1 = asn1js.fromBER(pkitsToArrayBuffer(PKITS.certs[params.certificates[i]]));
+				const asn1 = asn1js.fromBER(pkitsToArrayBuffer(PKITS.certs[params.certificates[i]]));
 				certs.push(new Certificate({ schema: asn1.result }));
 			}
 		}
@@ -1113,7 +1112,7 @@ function simpleVerification(params)
 		{
 			for(let i = 0; i < params.crls.length; i++)
 			{
-				let asn1 = asn1js.fromBER(pkitsToArrayBuffer(PKITS.crls[params.crls[i]]));
+				const asn1 = asn1js.fromBER(pkitsToArrayBuffer(PKITS.crls[params.crls[i]]));
 				crls.push(new CertificateRevocationList({ schema: asn1.result }));
 			}
 		}
@@ -1121,47 +1120,39 @@ function simpleVerification(params)
 		assert.doesNotThrow(initializeCRLs, Error, "Successfully initialize CRLs");
 		//endregion
 		
-		let certChain = new CertificateChainValidationEngine({
-			trustedCerts: trustedCerts,
-			certs: certs,
-			crls: crls
+		const certChain = new CertificateChainValidationEngine({
+			trustedCerts,
+			certs,
+			crls
 		});
 		
 		if(params.successExpected)
 		{
 			return certChain.verify(params.verifyParameters || {}).then(
-				function(result)
+				result =>
 				{
 					if(!result.result)
-						return new Promise(function(resolve, reject) { reject("Successfull verification expected, but FAILED return: " + result.resultMessage); });
+						return Promise.reject(`Successfull verification expected, but FAILED return: ${result.resultMessage}`);
 				},
-				function(error)
-				{
-					return new Promise(function(resolve, reject) { reject(error); });
-				}
+				error => Promise.reject(error)
 			);
 		}
-		else
-		{
-			return certChain.verify(params.verifyParameters || {}).then(
-				function(result)
-				{
-					if(result.result)
-						return new Promise(function(resolve, reject) { reject("Fail on verification expected, but SUCCESS return"); });
-				},
-				function(error)
-				{
-					return new Promise(function(resolve, reject) { resolve(); });
-				}
-			);
-		}
+		
+		return certChain.verify(params.verifyParameters || {}).then(
+			result =>
+			{
+				if(result.result)
+					return Promise.reject("Fail on verification expected, but SUCCESS return");
+			},
+			error => Promise.resolve()
+		);
 	};
 }
 //*********************************************************************************
-context("NIST PKITS tests", function()
+context("NIST PKITS tests", () =>
 {
 	//region 4.1 Signature Verification
-	context("4.1 Signature Verification", function()
+	context("4.1 Signature Verification", () =>
 	{
 		it("4.1.1 Valid Signatures Test1", simpleVerification({
 			trustedCertificates: [
@@ -1259,7 +1250,7 @@ context("NIST PKITS tests", function()
 	//endregion
 	
 	//region 4.2 Validity Periods
-	context("4.2 Validity Periods", function()
+	context("4.2 Validity Periods", () =>
 	{
 		it("4.2.1 Invalid CA notBefore Date Test1", simpleVerification({
 			trustedCertificates: [
@@ -1384,7 +1375,7 @@ context("NIST PKITS tests", function()
 	//endregion
 	
 	//region 4.3 Verifying Name Chaining
-	context("4.3 Verifying Name Chaining", function()
+	context("4.3 Verifying Name Chaining", () =>
 	{
 		it("4.3.1 Invalid Name Chaining EE Test1", simpleVerification({
 			trustedCertificates: [
@@ -1555,7 +1546,7 @@ context("NIST PKITS tests", function()
 	//endregion
 	
 	//region 4.4 Basic Certificate Revocation Tests
-	context("4.4 Basic Certificate Revocation Tests", function()
+	context("4.4 Basic Certificate Revocation Tests", () =>
 	{
 		it("4.4.1 Missing CRL Test1", simpleVerification({
 			trustedCertificates: [
@@ -1883,7 +1874,7 @@ context("NIST PKITS tests", function()
 	//endregion
 	
 	//region 4.5 Verifying Paths with Self-Issued Certificates
-	context("4.5 Verifying Paths with Self-Issued Certificates", function()
+	context("4.5 Verifying Paths with Self-Issued Certificates", () =>
 	{
 		it("4.5.1 Valid Basic Self-Issued Old With New Test1", simpleVerification({
 			trustedCertificates: [
@@ -2025,7 +2016,7 @@ context("NIST PKITS tests", function()
 	//endregion
 	
 	//region 4.6 Verifying Basic Constraints
-	context("4.6 Verifying Basic Constraints", function()
+	context("4.6 Verifying Basic Constraints", () =>
 	{
 		it("4.6.1 Invalid Missing basicConstraints Test1", simpleVerification({
 			trustedCertificates: [
@@ -2336,7 +2327,7 @@ context("NIST PKITS tests", function()
 	//endregion
 	
 	//region 4.7 Key Usage
-	context("4.7 Key Usage", function()
+	context("4.7 Key Usage", () =>
 	{
 		it("4.7.1 Invalid keyUsage Critical keyCertSign False Test1", simpleVerification({
 			trustedCertificates: [
@@ -2416,7 +2407,7 @@ context("NIST PKITS tests", function()
 	//endregion
 	
 	//region 4.8 Certificate Policies
-	context("4.8 Certificate Policies", function()
+	context("4.8 Certificate Policies", () =>
 	{
 		//region Policies list
 		
@@ -2429,7 +2420,7 @@ context("NIST PKITS tests", function()
 		
 		//endregion
 		
-		context("4.8.1 All Certificates Same Policy Test1", function()
+		context("4.8.1 All Certificates Same Policy Test1", () =>
 		{
 			it("with initial-explicit-policy set", simpleVerification({
 				trustedCertificates: [
@@ -2514,7 +2505,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.8.2 All Certificates No Policies Test2", function()
+		context("4.8.2 All Certificates No Policies Test2", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -2550,7 +2541,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.8.3 Different Policies Test3", function()
+		context("4.8.3 Different Policies Test3", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -2614,7 +2605,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.8.4 Different Policies Test4", function()
+		context("4.8.4 Different Policies Test4", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -2634,7 +2625,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.8.5 Different Policies Test5", function()
+		context("4.8.5 Different Policies Test5", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -2657,7 +2648,7 @@ context("NIST PKITS tests", function()
 		// The problem in this test is that "OverlappingPoliciesTest6EE.crt"
 		// has "BasicConstraints.cA = true". Thus we can not consider the certificate
 		// as "end entity" and rise an error.
-		context("4.8.6 Overlapping Policies Test6", function()
+		context("4.8.6 Overlapping Policies Test6", () =>
 		{
 			it.skip("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -2727,7 +2718,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.8.7 Different Policies Test7", function()
+		context("4.8.7 Different Policies Test7", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -2749,7 +2740,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.8.8 Different Policies Test8", function()
+		context("4.8.8 Different Policies Test8", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -2771,7 +2762,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.8.9 Different Policies Test9", function()
+		context("4.8.9 Different Policies Test9", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -2795,7 +2786,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.8.10 All Certificates Same Policies Test10", function()
+		context("4.8.10 All Certificates Same Policies Test10", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -2856,7 +2847,7 @@ context("NIST PKITS tests", function()
 		// I do not agree with the test because the test in fact has the same
 		// initial values with "4.8.2 All Certificates No Policies Test2", but
 		// expects another results.
-		context("4.8.11 All Certificates AnyPolicy Test11", function()
+		context("4.8.11 All Certificates AnyPolicy Test11", () =>
 		{
 			it.skip("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -2894,7 +2885,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.8.12 Different Policies Test12", function()
+		context("4.8.12 Different Policies Test12", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -2912,7 +2903,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.8.13 All Certificates Same Policies Test13", function()
+		context("4.8.13 All Certificates Same Policies Test13", () =>
 		{
 			it("with initial-policy-set = {NIST-test-policy-1}", simpleVerification({
 				trustedCertificates: [
@@ -2975,7 +2966,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.8.14 AnyPolicy Test14", function()
+		context("4.8.14 AnyPolicy Test14", () =>
 		{
 			it("with initial-policy-set = {NIST-test-policy-1}", simpleVerification({
 				trustedCertificates: [
@@ -3019,7 +3010,7 @@ context("NIST PKITS tests", function()
 		});
 		
 		// TODO: Return "user notice" in a successfull result
-		context("4.8.15 User Notice Qualifier Test15", function()
+		context("4.8.15 User Notice Qualifier Test15", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -3035,7 +3026,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.8.16 User Notice Qualifier Test16", function()
+		context("4.8.16 User Notice Qualifier Test16", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -3053,7 +3044,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.8.17 User Notice Qualifier Test17", function()
+		context("4.8.17 User Notice Qualifier Test17", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -3071,7 +3062,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.8.18 User Notice Qualifier Test18", function()
+		context("4.8.18 User Notice Qualifier Test18", () =>
 		{
 			it("with initial-policy-set = {NIST-test-policy-1}", simpleVerification({
 				trustedCertificates: [
@@ -3119,7 +3110,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.8.19 User Notice Qualifier Test19", function()
+		context("4.8.19 User Notice Qualifier Test19", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -3135,7 +3126,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.8.20 CPS Pointer Qualifier Test20", function()
+		context("4.8.20 CPS Pointer Qualifier Test20", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -3174,7 +3165,7 @@ context("NIST PKITS tests", function()
 	//endregion
 	
 	//region 4.9 Require Explicit Policy
-	context("4.9 Require Explicit Policy", function()
+	context("4.9 Require Explicit Policy", () =>
 	{
 		it("4.9.1 Valid RequireExplicitPolicy Test1", simpleVerification({
 			trustedCertificates: [
@@ -3341,9 +3332,9 @@ context("NIST PKITS tests", function()
 	//endregion
 	
 	//region 4.10 Policy Mappings
-	context("4.10 Policy Mappings", function()
+	context("4.10 Policy Mappings", () =>
 	{
-		context("4.10.1 Valid Policy Mapping Test1", function()
+		context("4.10.1 Valid Policy Mapping Test1", () =>
 		{
 			it("with initial-policy-set = {NIST-test-policy-1}", simpleVerification({
 				trustedCertificates: [
@@ -3386,7 +3377,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.10.2 Invalid Policy Mapping Test2", function()
+		context("4.10.2 Invalid Policy Mapping Test2", () =>
 		{
 			it("with default parameters", simpleVerification({
 				trustedCertificates: [
@@ -3422,7 +3413,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.10.3 Valid Policy Mapping Test3", function()
+		context("4.10.3 Valid Policy Mapping Test3", () =>
 		{
 			it("with initial-policy-set = {NIST-test-policy-1}", simpleVerification({
 				trustedCertificates: [
@@ -3473,7 +3464,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.10.4 Invalid Policy Mapping Test4", function()
+		context("4.10.4 Invalid Policy Mapping Test4", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -3495,7 +3486,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.10.5 Valid Policy Mapping Test5", function()
+		context("4.10.5 Valid Policy Mapping Test5", () =>
 		{
 			it("with initial-policy-set = {NIST-test-policy-1}", simpleVerification({
 				trustedCertificates: [
@@ -3542,7 +3533,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.10.6 Valid Policy Mapping Test6", function()
+		context("4.10.6 Valid Policy Mapping Test6", () =>
 		{
 			it("with initial-policy-set = {NIST-test-policy-1}", simpleVerification({
 				trustedCertificates: [
@@ -3589,7 +3580,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.10.7 Invalid Mapping From anyPolicy Test7", function()
+		context("4.10.7 Invalid Mapping From anyPolicy Test7", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -3607,7 +3598,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.10.8 Invalid Mapping To anyPolicy Test8", function()
+		context("4.10.8 Invalid Mapping To anyPolicy Test8", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -3625,7 +3616,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.10.9 Valid Policy Mapping Test9", function()
+		context("4.10.9 Valid Policy Mapping Test9", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -3643,7 +3634,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.10.10 Invalid Policy Mapping Test10", function()
+		context("4.10.10 Invalid Policy Mapping Test10", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -3663,7 +3654,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.10.11 Valid Policy Mapping Test11", function()
+		context("4.10.11 Valid Policy Mapping Test11", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -3683,7 +3674,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.10.12 Valid Policy Mapping Test12", function()
+		context("4.10.12 Valid Policy Mapping Test12", () =>
 		{
 			it("with initial-policy-set = {NIST-test-policy-1}", simpleVerification({
 				trustedCertificates: [
@@ -3729,7 +3720,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.10.13 Valid Policy Mapping Test13", function()
+		context("4.10.13 Valid Policy Mapping Test13", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -3747,7 +3738,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.10.14 Valid Policy Mapping Test14", function()
+		context("4.10.14 Valid Policy Mapping Test14", () =>
 		{
 			// I do not agree with the test because after mapping "NIST test-policy-1" to "NIST test-policy-2"
 			// the end entity certificate in fact does not have a valid policy included.
@@ -3772,7 +3763,7 @@ context("NIST PKITS tests", function()
 	//endregion
 	
 	//region 4.11 Inhibit Policy Mapping
-	context("4.11 Inhibit Policy Mapping", function()
+	context("4.11 Inhibit Policy Mapping", () =>
 	{
 		it("4.11.1 Invalid inhibitPolicyMapping Test1", simpleVerification({
 			trustedCertificates: [
@@ -3988,9 +3979,9 @@ context("NIST PKITS tests", function()
 	//endregion
 	
 	//region 4.12 Inhibit Any Policy
-	context("4.12 Inhibit Any Policy", function()
+	context("4.12 Inhibit Any Policy", () =>
 	{
-		context("4.12.1 Invalid inhibitAnyPolicy Test1", function()
+		context("4.12.1 Invalid inhibitAnyPolicy Test1", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -4008,7 +3999,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.12.2 Valid inhibitAnyPolicy Test2", function()
+		context("4.12.2 Valid inhibitAnyPolicy Test2", () =>
 		{
 			// TODO: Fix later
 			it.skip("with default settings", simpleVerification({
@@ -4027,7 +4018,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.12.3 inhibitAnyPolicy Test3", function()
+		context("4.12.3 inhibitAnyPolicy Test3", () =>
 		{
 			// TODO: Fix later
 			it.skip("with default settings", simpleVerification({
@@ -4068,7 +4059,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.12.4 Invalid inhibitAnyPolicy Test4", function()
+		context("4.12.4 Invalid inhibitAnyPolicy Test4", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -4088,7 +4079,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.12.5 Invalid inhibitAnyPolicy Test5", function()
+		context("4.12.5 Invalid inhibitAnyPolicy Test5", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -4110,7 +4101,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.12.6 Invalid inhibitAnyPolicy Test6", function()
+		context("4.12.6 Invalid inhibitAnyPolicy Test6", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -4130,7 +4121,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.12.7 Valid Self-Issued inhibitAnyPolicy Test7", function()
+		context("4.12.7 Valid Self-Issued inhibitAnyPolicy Test7", () =>
 		{
 			// TODO: Fix later
 			it.skip("with default settings", simpleVerification({
@@ -4152,7 +4143,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.12.8 Invalid Self-Issued inhibitAnyPolicy Test8", function()
+		context("4.12.8 Invalid Self-Issued inhibitAnyPolicy Test8", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -4175,7 +4166,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.12.9 Valid Self-Issued inhibitAnyPolicy Test9", function()
+		context("4.12.9 Valid Self-Issued inhibitAnyPolicy Test9", () =>
 		{
 			// TODO: Fix later
 			it.skip("with default settings", simpleVerification({
@@ -4198,7 +4189,7 @@ context("NIST PKITS tests", function()
 			}));
 		});
 		
-		context("4.12.10 Invalid Self-Issued inhibitAnyPolicy Test10", function()
+		context("4.12.10 Invalid Self-Issued inhibitAnyPolicy Test10", () =>
 		{
 			it("with default settings", simpleVerification({
 				trustedCertificates: [
@@ -4222,7 +4213,7 @@ context("NIST PKITS tests", function()
 	//endregion
 	
 	//region 4.13 Name Constraints
-	context("4.13 Name Constraints", function()
+	context("4.13 Name Constraints", () =>
 	{
 		it("4.13.1 Valid DN nameConstraints Test1", simpleVerification({
 			trustedCertificates: [
@@ -4822,7 +4813,7 @@ context("NIST PKITS tests", function()
 	//endregion
 	
 	//region 4.14 Distribution Points
-	context("4.14 Distribution Points", function()
+	context("4.14 Distribution Points", () =>
 	{
 		it("4.14.1 Valid distributionPoint Test1", simpleVerification({
 			trustedCertificates: [
@@ -5389,7 +5380,7 @@ context("NIST PKITS tests", function()
 	//endregion
 	
 	//region 4.15 Delta-CRLs
-	context("4.15 Delta-CRLs", function()
+	context("4.15 Delta-CRLs", () =>
 	{
 		// TODO: Fix later
 		it.skip("4.15.1 Invalid deltaCRLIndicator No Base Test1", simpleVerification({
@@ -5557,7 +5548,7 @@ context("NIST PKITS tests", function()
 	//endregion
 	
 	//region 4.16 Private Certificate Extensions
-	context("4.16 Private Certificate Extensions", function()
+	context("4.16 Private Certificate Extensions", () =>
 	{
 		it("4.16.1 Valid Unknown Not Critical Certificate Extension Test1", simpleVerification({
 			trustedCertificates: [
@@ -5591,8 +5582,9 @@ context("NIST PKITS tests", function()
 //*********************************************************************************
 //endregion
 //*********************************************************************************
-context("Hack for Rollup.js", () => {
-	return ;
+context("Hack for Rollup.js", () =>
+{
+	return;
 	
 	setEngine();
 });

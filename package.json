@@ -16,16 +16,15 @@
   },
   "devDependencies": {
     "mocha": "^3.0.2",
-    "rollup": "0.34.7",
-    "rollup-plugin-node-resolve": "^1.7.1",
-    "babel-cli": "latest",
-    "babel-preset-es2015": "latest",
-    "node-webcrypto-ossl": "latest",
-    "rollem": "git+https://github.com/PeculiarVentures/rollem.git"
+    "rollup": "^0.34.7",
+    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-node-resolve": "^1.7.1"
   },
   "dependencies": {
     "asn1js": "git+https://github.com/PeculiarVentures/asn1js-es6.git",
-    "pvutils": "^1.0.0"
+    "pvutils": "^1.0.0",
+    "babel-cli": "latest",
+    "babel-preset-es2015": "latest"
   },
   "scripts": {
     "build": "babel src --compact=false --out-dir build --source-maps",
@@ -56,6 +55,6 @@
   "jsnext:main": "./src/index.js",
   "main": "./build/index.js",
   "name": "pkijs",
-  "version": "2.0.34",
+  "version": "2.0.35",
   "license": "MIT"
 }
