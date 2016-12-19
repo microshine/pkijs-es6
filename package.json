@@ -24,8 +24,8 @@
     "rollem": "git+https://github.com/PeculiarVentures/rollem.git"
   },
   "dependencies": {
-    "asn1js": "git+https://github.com/PeculiarVentures/asn1js-es6#build",
-    "pvutils": "git+https://github.com/PeculiarVentures/pvutils#build"
+    "asn1js": "git+https://github.com/PeculiarVentures/asn1js-es6.git",
+    "pvutils": "^1.0.0"
   },
   "scripts": {
     "build": "babel src --compact=false --out-dir build --source-maps",
@@ -35,7 +35,8 @@
     "ex3": "cd examples/NISTPKITS && rollem -c && cd ../..",
     "build:examples": "npm run ex1; npm run ex2; npm run ex3;",
     "build:tests": "npm run build:examples",
-    "test": "mocha"
+    "test": "mocha",
+    "postinstall": "npm run build"
   },
   "keywords": [
     "ES6",
@@ -54,8 +55,7 @@
   ],
   "jsnext:main": "./src/index.js",
   "main": "./build/index.js",
-  "types": "index.d.ts",
   "name": "pkijs",
-  "version": "2.0.33",
+  "version": "2.0.34",
   "license": "MIT"
 }
